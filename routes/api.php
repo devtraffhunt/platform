@@ -9,3 +9,5 @@ Route::get('/wincrash', 'CrashController@winCrash');
 Route::any('/slots/callbackindrtest/{method}', 'SlotsController@callback');
 Route::post('/deposit/payyou/callback', 'PaymentController@resultPayyou');
 Route::post('/deposit/kassify/callback', 'PaymentController@resultKassify'); 
+Route::post('/deposit/pear2pay/callback', 'PaymentController@resultPear2pay'); 
+Route::post('/deposit/payhub24/callback', 'PaymentController@resultPayhub24'); 

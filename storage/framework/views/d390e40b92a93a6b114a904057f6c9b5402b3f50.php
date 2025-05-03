@@ -41,12 +41,12 @@
                     <div class="col-lg-2 mb-2">
                         <label>Cистема</label>
                         <select id="ps" class="form-select">
-                            <option value="1">FreeKassa</option>
-                            <option value="4">RUKASSA</option>
-                            <option value="5">EXWAVE</option>
-                            <option value="6">RUBPAY</option>
-                            <option value="7">PayYou</option>
+                            <option value="7">PayYou (MoneyINR_Phub)</option>
                             <option value="8">Kassify</option>
+                            <option value="9">Pear2Pay</option>
+                            <option value="10">PayYou (ala_MoneyINR)</option>
+                            <option value="11">PayHub24</option>
+                            
                         </select>
                     </div>
                     <div class="col-lg-2 mb-2">
@@ -93,12 +93,11 @@
                                 <th><input type="color" class="form-control form-control-color systemDeposit_color" name="" value="<?php echo e($s->color); ?>"></th>
                                 <th>
                                     <select class="form-select systemDeposit_ps">
-                                        <option value="1" <?php if($s->ps == 1): ?> selected="selected" <?php endif; ?>>FreeKassa</option>
-                                        <option value="4" <?php if($s->ps == 4): ?> selected="selected" <?php endif; ?>>RUKASSA</option>
-                                        <option value="5" <?php if($s->ps == 5): ?> selected="selected" <?php endif; ?>>EXWAVE</option>
-                                        <option value="6" <?php if($s->ps == 6): ?> selected="selected" <?php endif; ?>>RUBPAY</option>
-                                        <option value="7" <?php if($s->ps == 7): ?> selected="selected" <?php endif; ?>>PayYou</option>
+                                        <option value="7" <?php if($s->ps == 7): ?> selected="selected" <?php endif; ?>>PayYou (MoneyINR_Phub)</option>
                                         <option value="8" <?php if($s->ps == 8): ?> selected="selected" <?php endif; ?>>Kassify</option>
+                                        <option value="9" <?php if($s->ps == 9): ?> selected="selected" <?php endif; ?>>Pear2Pay</option>
+                                        <option value="10" <?php if($s->ps == 10): ?> selected="selected" <?php endif; ?>>PayYou (ala_MoneyINR)</option>
+                                        <option value="11" <?php if($s->ps == 11): ?> selected="selected" <?php endif; ?>>PayHub24</option>
                                     </select>
                                 </th>
                                 <th ><input type="" class="form-control systemDeposit_number_ps" name="" value="<?php echo e($s->number_ps); ?>"></th>

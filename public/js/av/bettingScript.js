@@ -1,7 +1,7 @@
 // 1. Налаштування ставок
 const BET_CONFIG = {
-	left: { min: 10, max: 99000, step: 1, speeds: [100, 200, 500, 1000] },
-	right: { min: 10, max: 99000, step: 1, speeds: [100, 200, 500, 1000] },
+	left: { min: 10, max: 8000, step: 1, speeds: [100, 200, 500, 1000] },
+	right: { min: 10, max: 8000, step: 1, speeds: [100, 200, 500, 1000] },
 };
 
 // 2. Форматування до en-US з двома десятковими

@@ -83,7 +83,7 @@ Route::post('/systemwithdraws/all', 'AdminController@systemWithdrawsAll');
 Route::post('/deposit/go', 'PaymentController@go');
 Route::post('/deposit/checkstatus', 'PaymentController@checkStatus');
 //Route::get('/deposit/resultforexample', 'PaymentController@result'); // под платеги перенести в api роуты
-
+Route::post('/withdraw/frozen', 'WithdrawController@withdrawFrozen');
 Route::post('/withdraw/go', 'WithdrawController@go');
 Route::post('/withdraw/cansel', 'WithdrawController@cansel');
 
@@ -174,6 +174,8 @@ Route::group(['middleware' => 'auth', 'middleware' => 'access:admin'], function 
     Route::post('/admin/chart', 'AdminController@chart'); 
 
     Route::post('/admin/changeBan', 'AdminController@changeBan'); 
+    Route::post('/admin/changeFrozen', 'AdminController@changeFrozen'); 
+    Route::post('/admin/resetPassword', 'AdminController@resetPassword'); 
     Route::post('/admin/deleteUser', 'AdminController@deleteUser'); 
     Route::post('/admin/saveUser', 'AdminController@saveUser');
 

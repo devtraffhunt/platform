@@ -465,7 +465,7 @@
          </div>
 
          <div class="gx-con">
-            <a href="/slots">All games</a>
+            <a <?php if(auth()->guard()->check()): ?> href="/slots" <?php else: ?> data-switch="regquick" <?php endif; ?>>All games</a>
          </div>
      </div>
 
@@ -510,22 +510,22 @@
 
 
 
-  <a href="/crash" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> href="/crash" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/aviator.svg" alt="Aviator">
   </a>
-  <a onclick="load('slots'); goToSlots(3, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(3, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/gates-of-olympus.svg" alt="Gates of Olympus">
   </a>
-  <a onclick="load('slots'); goToSlots(10, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(10, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/the-dog-house.svg" alt="The Dog House">
   </a>
-  <a onclick="load('slots'); goToSlots(627, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(627, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/plinko.svg" alt="Plinko">
   </a>
-  <a onclick="load('slots'); goToSlots(21, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(21, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/img/slots/buffalo_king_megaways.svg" alt="Buffalo King Megaways">
   </a>
-  <a onclick="load('slots'); goToSlots(697, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(697, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/img/slots/sugar_rush.svg" alt="Sugar Rash">
   </a>
 
@@ -601,7 +601,7 @@
          </div>
 
          <div class="gx-con">
-            <a href="/slots">All games</a>
+            <a <?php if(auth()->guard()->check()): ?> href="/slots" <?php else: ?> data-switch="regquick" <?php endif; ?>>All games</a>
          </div>
      </div>
 
@@ -611,22 +611,22 @@
 
 
   <div class="games">
-  <a onclick="load('slots'); goToSlots(469, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(469, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/tigger-jungle.svg" alt="Tigger Jungle">
   </a>
-  <a onclick="load('slots'); goToSlots(855, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(855, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/wanted-dead-or-a-wind.svg" alt="Wanted dead or a wind">
   </a>
-  <a onclick="load('slots'); goToSlots(724, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(724, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/sugar-rush-1000.svg" alt="Sugar Rush 1000">
   </a>
-  <a onclick="load('slots'); goToSlots(22, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(22, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/img/slots/bigger_bass_bonanza.svg" alt="Bigger Bass Bonanza">
   </a>
-  <a onclick="load('slots'); goToSlots(17, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(17, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/sweet-bonanza.svg" alt="Sweet Bonanza">
   </a>
-  <a onclick="load('slots'); goToSlots(838, 'real');" class="games__item">
+  <a <?php if(auth()->guard()->check()): ?> onclick="load('slots'); goToSlots(838, 'real');" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
     <img src="/games/img/rip-city.svg" alt="Rip City">
   </a>
 

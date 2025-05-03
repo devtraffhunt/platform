@@ -16,6 +16,7 @@ use App\SystemWithdraw;
 use App\SystemDep;
 use App\Tourniers;
 use Auth;
+use App\WithdrawFrozen;
 
 class GeneralController extends Controller
 {
@@ -71,10 +72,26 @@ class GeneralController extends Controller
                 return view('admin.promo', compact('data'));
             }
         }
-
+/*
         if($page == 'deps'){
             $data['deps'] = Payment::where('status', $dop)->orderBy('id', 'desc')->paginate(15);
+        }*/
+        
+        if($page == 'deps'){
+            $query = Payment::where('status', $dop);
+        
+            if (!empty(request()->input('search'))) {
+                $search = request()->input('search');
+                $query->where(function($q) use ($search) {
+                    $q->where('transaction', 'like', "%$search%")
+                      ->orWhere('external_id', 'like', "%$search%")
+                      ->orWhere('user_id', 'like', "%$search%");
+                });
+            }
+        
+            $data['deps'] = $query->orderBy('id', 'desc')->paginate(15, ['*'], 'deps');
         }
+        
 
         if($page == 'withdraws'){
             $data['withdraws'] = Withdraw::where('status', $dop)->orderBy('id', 'desc')->paginate(15);
@@ -90,9 +107,23 @@ class GeneralController extends Controller
 
         if($page == 'user'){
             $data['user'] = User::where('id', $dop)->first();
-            $data['deps'] = Payment::where('user_id', $dop)->orderBy('id', 'desc')->paginate(15, ['*'], 'deps');
-            $data['withdraws'] = Withdraw::where('user_id', $dop)->orderBy('id', 'desc')->paginate(15, ['*'], 'withdraws');
-            $data['accounts'] = User::where('ip', $data['user']->ip)->paginate(15, ['*'], 'accounts');;
+
+            $query = Payment::where('user_id', $dop);
+
+if (request()->has('search') && !empty(request('search'))) {
+    $search = request('search');
+    $query->where(function($q) use ($search) {
+        $q->where('transaction', 'like', "%$search%")
+          ->orWhere('external_id', 'like', "%$search%");
+    });
+}
+
+$data['deps'] = $query->orderBy('id', 'desc')->paginate(15, ['*'], 'deps');
+            $data['withdraws'] = WithdrawFrozen::where('user_id', $dop)->orderBy('id', 'desc')->paginate(15, ['*'], 'withdraws');
+            $data['accounts'] = User::where('external_id', $data['user']->external_id)
+            ->whereNotNull('external_id')
+            ->where('id', '!=', $data['user']->id) // <-- Исключение по id
+            ->paginate(15, ['*'], 'accounts');
 
             $cashe_hist_user = \Cache::get('user.'.$dop.'.historyBalance') ?? '[]';
             $cashe_hist_user = json_decode($cashe_hist_user);

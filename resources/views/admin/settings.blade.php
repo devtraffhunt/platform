@@ -5,8 +5,8 @@
 @section('content')
 
 @component('admin.components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Dashboard @endslot
+@slot('li_1') UPWIN @endslot
+@slot('title') Настройки @endslot
 @endcomponent
 
 @php
@@ -27,57 +27,18 @@ $setting = \App\Setting::first();
 						<input type="" class="form-control" id="name" value="{{$setting->name}}" name="">
 					</div>
 					<div class="col-lg-3 mb-3">
-						<label>Айди группы вк</label>
-						<input type="" class="form-control" id="group_id" value="{{$setting->group_id}}" name="">
+						<label>Контакт саппорта</label>
+						<input type="" class="form-control" id="support_contact" value="{{$setting->support_contact}}" name="">
 					</div>
 					<div class="col-lg-3 mb-3">
-						<label>Токен группы вк</label>
-						<input type="" class="form-control" id="group_token" value="{{$setting->group_token}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Канал тг</label>
-						<input type="" class="form-control" id="tg_id" value="{{$setting->tg_id}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Бот тг</label>
-						<input type="" class="form-control" id="tg_bot_id" value="{{$setting->tg_bot_id}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3" >
-						<label>Токен бота тг</label>
-						<input type="" class="form-control" id="tg_token" value="{{$setting->tg_token}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Бонус 2</label>
-						<input type="" class="form-control" id="bonus_reg" value="{{$setting->bonus_reg}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Бонус за подписку на группу ВК и ТГ</label>
-						<input type="" class="form-control" id="bonus_group" value="{{$setting->bonus_group}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Максимальный вывод с бонуса</label>
-						<input type="" class="form-control" id="max_withdraw_bonus" value="{{$setting->max_withdraw_bonus}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Депозит для перевода средств</label>
-						<input type="" class="form-control" id="dep_transfer" value="{{$setting->dep_transfer}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Депозит для создания промокода</label>
-						<input type="" class="form-control" id="dep_createpromo" value="{{$setting->dep_createpromo}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>Тема сайта</label>
-						<select class="form-select" id="theme">
-                            <option value="0" @if($setting->theme == 0) selected="selected" @endif>Обычная</option>
-                            <option value="1" @if($setting->theme == 1) selected="selected" @endif>Новогодняя</option>
+						<label>Состояние сайта</label>
+						<select class="form-select" id="status_site">
+                            <option value="1" @if($setting->status == 1) selected="selected" @endif>Активен</option>
+                            <option value="0" @if($setting->status == 0) selected="selected" @endif>Технические работы</option>
                         </select>
 						
 					</div>
-					<div class="col-lg-6 mb-3">
-						<label>Мета-теги</label>
-						<textarea type="" class="form-control" id="meta_tags" name="">{{$setting->meta_tags}}</textarea>
-					</div>
+			
 					<div class="col-lg">
 						<label>Действие</label>
 						<button onclick="saveSetting(1)" class="btn btn-info btn-block w-100">Сохранить</button>
@@ -87,26 +48,88 @@ $setting = \App\Setting::first();
 		</div>
 	</div>
 	
-	<div class="col-sm-12">
+	<div class="col-sm-6">
 		<div class="card">
 			<div class="card-body">
-				<h3>Настройки платежной системы FreeKassa (остальные в paymentcontroller, обязательно установить проверки после интеграции)</h3>
+				<h3>Настройки платежной системы Payou</h3>
 				<div class="row">
 					<div class="col-lg-3 mb-3">
-						<label>FK ID</label>
-						<input type="" class="form-control" id="fk_id" value="{{$setting->fk_id}}" name="">
+						<label>ID Кассы</label>
+						<input type="" class="form-control" id="payou_merchant_id" value="{{$setting->payou_merchant_id}}" name="">
 					</div>
 					<div class="col-lg-3 mb-3">
-						<label>FK SECRET 1</label>
-						<input type="" class="form-control" id="fk_secret_1" value="{{$setting->fk_secret_1}}" name="">
-					</div>
-					<div class="col-lg-3 mb-3">
-						<label>FK SECRET 2</label>
-						<input type="" class="form-control" id="fk_secret_2" value="{{$setting->fk_secret_2}}" name="">
+						<label>Секретный ключ</label>
+						<input type="" class="form-control" id="payou_secret" value="{{$setting->payou_secret}}" name="">
 					</div>
 					<div class="col-lg">
 						<label>Действие</label>
 						<button onclick="saveSetting(2)" class="btn btn-info btn-block w-100">Сохранить</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
+				<h3>Настройки платежной системы Pear2Pay</h3>
+				<div class="row">
+					<div class="col-lg-3 mb-3">
+						<label>API Key</label>
+						<input type="" class="form-control" id="pear2pay_api" value="{{$setting->pear2pay_api}}" name="">
+					</div>
+					<div class="col-lg-3 mb-3">
+						<label>Secret Key</label>
+						<input type="" class="form-control" id="pear2pay_secret" value="{{$setting->pear2pay_secret}}" name="">
+					</div>
+					<div class="col-lg">
+						<label>Действие</label>
+						<button onclick="saveSetting(3)" class="btn btn-info btn-block w-100">Сохранить</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
+				<h3>Настройки платежной системы Kassify</h3>
+				<div class="row">
+					<div class="col-lg-3 mb-3">
+						<label>Merchant ID</label>
+						<input type="" class="form-control" id="kassify_merchant_id" value="{{$setting->kassify_merchant_id}}" name="">
+					</div>
+					<div class="col-lg-3 mb-3">
+						<label>Secret Key</label>
+						<input type="" class="form-control" id="kassify_secret" value="{{$setting->kassify_secret}}" name="">
+					</div>
+					<div class="col-lg">
+						<label>Действие</label>
+						<button onclick="saveSetting(4)" class="btn btn-info btn-block w-100">Сохранить</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
+				<h3>Настройки платежной системы PayHub24</h3>
+				<div class="row">
+					<div class="col-lg-3 mb-3">
+						<label>Public Key (API)</label>
+						<input type="" class="form-control" id="payhub24_public_key" value="{{$setting->payhub24_public_key}}" name="">
+					</div>
+					<div class="col-lg-3 mb-3">
+						<label>Private Key</label>
+						<input type="" class="form-control" id="payhub24_private_key" value="{{$setting->payhub24_private_key}}" name="">
+					</div>
+					<div class="col-lg">
+						<label>Действие</label>
+						<button onclick="saveSetting(5)" class="btn btn-info btn-block w-100">Сохранить</button>
 					</div>
 				</div>
 			</div>

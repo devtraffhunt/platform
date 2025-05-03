@@ -37,12 +37,12 @@
                     <div class="col-lg-2 mb-2">
                         <label>Cистема</label>
                         <select id="ps" class="form-select">
-                            <option value="1">FreeKassa</option>
-                            <option value="4">RUKASSA</option>
-                            <option value="5">EXWAVE</option>
-                            <option value="6">RUBPAY</option>
-                            <option value="7">PayYou</option>
+                            <option value="7">PayYou (MoneyINR_Phub)</option>
                             <option value="8">Kassify</option>
+                            <option value="9">Pear2Pay</option>
+                            <option value="10">PayYou (ala_MoneyINR)</option>
+                            <option value="11">PayHub24</option>
+                            
                         </select>
                     </div>
                     <div class="col-lg-2 mb-2">
@@ -89,12 +89,11 @@
                                 <th><input type="color" class="form-control form-control-color systemDeposit_color" name="" value="{{$s->color}}"></th>
                                 <th>
                                     <select class="form-select systemDeposit_ps">
-                                        <option value="1" @if($s->ps == 1) selected="selected" @endif>FreeKassa</option>
-                                        <option value="4" @if($s->ps == 4) selected="selected" @endif>RUKASSA</option>
-                                        <option value="5" @if($s->ps == 5) selected="selected" @endif>EXWAVE</option>
-                                        <option value="6" @if($s->ps == 6) selected="selected" @endif>RUBPAY</option>
-                                        <option value="7" @if($s->ps == 7) selected="selected" @endif>PayYou</option>
+                                        <option value="7" @if($s->ps == 7) selected="selected" @endif>PayYou (MoneyINR_Phub)</option>
                                         <option value="8" @if($s->ps == 8) selected="selected" @endif>Kassify</option>
+                                        <option value="9" @if($s->ps == 9) selected="selected" @endif>Pear2Pay</option>
+                                        <option value="10" @if($s->ps == 10) selected="selected" @endif>PayYou (ala_MoneyINR)</option>
+                                        <option value="11" @if($s->ps == 11) selected="selected" @endif>PayHub24</option>
                                     </select>
                                 </th>
                                 <th ><input type="" class="form-control systemDeposit_number_ps" name="" value="{{$s->number_ps}}"></th>

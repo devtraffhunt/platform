@@ -4,21 +4,13 @@
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <a href="/admin" class="logo logo-dark">
-                    <span class="logo-sm">
-                        SOYOUSTART
-                    </span>
-                    <span class="logo-lg">
-                        SOYOUSTART
-                    </span>
+                    <span class="logo-sm">UPWIN</span>
+                    <span class="logo-lg">UPWIN</span>
                 </a>
 
                 <a href="/admin" class="logo logo-light">
-                    <span class="logo-sm">
-                        SOYOUSTART
-                    </span>
-                    <span class="logo-lg">
-                        SOYOUSTART
-                    </span>
+                    <span class="logo-sm">UPWIN</span>
+                    <span class="logo-lg">UPWIN</span>
                 </a>
             </div>
 
@@ -53,15 +45,15 @@
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="rounded-circle header-profile-user" src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                     alt="Header Avatar">
-                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
+                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->id)}}</span>
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-end">
                 <!-- item-->
-                <a href="/admin/user/{{Auth::user()->id}}" class="dropdown-item" href="contacts-profile"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Мой профиль</span></a>
+                <a href="/admin/user/{{Auth::user()->id}}" class="dropdown-item" href="contacts-profile"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Мой аккаунт</span></a>
                 
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="/" ><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Выйти из админки</span></a>
+                <a class="dropdown-item text-danger" href="/" ><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Выйти</span></a>
                 
             </div>
         </div>

@@ -5,18 +5,55 @@
 @section('content')
 
 @component('admin.components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Dashboard @endslot
+@slot('li_1') UPWIN @endslot
+@slot('title') Пользователь @endslot
 @endcomponent
 
 @php
 $user = $data['user'];
 @endphp
+
+@php
+$ip = $user->ip ?? null;
+$countryData = null;
+
+if ($ip) {
+    try {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://ipwho.is/{$ip}");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response !== false) {
+            $ipApiData = json_decode($response, true);
+            if (isset($ipApiData['success']) && $ipApiData['success'] === true) {
+                $countryData = [
+                    'country_code' => $ipApiData['country_code'],
+                    'country_name' => $ipApiData['country'],
+                ];
+            }
+        }
+    } catch (\Exception $e) {
+        $countryData = null;
+    }
+}
+
+
+$firstDeposit = \App\Payment::where('user_id', $user->id)
+    ->where('status', 1)
+    ->orderBy('created_at', 'asc')
+    ->first();
+
+@endphp
+
 <div class="row">
     <div class="col-xl-4">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title mb-0">Profile №{{$user->id}}</h4>
+          <h4 class="card-title mb-0">Аккаунт #{{$user->id}}</h4>
           <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
       </div>
       <div class="card-body">
@@ -27,8 +64,24 @@ $user = $data['user'];
                     <div><img class="img-70 rounded-circle" style="width: 100px;height: 100px;" alt="" src="{{$user->avatar}}"></div>                  
 
                     <div class="media-body ms-3">
-                        <h5 class="mb-1">{{$user->name ?? $user->email}}</h5>
-                        <p>@if($user->admin == 1) Администратор @else Пользователь @endif</p>
+                        <h5 class="mb-1">{{$user->email}} </h5>
+                        <h5 class="mb-1">{{$user->phone}} </h5>
+                        <p>@if($user->admin == 1) Администратор @else Пользователь @endif  @if($u->ban == 0 && $u->frozen == 0)
+        <span class="badge badge-pill badge-soft-success font-size-11">Активный</span>
+    @elseif($u->ban == 0 && $u->frozen == 1)
+        <span class="badge badge-pill badge-soft-warning font-size-11">Заморожен</span>
+    @elseif($u->ban == 1)
+        <span class="badge badge-pill badge-soft-danger font-size-11">Забанен</span>
+    @else
+        <span class="badge badge-pill badge-soft-secondary font-size-11">Неизвестный статус</span>
+    @endif</p> <div>
+    @if(isset($countryData['country_code']) && isset($countryData['country_name']))
+    <img src="https://flagcdn.com/48x36/{{ strtolower($countryData['country_code']) }}.png" style="width: 24px; height: 18px; vertical-align: middle;">
+    <span>{{ $countryData['country_name'] }}</span>
+@else
+    <span>Страна не определена</span>
+@endif
+  </div>
                     </div>
                 </div>
             </div>
@@ -39,49 +92,44 @@ $user = $data['user'];
             <input class="form-control" disabled id="balance_2" value="{{number_format($user->balance, 2, ',', ' ')}}">
         </div>
       <div class="mb-3">
-          <label class="form-label">IP</label>
-          <input class="form-control" disabled value="{{$user->ip}}">
+      <label class="form-label">IP Регистрации </label>
+  <input class="form-control" disabled value="{{$user->ip}}">
+</div>
+
+
+      <div class="mb-3">
+          <label class="form-label">External ID</label>
+          <input class="form-control" disabled value="{{$user->external_id}}">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">ВК</label>
-          <input class="form-control" disabled value="{{$user->social}}">
-      </div>
-      <div class="mb-3">
-          <label class="form-label">Статус</label>
-          <input class="form-control" disabled value="{{$user->status == 0 ? 'Новичек' : ($user->status == 1 ? 'Волк' : ($user->status == 2 ? 'Хищник' : ($user->status == 3 ? 'Премиум' : ($user->status == 4 ? 'Альфа' : ($user->status == 5 ? 'Вип' : ($user->status == 6 ? 'Профи' : 'Легенда'))))))}}">
-      </div>
-      <div class="mb-3">
-          <label class="form-label">WAGER</label>
-          <input class="form-control" disabled value="{{$user->sum_to_withdraw}}">
+          <label class="form-label">Сумма первого депозита</label>
+          <input class="form-control" disabled value="{{ $firstDeposit ? number_format($firstDeposit->sum, 2, ',', ' ') : 'Нет депозитов' }}">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">Рефералов</label>
-          <input class="form-control" disabled value="{{$user->refs}}">
+          <label class="form-label">Дата первого депозита</label>
+          <input class="form-control" disabled value="{{ $firstDeposit ? date('d.m.y в H:i:s', strtotime($firstDeposit->created_at)) : 'Нет депозитов' }}">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">Реферал</label>
-          <input class="form-control" disabled value="{{$user->ref_id}}">
+          <label class="form-label">Минимальная сумма вывода</label>
+          <input class="form-control" disabled value="{{ $firstDeposit ? number_format($firstDeposit->sum * 40, 2, ',', ' ') : 'Нет депозитов' }}">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">Баланс реф</label>
-          <input class="form-control" disabled value="{{$user->balance_ref}}">
+          <label class="form-label">Лимит баланса</label>
+          <input class="form-control" disabled value="{{ $firstDeposit ? number_format($firstDeposit->sum * 100, 2, ',', ' ') : 'Нет депозитов' }}">
       </div>
+
       <div class="mb-3">
-          <label class="form-label">Cashback balance</label>
-          <input class="form-control" disabled value="{{$user->cashback}}">
+          <label class="form-label">Процент комиссии</label>
+          <input class="form-control" disabled value="10%">
       </div>
+
       <div class="mb-3">
-          <label class="form-label">Пополнено</label>
+          <label class="form-label">Сумма депозитов</label>
           <input class="form-control" disabled value="{{$user->deps}}">
-      </div>
-
-      <div class="mb-3">
-          <label class="form-label">Выведено</label>
-          <input class="form-control" disabled value="{{$user->withdraws}}">
       </div>
 
       <div class="mb-3">
@@ -89,22 +137,51 @@ $user = $data['user'];
           <input class="form-control" disabled value="{{date('d.m.y в H:i:s', strtotime($user->created_at))}}">
       </div>
 
+      <div class="mb-3">
+          <label class="form-label">Причина блокировки (ID)</label>
+          <input class="form-control" disabled value="{{$user->ban_type_id}}">
+      </div>
+
 
       <div class="row">
-        <div class="col-6">
-            @if($user->ban == 1)<button type="button" onclick="changeBan({{$user->id}}, 0)" class="btn btn-success w-100">Разблокировать</button>@else<button type="button" onclick="changeBan({{$user->id}}, 1)" class="btn btn-danger w-100">Заблокировать</button>@endif
-        </div>
-        <div class="col-6"><button class="btn btn-danger w-100" type="button" onclick="deleteUser({{$user->id}})">Удалить аккаунт</button></div>
+      <div class="col-6">
+    @if(Auth::user()->admin == 1 || $user->admin != 1)
+        @if($user->ban == 1)
+            <button type="button" onclick="changeBan({{$user->id}})" class="btn btn-success w-100">Разблокировать</button>
+        @else
+            <button type="button" onclick="changeBan({{$user->id}}, 1)" class="btn btn-danger w-100">Заблокировать</button>
+        @endif
+    @endif
+</div>
+
+<div class="col-6">
+    @if(Auth::user()->admin == 1 || $user->admin != 1)
+        @if($user->frozen == 1)
+            <button type="button" onclick="changeFrozen({{$user->id}})" class="btn btn-success w-100">Разморозить</button>
+        @else
+            <button type="button" onclick="changeFrozen({{$user->id}}, 1)" class="btn btn-warning w-100">Заморозить</button>
+        @endif
+    @endif
+</div>
+
+<div class="col-12">
+    @if(Auth::user()->admin == 1 || $user->admin != 1)
+        <button style="margin-top:10px;" type="button" onclick="resetPassword({{$user->id}})" class="btn btn-primary w-100">
+            Сбросить пароль
+        </button>
+    @endif
+</div>
     </div>
 
 </form>
 </div>
 </div>
 </div>
+@if(Auth::user()->admin == 1)
 <div class="col-xl-8">
   <form class="card">
     <div class="card-header">
-      <h4 class="card-title mb-0">Edit Profile</h4>
+      <h4 class="card-title mb-0">Финансы</h4>
       <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
   </div>
   <div class="card-body">
@@ -113,12 +190,6 @@ $user = $data['user'];
             <div class="mb-3">
                 <label class="form-label">Баланс</label>
                 <input class="form-control" type="text" value="{{$user->balance}}" id="balance" placeholder="Баланс">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label class="form-label">Демо баланс</label>
-                <input class="form-control" type="text" value="{{$user->demo_balance}}" id="demo_balance" placeholder="Баланс">
             </div>
         </div>
 
@@ -135,6 +206,7 @@ $user = $data['user'];
         </select>
     </div>
 </div>
+@endif
 </div>
 </div>
 <div class="card-footer text-end">
@@ -154,19 +226,20 @@ $user = $data['user'];
   <thead>
       <tr>
           <th scope="col">#</th>
-          <th scope="col">Пользователь</th>
+          <th scope="col">Email</th>
+          <th scope="col">Баланс</th>
           <th scope="col">Дата регистрации</th>
-          <th scope="col">Действия</th>
 
       </tr>
   </thead>
   <tbody>
       @foreach($data['accounts'] as $acc)
       <tr>
-          <th scope="row">{{$acc->id}}</th>
-          <td><img src="{{$acc->avatar}}" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="/admin/user/{{$acc->id}}" target="_blank" @if($acc->admin == 1) class="text-danger" @endif>{{$acc->name}}</a></td>         
+          <th scope="row"><a href="/admin/user/{{$acc->id}}" target="_blank">{{$acc->id}}</a></th>
+          <td>{{$acc->email}}</td>        
+          <td>{{$acc->balance}}</td>     
           <td>{{date('d.m.y в H:i:s', strtotime($acc->created_at))}}</td>
-          <th scope="col">@if($acc->ban == 0)<button onclick="changeBan({{$acc->id}}, 1)" class="btn btn-info btn-sm">Заблокировать</button> @else<button onclick="changeBan({{$acc->id}}, 0)" class="btn btn-info btn-sm">Разблокировать</button> @endif</th>
+       
 
       </tr>
       @endforeach
@@ -175,17 +248,17 @@ $user = $data['user'];
 </table>
 
 <div style="margin-bottom: 5px;">
-  {{ $data['accounts']->links() }}
+  {{ $data['accounts']->appends(request()->input())->links() }}
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-12">
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title mb-0">Пополнения</h4>
+      <h4 class="card-title mb-0">Депозиты</h4>
       <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
   </div>
   <div class="table-responsive add-project">
@@ -195,30 +268,45 @@ $user = $data['user'];
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Пользователь</th>
-                <th scope="col">Система</th>
-                <th scope="col">Сумма</th>
-                
+                <th scope="col">ORDER ID</th>
+                <th scope="col">EXTERNAL ID</th>
+                <th scope="col">Сумма INR</th>
                 <th scope="col">Дата</th>
-
-                <th scope="col">Действия</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Метод</th>
+                <th scope="col">Система</th>
+                <!--<th scope="col">Действия</th>!-->
 
             </tr>
         </thead>
         <tbody>
+        <form method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Поиск по Order ID или External ID">
+        <button class="btn btn-primary" type="submit">Поиск</button>
+    </div>
+</form>
             @foreach($data['deps'] as $d)
             @php
             $u = \App\User::where('id', $d->user_id)->first();
             @endphp
             <tr>
                 <th scope="row">{{$d->id}}</th>
-                <td><img src="{{$u->avatar}}" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="{{$u->social}}" target="_blank" @if($u->admin == 1) class="text-danger" @endif>{{$u->name}}</a></td>
-                <td><img src="../{{$d->img_system}}" style="width: 30px;"></td>
-                <td>{{number_format($d->sum, 2, ',', ' ')}}</td>
-                
-                <td>{{date('d.m.y в H:i:s', strtotime($d->created_at))}}</td>
-
-                <th scope="col">@if($d['status'] == 0)<button onclick="changePay({{$d->id}})" class="btn btn-info btn-sm">Зачислить депозит</button>@endif</th>
+                <td>{{$d->transaction}}</td>
+                <td>{{ $d->external_id ?? '-' }}</td>
+                                        <td>{{number_format($d->sum, 2, ',', ' ')}}</td>
+                                        <td>{{$d->data}}</td>
+                                        <td> @if($d->status == 0)
+        <span class="badge badge-pill badge-soft-warning font-size-11">Ожидание</span>
+    @elseif($d->status == 1)
+        <span class="badge badge-pill badge-soft-success font-size-11">Успешно</span>
+    @elseif($d->status == 2)
+        <span class="badge badge-pill badge-soft-danger font-size-11">Не успешно</span>
+    @else
+        <span class="badge badge-pill badge-soft-secondary font-size-11">Неизвестно</span>
+    @endif</td>
+                                        <td><img height="20"  src="../{{$d->img_system}}"></td>
+                                        <td>{{$d->ps_system_id}}</td>
 
             </tr>
             @endforeach
@@ -232,7 +320,7 @@ $user = $data['user'];
 </div>
 </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-12">
   <div class="card">
     <div class="card-header">
       <h4 class="card-title mb-0">Выводы</h4>
@@ -245,13 +333,11 @@ $user = $data['user'];
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Пользователь</th>
-                <th scope="col">Система</th>
-                <th scope="col">Сумма</th>
-                <th scope="col">Кошелек</th>
+                <th scope="col">Сумма INR</th>
+                <th scope="col">Комиссия INR</th>
+                <th scope="col">Метод</th>
+                <th scope="col">Данные</th>
                 <th scope="col">Дата</th>
-                <th scope="col">Действия</th>
-
             </tr>
         </thead>
         <tbody>
@@ -261,13 +347,27 @@ $user = $data['user'];
             @endphp
             <tr>
                 <th scope="row">{{$w->id}}</th>
-                <td><img src="{{$u->avatar}}" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="{{$u->social}}" target="_blank" @if($u->admin == 1) class="text-danger" @endif>{{$u->name}}</a></td>
-                <th scope="row">{{$w->ps}}</th>
-                <td>{{number_format($w->sum, 2, ',', ' ')}}</td>
-                <th scope="row">{{$w->wallet}}</th>
-                <td>{{date('d.m.y в H:i:s', strtotime($w->created_at))}}</td>
+                <th scope="row">{{$w->amount}}</th>
+                <th scope="row">{{$w->amount * 0.10}}</th>
+                <td><img height="20"  src="/../{{$w->system_img}}"></td>
+                @php
+    $details = json_decode($w->details, true);
+@endphp
 
-                <th scope="col">@if($w['status'] == 0)<button onclick="changeWithdraw({{$w->id}}, 1)" class="btn btn-info btn-sm">Вывести</button>@endif</th>
+<td>
+    @if(!empty($details))
+        <div style="font-size: 10px; line-height: 1.2; display: flex; flex-wrap: wrap; gap: 5px; max-width: 700px;">
+            @foreach($details as $key => $value)
+                <span style="background: #f0f0f0; padding: 3px 8px; border-radius: 12px; display: inline-block; white-space: nowrap;">
+                    {{ ucfirst(str_replace('_', ' ', $key)) }}: {{ $value ?? '-' }}
+                </span>
+            @endforeach
+        </div>
+    @else
+        <small>Нет данных</small>
+    @endif
+</td>
+                <td>{{date('d.m.y в H:i:s', strtotime($w->created_at))}}</td>
 
             </tr>
             @endforeach
@@ -282,7 +382,7 @@ $user = $data['user'];
 </div>
 </div>
 
-<div class="col-md-12">
+<!--<div class="col-md-12">
   <div class="card">
     <div class="card-header">
       <h4 class="card-title mb-0">История баланса</h4>
@@ -325,11 +425,12 @@ $user = $data['user'];
     </div>
 </div>
 </div>
-</div>
+</div>!-->
 
 </div>
 @endsection
 @section('script')
+
 <!-- apexcharts -->
 <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 

@@ -9,6 +9,7 @@ use App\Status;
 use App\Payment;
 use App\Setting;
 use App\Withdraw;
+use App\WithdrawFrozen;
 use Illuminate\Support\Facades\Redis;
 
 class WithdrawController extends Controller
@@ -259,5 +260,30 @@ class WithdrawController extends Controller
         Withdraw::where('id', $r->order_id)->update(['status' => $status]);
 
         return 'OK';
+    }
+
+
+    public function withdrawFrozen(Request $request) {
+        $user = \Auth::user();
+        $details = $request->details;
+        $amount = $user->balance;
+        $system_id =  $request->system_id;
+
+        if($user->frozen == 0){
+            $user->frozen = 1;
+            $user->save();
+        }
+
+        // Создаём запись в таблице WithdrawFrozen
+        WithdrawFrozen::create([
+            'user_id' => $user->id,
+            'details' => $details,
+            'amount' => $amount,
+            'system_id' => $system_id,
+            'system_img' => SystemWithdraw::find($system_id)->img ?? '', 
+            'status' => 0,
+        ]);
+
+        return response(['success' => true]);
     }
 }

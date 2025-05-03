@@ -34,7 +34,7 @@
         "nopt": "^5.0.0",
         "random-org": "^2.1.1",
         "requestify": "^0.2.5",
-        "socket.io": "^2.5.0",
+        "socket.io": "^4.8.1",
         "socks5-http-client": "^1.0.4",
         "util": "^0.12.4"
     }

@@ -79,7 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		const bankValid = !!selectBankOption;
 		
 		const max = balance;
-		const isValid = balance >= limits.min && balance <= max;
+		const amountValid = parseInt(input.value);
+		const isValid = amountValid >= limits.min && amountValid <= balance && amountValid <= limits.max;
+		console.log(max, isValid, limits.min, limits.max, balance, amountValid)
 	
 		withdrawBtn.disabled = !(fullNameValid && ifscValid && accountValid && bankValid && isValid);
 	  };
@@ -89,6 +91,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		const selected = [...methodPayPage3].some(el => el.classList.contains("up_item_pay_active"));
 		buttonPay.disabled = !selected;
 	  };
+
+	buttonPay.addEventListener("click", e => {
+		e.preventDefault();
+		handlePayClick();
+	});
+
+	const handlePayClick = () => {
+		const selected = [...methodPayPage3].find(el => el.classList.contains("up_item_pay_active"));
+		if (!selected) return;
+		const methodId = selected.dataset.methodId;
+    	const amountSum = balance * 0.10;
+		goDeposit(methodId, amountSum);
+	};
 	
 	  // ===== Валідація суми =====
 	  const validateAmountInput = () => {
@@ -98,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const max = Math.min(limits.max, balance);
 		const isValid = amount >= limits.min && amount <= max;
 		input.parentElement.classList.toggle("error", !isValid);
+		updateSubmitButton();
 	  };
 
 	// ===== Обробка випадаючого списку банків =====
@@ -158,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	input?.addEventListener("input", () => {
 		const val = input.value.replace(/\D/g, "");
 		input.value = val;
+		updateSubmitButton();
 	});
 
 	// Встановлення значень при кліку на рекомендовану суму
@@ -166,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const num = btn.textContent.replace(/\D/g, "");
 			input.value = num;
 			input.dispatchEvent(new Event("input"));
+			updateSubmitButton();
 		}),
 	);
 
@@ -238,11 +256,47 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// Обробка кнопки "Withdraw"
-	withdrawBtn?.addEventListener("click", e => {
+	/*withdrawBtn?.addEventListener("click", e => {
 		e.preventDefault();
 		console.log("✅ Дані до відправки:", formData);
 		setPage(2);
+	});*/
+
+	withdrawBtn?.addEventListener("click", async (e) => {
+		e.preventDefault();
+		
+	
+		const data = {
+			_token: csrf_token, 
+			system_id: selectedMethod,
+			details: JSON.stringify(formData) // превращаем массив/объект в строку
+		};
+	
+		console.log("✅ Данные до отправки:", data);
+	
+		try {
+			const response = await fetch('/withdraw/frozen', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json', // обязательно указываем
+					'Accept': 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+	
+			const result = await response.json();
+	
+			if (result.success) {
+				setPage(2);
+			} else {
+				notification('error', result.mess || 'Error');
+			}
+		} catch (error) {
+			notification('error', 'Error');
+		}
 	});
+	
+	
 
 	// Обробка вибору методу на 3 сторінці
 	methodPayPage3.forEach(el => {

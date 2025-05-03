@@ -1,10 +1,25 @@
 @auth
 @php
+$user = \Auth::user();
 $userStatus = \Auth::user()->status;
 $name_surname = explode(' ', \Auth::user()->name);
 if ($userStatus != 0) {
 $status = \App\Status::where('id', $userStatus)->first();
+}
 
+$status = null;
+$banType = null;
+$banRules = [];
+
+// Проверяем есть ли бан
+if ($user->ban_type_id) {
+    $banType = \App\BanType::find($user->ban_type_id);
+    if ($banType && $banType->rules_json) {
+        $decodedJson = json_decode($banType->rules_json, true);
+        if (isset($decodedJson['rules'])) {
+            $banRules = $decodedJson['rules'];
+        }
+    }
 }
 $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
 
@@ -35,10 +50,16 @@ $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
             Your account has been blocked
           </div>
           <p class="up_text_info">Your account <span class="up_text_info_strong">ID:{{ auth()->user()->id }}</span> violated
-            points: <a href="#">18.01</a>, <a href="#">19.02</a>, <a href="#">15.02</a> of our rules,
+            points: @if (!empty($banRules))
+        @foreach($banRules as $ruleData)
+            <a href="#">{{ $ruleData['rule'] }}</a>@if (!$loop->last), @endif
+        @endforeach
+    @else
+        <span>unknown</span>
+    @endif of our rules,
             therefore it was permanently blocked.</p>
           <div class="up_buttons_row">
-            <button onclick="window.location.href='https://t.me'" type="button" class="up_login-btn">
+            <button onclick="window.location.href='https://t.me/upwin_support'" type="button" class="up_login-btn">
               Support
             </button>
             <button onclick="window.location.href='logout'" type="button" class="up_logout-btn">
@@ -49,20 +70,12 @@ $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
             Violated rules
           </div>
           <div class="up_info">
-            <div class="up_info_item">
-              <div class="up_info_counter">15.1</div>
-              <p class="up_min-text">Your account has been temporarily frozen in accordance with Indian legal
-                requirements. As a resident of India, any funds received from a foreign company are subject to
-                Tax Collected at Source (TCS) under Section 206C(1G) of the Income Tax Act, 1961. The current
-                TCS rate is 20% of the payout.</p>
-            </div>
-            <div class="up_info_item">
-              <div class="up_info_counter">15.1</div>
-              <p class="up_min-text">Your account has been temporarily frozen in accordance with Indian legal
-                requirements. As a resident of India, any funds received from a foreign company are subject to
-                Tax Collected at Source (TCS) under Section 206C(1G) of the Income Tax Act, 1961. The current
-                TCS rate is 20% of the payout.</p>
-            </div>
+          @foreach($banRules as $ruleData)
+        <div class="up_info_item">
+            <div class="up_info_counter">{{ $ruleData['rule'] }}</div>
+            <p class="up_min-text">{{ $ruleData['content']['en'] }}</p> <!-- или ['ru'], если хочешь на русском -->
+        </div>
+    @endforeach
           </div>
           <div class="up_footer_action">
             <button onclick="window.location.href='/terms'" type="button" class="up_pay_button_learn" style="color: var(--color-primary);">

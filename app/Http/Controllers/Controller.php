@@ -649,8 +649,10 @@ if($user->type_balance == 1){
 
     public function balanceGet(){
         $user = \Auth::user();
-        return response(['success' => true, 'balance' => $user->balance ]);
+        return response(['success' => true, 'balance' => $user->balance, 'frozen' =>$user->frozen, 'ban' =>$user->ban]);
     }
+
+
     public function bonusRef(){
         if(\Auth::guest()){return response(['success' => false, 'mess' => 'Авторизуйтесь' ]);}
 

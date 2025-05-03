@@ -33,7 +33,7 @@
 							</li>!-->
 
 							<li>
-								<a href="https://t.me/" target="_blank" class="d-flex align-center">
+								<a href="https://t.me/upwin_support" target="_blank" class="d-flex align-center">
 									<svg class="icon"><use xlink:href="images/symbols.svg?v=29#support"></use></svg>
 									<span>Support</span>
 									</a>

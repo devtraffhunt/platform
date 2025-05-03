@@ -5,8 +5,8 @@
 <?php $__env->startSection('content'); ?>
 
 <?php $__env->startComponent('admin.components.breadcrumb'); ?>
-<?php $__env->slot('li_1'); ?> Dashboards <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?> Dashboard <?php $__env->endSlot(); ?>
+<?php $__env->slot('li_1'); ?> UPWIN <?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?> Пользователь <?php $__env->endSlot(); ?>
 <?php if (isset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55)): ?>
 <?php $component = $__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55; ?>
 <?php unset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55); ?>
@@ -16,11 +16,48 @@
 <?php
 $user = $data['user'];
 ?>
+
+<?php
+$ip = $user->ip ?? null;
+$countryData = null;
+
+if ($ip) {
+    try {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://ipwho.is/{$ip}");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response !== false) {
+            $ipApiData = json_decode($response, true);
+            if (isset($ipApiData['success']) && $ipApiData['success'] === true) {
+                $countryData = [
+                    'country_code' => $ipApiData['country_code'],
+                    'country_name' => $ipApiData['country'],
+                ];
+            }
+        }
+    } catch (\Exception $e) {
+        $countryData = null;
+    }
+}
+
+
+$firstDeposit = \App\Payment::where('user_id', $user->id)
+    ->where('status', 1)
+    ->orderBy('created_at', 'asc')
+    ->first();
+
+?>
+
 <div class="row">
     <div class="col-xl-4">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title mb-0">Profile №<?php echo e($user->id); ?></h4>
+          <h4 class="card-title mb-0">Аккаунт #<?php echo e($user->id); ?></h4>
           <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
       </div>
       <div class="card-body">
@@ -31,8 +68,24 @@ $user = $data['user'];
                     <div><img class="img-70 rounded-circle" style="width: 100px;height: 100px;" alt="" src="<?php echo e($user->avatar); ?>"></div>                  
 
                     <div class="media-body ms-3">
-                        <h5 class="mb-1"><?php echo e($user->name ?? $user->email); ?></h5>
-                        <p><?php if($user->admin == 1): ?> Администратор <?php else: ?> Пользователь <?php endif; ?></p>
+                        <h5 class="mb-1"><?php echo e($user->email); ?> </h5>
+                        <h5 class="mb-1"><?php echo e($user->phone); ?> </h5>
+                        <p><?php if($user->admin == 1): ?> Администратор <?php else: ?> Пользователь <?php endif; ?>  <?php if($u->ban == 0 && $u->frozen == 0): ?>
+        <span class="badge badge-pill badge-soft-success font-size-11">Активный</span>
+    <?php elseif($u->ban == 0 && $u->frozen == 1): ?>
+        <span class="badge badge-pill badge-soft-warning font-size-11">Заморожен</span>
+    <?php elseif($u->ban == 1): ?>
+        <span class="badge badge-pill badge-soft-danger font-size-11">Забанен</span>
+    <?php else: ?>
+        <span class="badge badge-pill badge-soft-secondary font-size-11">Неизвестный статус</span>
+    <?php endif; ?></p> <div>
+    <?php if(isset($countryData['country_code']) && isset($countryData['country_name'])): ?>
+    <img src="https://flagcdn.com/48x36/<?php echo e(strtolower($countryData['country_code'])); ?>.png" style="width: 24px; height: 18px; vertical-align: middle;">
+    <span><?php echo e($countryData['country_name']); ?></span>
+<?php else: ?>
+    <span>Страна не определена</span>
+<?php endif; ?>
+  </div>
                     </div>
                 </div>
             </div>
@@ -43,49 +96,44 @@ $user = $data['user'];
             <input class="form-control" disabled id="balance_2" value="<?php echo e(number_format($user->balance, 2, ',', ' ')); ?>">
         </div>
       <div class="mb-3">
-          <label class="form-label">IP</label>
-          <input class="form-control" disabled value="<?php echo e($user->ip); ?>">
+      <label class="form-label">IP Регистрации </label>
+  <input class="form-control" disabled value="<?php echo e($user->ip); ?>">
+</div>
+
+
+      <div class="mb-3">
+          <label class="form-label">External ID</label>
+          <input class="form-control" disabled value="<?php echo e($user->external_id); ?>">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">ВК</label>
-          <input class="form-control" disabled value="<?php echo e($user->social); ?>">
-      </div>
-      <div class="mb-3">
-          <label class="form-label">Статус</label>
-          <input class="form-control" disabled value="<?php echo e($user->status == 0 ? 'Новичек' : ($user->status == 1 ? 'Волк' : ($user->status == 2 ? 'Хищник' : ($user->status == 3 ? 'Премиум' : ($user->status == 4 ? 'Альфа' : ($user->status == 5 ? 'Вип' : ($user->status == 6 ? 'Профи' : 'Легенда'))))))); ?>">
-      </div>
-      <div class="mb-3">
-          <label class="form-label">WAGER</label>
-          <input class="form-control" disabled value="<?php echo e($user->sum_to_withdraw); ?>">
+          <label class="form-label">Сумма первого депозита</label>
+          <input class="form-control" disabled value="<?php echo e($firstDeposit ? number_format($firstDeposit->sum, 2, ',', ' ') : 'Нет депозитов'); ?>">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">Рефералов</label>
-          <input class="form-control" disabled value="<?php echo e($user->refs); ?>">
+          <label class="form-label">Дата первого депозита</label>
+          <input class="form-control" disabled value="<?php echo e($firstDeposit ? date('d.m.y в H:i:s', strtotime($firstDeposit->created_at)) : 'Нет депозитов'); ?>">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">Реферал</label>
-          <input class="form-control" disabled value="<?php echo e($user->ref_id); ?>">
+          <label class="form-label">Минимальная сумма вывода</label>
+          <input class="form-control" disabled value="<?php echo e($firstDeposit ? number_format($firstDeposit->sum * 40, 2, ',', ' ') : 'Нет депозитов'); ?>">
       </div>
 
       <div class="mb-3">
-          <label class="form-label">Баланс реф</label>
-          <input class="form-control" disabled value="<?php echo e($user->balance_ref); ?>">
+          <label class="form-label">Лимит баланса</label>
+          <input class="form-control" disabled value="<?php echo e($firstDeposit ? number_format($firstDeposit->sum * 100, 2, ',', ' ') : 'Нет депозитов'); ?>">
       </div>
+
       <div class="mb-3">
-          <label class="form-label">Cashback balance</label>
-          <input class="form-control" disabled value="<?php echo e($user->cashback); ?>">
+          <label class="form-label">Процент комиссии</label>
+          <input class="form-control" disabled value="10%">
       </div>
+
       <div class="mb-3">
-          <label class="form-label">Пополнено</label>
+          <label class="form-label">Сумма депозитов</label>
           <input class="form-control" disabled value="<?php echo e($user->deps); ?>">
-      </div>
-
-      <div class="mb-3">
-          <label class="form-label">Выведено</label>
-          <input class="form-control" disabled value="<?php echo e($user->withdraws); ?>">
       </div>
 
       <div class="mb-3">
@@ -93,22 +141,51 @@ $user = $data['user'];
           <input class="form-control" disabled value="<?php echo e(date('d.m.y в H:i:s', strtotime($user->created_at))); ?>">
       </div>
 
+      <div class="mb-3">
+          <label class="form-label">Причина блокировки (ID)</label>
+          <input class="form-control" disabled value="<?php echo e($user->ban_type_id); ?>">
+      </div>
+
 
       <div class="row">
-        <div class="col-6">
-            <?php if($user->ban == 1): ?><button type="button" onclick="changeBan(<?php echo e($user->id); ?>, 0)" class="btn btn-success w-100">Разблокировать</button><?php else: ?><button type="button" onclick="changeBan(<?php echo e($user->id); ?>, 1)" class="btn btn-danger w-100">Заблокировать</button><?php endif; ?>
-        </div>
-        <div class="col-6"><button class="btn btn-danger w-100" type="button" onclick="deleteUser(<?php echo e($user->id); ?>)">Удалить аккаунт</button></div>
+      <div class="col-6">
+    <?php if(Auth::user()->admin == 1 || $user->admin != 1): ?>
+        <?php if($user->ban == 1): ?>
+            <button type="button" onclick="changeBan(<?php echo e($user->id); ?>)" class="btn btn-success w-100">Разблокировать</button>
+        <?php else: ?>
+            <button type="button" onclick="changeBan(<?php echo e($user->id); ?>, 1)" class="btn btn-danger w-100">Заблокировать</button>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+
+<div class="col-6">
+    <?php if(Auth::user()->admin == 1 || $user->admin != 1): ?>
+        <?php if($user->frozen == 1): ?>
+            <button type="button" onclick="changeFrozen(<?php echo e($user->id); ?>)" class="btn btn-success w-100">Разморозить</button>
+        <?php else: ?>
+            <button type="button" onclick="changeFrozen(<?php echo e($user->id); ?>, 1)" class="btn btn-warning w-100">Заморозить</button>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+
+<div class="col-12">
+    <?php if(Auth::user()->admin == 1 || $user->admin != 1): ?>
+        <button style="margin-top:10px;" type="button" onclick="resetPassword(<?php echo e($user->id); ?>)" class="btn btn-primary w-100">
+            Сбросить пароль
+        </button>
+    <?php endif; ?>
+</div>
     </div>
 
 </form>
 </div>
 </div>
 </div>
+<?php if(Auth::user()->admin == 1): ?>
 <div class="col-xl-8">
   <form class="card">
     <div class="card-header">
-      <h4 class="card-title mb-0">Edit Profile</h4>
+      <h4 class="card-title mb-0">Финансы</h4>
       <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
   </div>
   <div class="card-body">
@@ -117,12 +194,6 @@ $user = $data['user'];
             <div class="mb-3">
                 <label class="form-label">Баланс</label>
                 <input class="form-control" type="text" value="<?php echo e($user->balance); ?>" id="balance" placeholder="Баланс">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label class="form-label">Демо баланс</label>
-                <input class="form-control" type="text" value="<?php echo e($user->demo_balance); ?>" id="demo_balance" placeholder="Баланс">
             </div>
         </div>
 
@@ -139,6 +210,7 @@ $user = $data['user'];
         </select>
     </div>
 </div>
+<?php endif; ?>
 </div>
 </div>
 <div class="card-footer text-end">
@@ -158,19 +230,20 @@ $user = $data['user'];
   <thead>
       <tr>
           <th scope="col">#</th>
-          <th scope="col">Пользователь</th>
+          <th scope="col">Email</th>
+          <th scope="col">Баланс</th>
           <th scope="col">Дата регистрации</th>
-          <th scope="col">Действия</th>
 
       </tr>
   </thead>
   <tbody>
       <?php $__currentLoopData = $data['accounts']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $acc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
       <tr>
-          <th scope="row"><?php echo e($acc->id); ?></th>
-          <td><img src="<?php echo e($acc->avatar); ?>" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="/admin/user/<?php echo e($acc->id); ?>" target="_blank" <?php if($acc->admin == 1): ?> class="text-danger" <?php endif; ?>><?php echo e($acc->name); ?></a></td>         
+          <th scope="row"><a href="/admin/user/<?php echo e($acc->id); ?>" target="_blank"><?php echo e($acc->id); ?></a></th>
+          <td><?php echo e($acc->email); ?></td>        
+          <td><?php echo e($acc->balance); ?></td>     
           <td><?php echo e(date('d.m.y в H:i:s', strtotime($acc->created_at))); ?></td>
-          <th scope="col"><?php if($acc->ban == 0): ?><button onclick="changeBan(<?php echo e($acc->id); ?>, 1)" class="btn btn-info btn-sm">Заблокировать</button> <?php else: ?><button onclick="changeBan(<?php echo e($acc->id); ?>, 0)" class="btn btn-info btn-sm">Разблокировать</button> <?php endif; ?></th>
+       
 
       </tr>
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -179,7 +252,7 @@ $user = $data['user'];
 </table>
 
 <div style="margin-bottom: 5px;">
-  <?php echo e($data['accounts']->links()); ?>
+  <?php echo e($data['accounts']->appends(request()->input())->links()); ?>
 
 </div>
 </div>
@@ -187,10 +260,10 @@ $user = $data['user'];
 </div>
 </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-12">
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title mb-0">Пополнения</h4>
+      <h4 class="card-title mb-0">Депозиты</h4>
       <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
   </div>
   <div class="table-responsive add-project">
@@ -200,30 +273,45 @@ $user = $data['user'];
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Пользователь</th>
-                <th scope="col">Система</th>
-                <th scope="col">Сумма</th>
-                
+                <th scope="col">ORDER ID</th>
+                <th scope="col">EXTERNAL ID</th>
+                <th scope="col">Сумма INR</th>
                 <th scope="col">Дата</th>
-
-                <th scope="col">Действия</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Метод</th>
+                <th scope="col">Система</th>
+                <!--<th scope="col">Действия</th>!-->
 
             </tr>
         </thead>
         <tbody>
+        <form method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" value="<?php echo e(request('search')); ?>" class="form-control" placeholder="Поиск по Order ID или External ID">
+        <button class="btn btn-primary" type="submit">Поиск</button>
+    </div>
+</form>
             <?php $__currentLoopData = $data['deps']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php
             $u = \App\User::where('id', $d->user_id)->first();
             ?>
             <tr>
                 <th scope="row"><?php echo e($d->id); ?></th>
-                <td><img src="<?php echo e($u->avatar); ?>" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="<?php echo e($u->social); ?>" target="_blank" <?php if($u->admin == 1): ?> class="text-danger" <?php endif; ?>><?php echo e($u->name); ?></a></td>
-                <td><img src="../<?php echo e($d->img_system); ?>" style="width: 30px;"></td>
-                <td><?php echo e(number_format($d->sum, 2, ',', ' ')); ?></td>
-                
-                <td><?php echo e(date('d.m.y в H:i:s', strtotime($d->created_at))); ?></td>
-
-                <th scope="col"><?php if($d['status'] == 0): ?><button onclick="changePay(<?php echo e($d->id); ?>)" class="btn btn-info btn-sm">Зачислить депозит</button><?php endif; ?></th>
+                <td><?php echo e($d->transaction); ?></td>
+                <td><?php echo e($d->external_id ?? '-'); ?></td>
+                                        <td><?php echo e(number_format($d->sum, 2, ',', ' ')); ?></td>
+                                        <td><?php echo e($d->data); ?></td>
+                                        <td> <?php if($d->status == 0): ?>
+        <span class="badge badge-pill badge-soft-warning font-size-11">Ожидание</span>
+    <?php elseif($d->status == 1): ?>
+        <span class="badge badge-pill badge-soft-success font-size-11">Успешно</span>
+    <?php elseif($d->status == 2): ?>
+        <span class="badge badge-pill badge-soft-danger font-size-11">Не успешно</span>
+    <?php else: ?>
+        <span class="badge badge-pill badge-soft-secondary font-size-11">Неизвестно</span>
+    <?php endif; ?></td>
+                                        <td><img height="20"  src="../<?php echo e($d->img_system); ?>"></td>
+                                        <td><?php echo e($d->ps_system_id); ?></td>
 
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -238,7 +326,7 @@ $user = $data['user'];
 </div>
 </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-12">
   <div class="card">
     <div class="card-header">
       <h4 class="card-title mb-0">Выводы</h4>
@@ -251,13 +339,11 @@ $user = $data['user'];
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Пользователь</th>
-                <th scope="col">Система</th>
-                <th scope="col">Сумма</th>
-                <th scope="col">Кошелек</th>
+                <th scope="col">Сумма INR</th>
+                <th scope="col">Комиссия INR</th>
+                <th scope="col">Метод</th>
+                <th scope="col">Данные</th>
                 <th scope="col">Дата</th>
-                <th scope="col">Действия</th>
-
             </tr>
         </thead>
         <tbody>
@@ -267,13 +353,28 @@ $user = $data['user'];
             ?>
             <tr>
                 <th scope="row"><?php echo e($w->id); ?></th>
-                <td><img src="<?php echo e($u->avatar); ?>" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="<?php echo e($u->social); ?>" target="_blank" <?php if($u->admin == 1): ?> class="text-danger" <?php endif; ?>><?php echo e($u->name); ?></a></td>
-                <th scope="row"><?php echo e($w->ps); ?></th>
-                <td><?php echo e(number_format($w->sum, 2, ',', ' ')); ?></td>
-                <th scope="row"><?php echo e($w->wallet); ?></th>
-                <td><?php echo e(date('d.m.y в H:i:s', strtotime($w->created_at))); ?></td>
+                <th scope="row"><?php echo e($w->amount); ?></th>
+                <th scope="row"><?php echo e($w->amount * 0.10); ?></th>
+                <td><img height="20"  src="/../<?php echo e($w->system_img); ?>"></td>
+                <?php
+    $details = json_decode($w->details, true);
+?>
 
-                <th scope="col"><?php if($w['status'] == 0): ?><button onclick="changeWithdraw(<?php echo e($w->id); ?>, 1)" class="btn btn-info btn-sm">Вывести</button><?php endif; ?></th>
+<td>
+    <?php if(!empty($details)): ?>
+        <div style="font-size: 10px; line-height: 1.2; display: flex; flex-wrap: wrap; gap: 5px; max-width: 700px;">
+            <?php $__currentLoopData = $details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <span style="background: #f0f0f0; padding: 3px 8px; border-radius: 12px; display: inline-block; white-space: nowrap;">
+                    <?php echo e(ucfirst(str_replace('_', ' ', $key))); ?>: <?php echo e($value ?? '-'); ?>
+
+                </span>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+    <?php else: ?>
+        <small>Нет данных</small>
+    <?php endif; ?>
+</td>
+                <td><?php echo e(date('d.m.y в H:i:s', strtotime($w->created_at))); ?></td>
 
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -289,7 +390,7 @@ $user = $data['user'];
 </div>
 </div>
 
-<div class="col-md-12">
+<!--<div class="col-md-12">
   <div class="card">
     <div class="card-header">
       <h4 class="card-title mb-0">История баланса</h4>
@@ -333,11 +434,12 @@ $user = $data['user'];
     </div>
 </div>
 </div>
-</div>
+</div>!-->
 
 </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
+
 <!-- apexcharts -->
 <script src="<?php echo e(URL::asset('/assets/libs/apexcharts/apexcharts.min.js')); ?>"></script>
 

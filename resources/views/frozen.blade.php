@@ -42,7 +42,7 @@ $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
             initial deposit amount. Withdraw your entire balance to continue using our casino.
           </p>
           <div class="up_buttons_row">
-            <a href="https://t.me" class="up_login-btn">
+            <a href="https://t.me/upwin_support" class="up_login-btn">
               Support
             </a>
             <a href="/withdrawal" class="up_reg-btn">

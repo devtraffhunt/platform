@@ -1,5 +1,16 @@
 <?php
-$users = \App\User::paginate(15);
+$query = \App\User::query();
+
+if (request()->filled('search')) {
+    $search = request()->input('search');
+    $query->where(function ($q) use ($search) {
+        $q->where('id', $search)
+          ->orWhere('external_id', 'like', "%$search%")
+          ->orWhere('email', 'like', "%$search%"); // добавили сюда поиск по email
+    });
+}
+
+$users = $query->paginate(15);
 ?>
 
 
@@ -9,8 +20,8 @@ $users = \App\User::paginate(15);
 <?php $__env->startSection('content'); ?>
 
 <?php $__env->startComponent('admin.components.breadcrumb'); ?>
-<?php $__env->slot('li_1'); ?> Dashboards <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?> Dashboard <?php $__env->endSlot(); ?>
+<?php $__env->slot('li_1'); ?> UPWIN <?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?> Пользователи <?php $__env->endSlot(); ?>
 <?php if (isset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55)): ?>
 <?php $component = $__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55; ?>
 <?php unset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55); ?>
@@ -22,20 +33,28 @@ $users = \App\User::paginate(15);
   <div class="col-sm-12">
     <div class="card">
       <div class="card-body">
-
+      <form method="GET" action="" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="search" value="<?php echo e(request('search')); ?>" class="form-control" placeholder="Поиск по ID, External ID, email ">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        </div>
+    </div>
+</form>
         <div class="table-responsive">
           <table class="table "  style="margin-bottom: 20px;"> 
 
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Имя</th>
+                <th scope="col">External ID</th>
                 <th scope="col">IP</th>
                 <th scope="col">Баланс</th>
                 <th scope="col">Депозитов</th>
-                <th scope="col">Выводов</th>
-                <th scope="col">Рефералов</th>
                 <th scope="col">Дата регистрации</th>
+                <th scope="col">Статус</th>
                 <th scope="col">Действия</th>
             </tr>
         </thead>
@@ -47,14 +66,23 @@ $users = \App\User::paginate(15);
           ?>
           <tr>
             <th scope="row"><?php echo e($u->id); ?></th>
-            <td><img src="<?php echo e($u->avatar); ?>" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="user/<?php echo e($u->id); ?>" target="_blank" <?php if($u->admin == 1): ?> class="text-danger" <?php endif; ?>><?php echo e($u->name); ?></a></td>
+            <td><?php echo e($u->external_id ?? '-'); ?></td>
             <td><?php echo e($u->ip); ?></td>
             <td><?php echo e(number_format($u->balance, 2, ',', ' ')); ?></td>
             <td><?php echo e(number_format($deps, 2, ',', ' ')); ?></td>
-            <td><?php echo e(number_format($withdraws, 2, ',', ' ')); ?></td>
-            <td><?php echo e($u->refs); ?></td>
             <td><?php echo e(date('d.m.y в H:i:s', strtotime($u->created_at))); ?></td>
-            <td id="btns_bun_id_<?php echo e($u->id); ?>"><a href="user/<?php echo e($u->id); ?>" class="btn btn-primary btn-sm me-2">Перейти</a><?php if($u->ban == 1): ?><button onclick="changeBan(<?php echo e($u->id); ?>, 0)" class="btn btn-success btn-sm ">Разблокировать</button><?php else: ?><button onclick="changeBan(<?php echo e($u->id); ?>, 1)" class="btn btn-danger btn-sm">Заблокировать</button><?php endif; ?></td>
+            <td>
+    <?php if($u->ban == 0 && $u->frozen == 0): ?>
+        <span class="badge badge-pill badge-soft-success font-size-11">Активный</span>
+    <?php elseif($u->ban == 0 && $u->frozen == 1): ?>
+        <span class="badge badge-pill badge-soft-warning font-size-11">Заморожен</span>
+    <?php elseif($u->ban == 1): ?>
+        <span class="badge badge-pill badge-soft-danger font-size-11">Забанен</span>
+    <?php else: ?>
+        <span class="badge badge-pill badge-soft-secondary font-size-11">Неизвестный статус</span>
+    <?php endif; ?>
+</td>
+            <td id="btns_bun_id_<?php echo e($u->id); ?>"><a href="user/<?php echo e($u->id); ?>" class="btn btn-primary btn-sm me-2">Перейти</a></td>
         </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

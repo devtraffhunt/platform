@@ -5,8 +5,8 @@
 @section('content')
 
 @component('admin.components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Dashboard @endslot
+@slot('li_1') UPWIN @endslot
+@slot('title') Промокоды @endslot
 @endcomponent
 
 
@@ -29,7 +29,7 @@
 						<input type="" id="active_promo" class="form-control" name="">
 					</div>
 					<div class="col-lg-3">
-						<label>Дейсвтие</label>
+						<label>Действие</label>
 						<button onclick="createDepPromo()" class="btn btn-info btn-block w-100">Создать промокод</button>
 					</div>
 				</div>

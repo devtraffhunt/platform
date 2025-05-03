@@ -81,9 +81,9 @@ var axisTicks = {
 function  statUpdate(id, that) {
   $.post('/admin/chart',{_token: csrf_token, id}).then(e=>{
 
-    $('#deposits').html(parseFloat(e.deps_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' ₽')
-    $('#withdraws').html(parseFloat(e.withdraws_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' ₽')
-    $('#profit').html(parseFloat(e.profit_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' ₽')
+    $('#deposits').html(parseFloat(e.deps_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' INR')
+    $('#withdraws').html(parseFloat(e.withdraws_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' INR')
+    $('#profit').html(parseFloat(e.profit_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' INR')
 
     $('.stat-pills .nav-link').removeClass('active')
     $(that).addClass('active')
@@ -147,7 +147,7 @@ function noty(type, msg) {
 }
 
 function saveUser(id) {
-  $.post('/admin/saveUser',{_token: csrf_token, id, balance: $('#balance').val(), demo_balance: $('#demo_balance').val(), admin: $('#admin').val()}).then(e=>{
+  $.post('/admin/saveUser',{_token: csrf_token, id, balance: $('#balance').val(), demo_balance: 0, admin: $('#admin').val()}).then(e=>{
     noty('success', 'Успешно')
     $('#balance_2').val($('#balance').val())
   }).fail(e=>{
@@ -156,20 +156,32 @@ function saveUser(id) {
 }
 
 function changeBan(id, type) {
-  $.post('/admin/changeBan',{_token: csrf_token, id, type}).then(e=>{
+  $.post('/admin/changeBan',{_token: csrf_token, id}).then(e=>{
     location.href = ''
   }).fail(e=>{
     noty('error', JSON.parse(e.responseText).message)
   });
 }
 
-function deleteUser(id){
-  $.post('/admin/deleteUser',{_token: csrf_token, id}).then(e=>{
-    location.href = '/admin/users'
+function resetPassword(id) {
+  $.post('/admin/resetPassword', {_token: csrf_token, id})
+    .then(e => {
+      alert('Новый пароль: ' + e.new_password); // показываем новый пароль в alert
+    })
+    .fail(e => {
+      noty('error', JSON.parse(e.responseText).mess); // у тебя было .message, но на сервере ты возвращаешь 'mess'
+    });
+}
+
+
+function changeFrozen(id) {
+  $.post('/admin/changeFrozen',{_token: csrf_token, id}).then(e=>{
+    location.href = ''
   }).fail(e=>{
     noty('error', JSON.parse(e.responseText).message)
   });
 }
+
 
 function changePay(id) {
   $.post('/admin/changePay',{_token: csrf_token, id}).then(e=>{
@@ -309,58 +321,35 @@ function saveSetting(type){
   if(type == 1){
     param = {_token: csrf_token, type,
       name: $('#name').val(),
-      group_id: $('#group_id').val(),
-      group_token: $('#group_token').val(),
-      tg_id: $('#tg_id').val(),
-      tg_bot_id: $('#tg_bot_id').val(),
-      tg_token: $('#tg_token').val(),
-      bonus_reg: $('#bonus_reg').val(),
-      bonus_group: $('#bonus_group').val(),
-      dep_transfer: $('#dep_transfer').val(),
-      dep_createpromo: $('#dep_createpromo').val(),
-      meta_tags: $('#meta_tags').val(),
-      max_withdraw_bonus: $("#max_withdraw_bonus").val(),
-      theme: $("#theme").val()}
+      support_contact: $('#support_contact').val(),
+      status: $('#status_site').val(),
+    };
   }
 
-  if(type == 2){
-    param = {_token: csrf_token, type,
-      fk_id: $('#fk_id').val(),
-      fk_secret_1: $('#fk_secret_1').val(),
-      fk_secret_2: $('#fk_secret_2').val()}
-  }
+  if (type == 2) {
+    // Payou
+    param.payou_merchant_id = $('#payou_merchant_id').val();
+    param.payou_secret = $('#payou_secret').val();
+}
 
-  if(type == 3){
-    param = {_token: csrf_token, type,
-      piastrix_id: $('#piastrix_id').val(),
-      piastrix_secret: $('#piastrix_secret').val()}
-  }
+if (type == 3) {
+    // Pear2Pay
+    param.pear2pay_api = $('#pear2pay_api').val();
+    param.pear2pay_secret = $('#pear2pay_secret').val();
+}
 
-  if(type == 4){
-    param = {_token: csrf_token, type,
-      prime_id: $('#prime_id').val(),
-      prime_secret_1: $('#prime_secret_1').val(),
-      prime_secret_2: $('#prime_secret_2').val()}
-  }
+if (type == 4) {
+    // Kassify
+    param.kassify_merchant_id = $('#kassify_merchant_id').val();
+    param.kassify_secret = $('#kassify_secret').val();
+}
 
-  if(type == 5){
-    param = {_token: csrf_token, type,
-      linepay_id: $('#linepay_id').val(),
-      linepay_secret_1: $('#linepay_secret_1').val(),
-      linepay_secret_2: $('#linepay_secret_2').val()}
-  }
-
-  if(type == 6){
-    param = {_token: csrf_token, type,
-      paypaylych_id: $('#paypaylych_id').val(),
-      paypaylych_token: $('#paypaylych_token').val()}
-  }
-
-  if(type == 7){
-    param = {_token: csrf_token, type,
-      aezapay_id: $('#aezapay_id').val(),
-      aezapay_token: $('#aezapay_token').val()}
-  }
+if (type == 5) {
+    // PayHub24
+    param.payhub24_public_key = $('#payhub24_public_key').val();
+    param.payhub24_private_key = $('#payhub24_private_key').val();
+}
+  
   
   $.post('/admin/saveSetting',param).then(e=>{
     noty('success', 'Успешно')

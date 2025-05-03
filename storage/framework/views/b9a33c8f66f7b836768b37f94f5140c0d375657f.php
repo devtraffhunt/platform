@@ -58,45 +58,12 @@
     <?php endif; ?>
 </script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.socket.io/4.8.1/socket.io.min.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
 
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
 		<script>
-/*
-function checkRealTelegramApp() {
-    if (
-        typeof window.Telegram === 'undefined' ||
-        typeof window.Telegram.WebApp === 'undefined' ||
-        typeof window.Telegram.WebApp.initDataUnsafe === 'undefined' ||
-        typeof window.Telegram.WebApp.initDataUnsafe.user === 'undefined'
-    ) {
-        // ❌ НЕ Telegram Mini App
-        document.body.innerHTML = `
-            <div style="background-color: #f8f8f8; color: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 20px;">
-    <h2 style="margin-bottom: 20px;">Это приложение доступно только через Telegram Mini App</h2>
-    <p style="margin-bottom: 30px;">Пожалуйста, откройте его через Telegram</p>
-    <a href="https://t.me/YOUR_BOT_USERNAME" style="text-decoration: none;">
-        <button style="background-color: #229ED9; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s;">
-            Открыть в Telegram
-        </button>
-    </a>
-</div>
-        `;
-        document.body.style.backgroundColor = '#f8f8f8';
-    } else {
-        // ✅ Реальный пользователь Telegram
-        console.log('✅ Реальный Telegram Mini App пользователь');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () {
-        checkRealTelegramApp();
-    }, 300);
-});
-*/
 
 function saveTelegramIdSimple() {
     // Сначала пробуем достать из localStorage
@@ -233,7 +200,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			<?php echo $__env->make('layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 				<div class="gx-s">
 					<script src="./scripts/login.js?v=67477"></script>
-					<script src="js/script.js?v=11" type="text/javascript"></script>
+					<script src="js/script.js?v=1221222232323221" type="text/javascript"></script>
+				
 					<script src="https://cdnjsgame.ru/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 					<main id="_ajax_content_">
 					
@@ -267,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
 											<a href="#" onclick="load('policy')">User Agreement</a>
 										</li>
 										<li class="footer__link">
-											<a href="https://t.me" >Support</a>
+											<a target="_blank" href="https://t.me/upwin_support" >Support</a>
 										</li>
 										
 									</nav>
@@ -293,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
 								<span class="mobile_p" >Slots</span>
 							</li>
 							<li >
-								<a class="btn_active btn_crash active" <?php if(auth()->guard()->check()): ?> href="/crash" <?php else: ?> rel="popup" data-popup="popup--auth" <?php endif; ?>>
+								<a class="btn_active btn_crash active"  href="/crash">
 
 								<svg xmlns="http://www.w3.org/2000/svg" fill="#B0143A" class="icon_mobiles" viewBox="0 0 182 182" >
 									<g clip-path="url(#clip0_125_572)">
@@ -433,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
 							<!--<a onclick="$('#moreBtn').click();load('tourniers')">
 								<svg class="icon mobilesli"><use xlink:href="images/symbols.svg#keno"></use></svg> Турниры
 							</a>!-->							
-							<a href="https://t.me">
+							<a target="_blank" href="https://t.me/upwin_support">
 								<svg class="icon mobilesli"><use xlink:href="images/symbols.svg#support"></use></svg> Support
 							</a>
 						</li>

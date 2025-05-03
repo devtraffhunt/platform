@@ -1,3 +1,8 @@
+<?php if(!Auth::check()): ?>
+    <script>
+        window.location.href = '/?modal=regquick';
+    </script>
+<?php endif; ?>
 <?php if(Auth::check()): ?>
     <?php if(Auth::user()->ban && request()->path() !== 'blocked'): ?>
         <?php echo $__env->make('blocked', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -14,7 +19,7 @@
 
   }
   $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
-
+  $settings = \App\Setting::first();
   ?>
 
   <link rel="stylesheet" href="./styles/deposit.css?v=4" />
@@ -118,9 +123,12 @@
         </div>
         </div>
 
-        <button type="button" class="up_pay_button_learn up_video_show_global" id="howToBtn">
+        <button style="display: none;" type="button" class="up_pay_button_learn up_video_show_global" id="howToBtn">
         <img src="./img/play.svg" alt="">How to deposit?
         </button>
+        <a class="up_pay_button_learn" target="_blank" href="<?php echo e($settings->support_contact); ?>" style="margin-top: 10px;">
+        Support
+</a>
         <button type="button" class="up_reg-btn" style="margin-top: 10px;" id="depositBtn" disabled>
         Deposit
         </button>

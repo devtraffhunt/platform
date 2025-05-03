@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "elephantio/elephant.io": "dev-master",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
@@ -22,8 +23,7 @@
         "socialiteproviders/vkontakte": "^4.2",
         "socialiteproviders/yandex": "^4.1",
         "telegram-bot/api": "^2.3",
-        "vkcom/vk-php-sdk": "^5.101",
-        "wisembly/elephant.io": "^3.3"
+        "vkcom/vk-php-sdk": "^5.101"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -69,5 +69,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
+    },
+    "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ElephantIO/elephant.io"
     }
+  ]
 }

@@ -5,8 +5,8 @@
 <?php $__env->startSection('content'); ?>
 
 <?php $__env->startComponent('admin.components.breadcrumb'); ?>
-<?php $__env->slot('li_1'); ?> Dashboards <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?> Dashboard <?php $__env->endSlot(); ?>
+<?php $__env->slot('li_1'); ?> UPWIN <?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?> Депозиты <?php $__env->endSlot(); ?>
 <?php if (isset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55)): ?>
 <?php $component = $__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55; ?>
 <?php unset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55); ?>
@@ -19,19 +19,32 @@
 	<div class="col-sm-12">
 		<div class="card">
 			<div class="card-body">
+				<!-- Форма поиска -->
+				<form method="GET" action="" style="margin-bottom: 20px;">
+					<div class="row">
+						<div class="col-md-4">
+							<input type="text" name="search" value="<?php echo e(request('search')); ?>" class="form-control" placeholder="Поиск по ORDER ID, EXTERNAL ID или USER ID">
+						</div>
+						<div class="col-md-2">
+							<button type="submit" class="btn btn-primary">Поиск</button>
+						</div>
+					</div>
+				</form>
 
 				<div class="table-responsive">
 					<table class="table "  style="margin-bottom: 20px;"> 
 
 						<thead>
 							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Пользователь</th>
-								<th scope="col">Сумма</th>
-								<th scope="col">Дата</th>
-								<?php if($data['dop'] == 0): ?>
-								<th scope="col">Действия</th>
-								<?php endif; ?>
+								<th class="align-middle">ID</th>
+                                <th class="align-middle">USER ID</th>
+                                <th class="align-middle">ORDER ID</th>
+                                <th class="align-middle">EXTERNAL ID</th>
+                                <th class="align-middle">Сумма INR</th>
+                                <th class="align-middle">Дата</th>
+                                <th class="align-middle">Статус</th>
+                                <th class="align-middle">Метод</th>
+                                <th class="align-middle">Система</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -40,13 +53,25 @@
 								$u = \App\User::where('id', $d->user_id)->first();
 							?>
 							<tr>
-								<th scope="row"><?php echo e($d->id); ?></th>
-								<td><img src="<?php echo e($u->avatar); ?>" style="width:30px;height:30px;border-radius: 100%" class="me-3"><a href="/admin/user/<?php echo e($u->id); ?>" target="_blank" <?php if($u->admin == 1): ?> class="text-danger" <?php endif; ?>><?php echo e($u->name); ?></a></td>
-								<td><?php echo e(number_format($d->sum, 2, ',', ' ')); ?></td>
-								<td><?php echo e(date('d.m.y в H:i:s', strtotime($d->created_at))); ?></td>
-								<?php if($data['dop'] == 0): ?>
-								<th scope="col"><button onclick="changePay(<?php echo e($d->id); ?>)" class="btn btn-info btn-sm">Зачислить депозит</button></th>
-								<?php endif; ?>
+							<td><a href="javascript: void(0);" class="text-body fw-bold">#<?php echo e($d->id); ?></a> </td>
+                                        <td><a href="/admin/user/<?php echo e($d->user_id); ?>" class="text-body fw-bold">#<?php echo e($d->user_id); ?></a> </td>
+                                        <td><?php echo e($d->transaction); ?></td>
+                                        <td><?php echo e($d->external_id ?? '-'); ?></td>
+                                        <td><?php echo e(number_format($d->sum, 2, ',', ' ')); ?></td>
+                                        <td><?php echo e($d->data); ?></td>
+                                        <td>
+    <?php if($d->status == 0): ?>
+        <span class="badge badge-pill badge-soft-warning font-size-11">Ожидание</span>
+    <?php elseif($d->status == 1): ?>
+        <span class="badge badge-pill badge-soft-success font-size-11">Успешно</span>
+    <?php elseif($d->status == 2): ?>
+        <span class="badge badge-pill badge-soft-danger font-size-11">Не успешно</span>
+    <?php else: ?>
+        <span class="badge badge-pill badge-soft-secondary font-size-11">Неизвестно</span>
+    <?php endif; ?>
+</td>
+                                        <td><img height="20" src="/<?php echo e($d->img_system); ?>"></td>
+                                        <td><?php echo e($d->ps_system_id); ?></td>
 							</tr>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
@@ -54,7 +79,7 @@
 					</table>
 
 					<div style="margin-bottom: 5px;">
-						<?php echo e($data['deps']->links()); ?>
+					<?php echo e($data['deps']->appends(request()->input())->links()); ?>
 
 					</div>
 

@@ -367,7 +367,7 @@ public function registerQuick(Request $request)
         'phone'    => $phone,
         'email'    => $email,
         'password' => Hash::make($password),
-        'avatar'   => 'https://cdnjsgame.ru/img/user/twingo.png',
+        'avatar'   => '/avatar.png',
         'ip'       => $ip,
         'social_id' => Str::random(8),
     ]);

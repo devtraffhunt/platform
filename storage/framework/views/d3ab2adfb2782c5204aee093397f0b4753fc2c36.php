@@ -1,3 +1,9 @@
+<?php if(!Auth::check()): ?>
+    <script>
+        window.location.href = '/?modal=regquick';
+    </script>
+<?php endif; ?>
+
 <?php if(Auth::check()): ?>
 <?php if(Auth::user()->ban && request()->path() !== 'blocked'): ?>
 <?php echo $__env->make('blocked', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -11,7 +17,23 @@
   <!-- Подключаем библиотеки -->
 </head>
 
+<style>
+.av_buttonBet span {
+    pointer-events: none;
+}
+
+canvas {
+    touch-action: auto;
+    -ms-touch-action: auto; /* старые IE */
+}
+
+</style>
+
 <div class="wrapper">
+
+<?php if(Auth::check() && Auth::user()->balance == 0): ?>
+        <a href="/deposit" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;"></a>
+    <?php endif; ?>
 
   <!-- HEADER -->
   <div class="head_slot_game">
@@ -167,19 +189,60 @@
 </div>
 
 <script src="/js/av/showLoader.js?v=1"></script>
-<script src="/js/av/bettingScript.js?v=13"></script>
+<script src="/js/av/bettingScript.js?v=133"></script>
 <script src="/js/av/showTost.js?v=1"></script>
 <script src="/js/av/generationPlayers.js?v=3"></script>
-<script src="/js/av/mainScriptGame.js?v=44"></script>
+<script src="/js/av/mainScriptGame.js?v=66217222222222222223"></script>
 
 <script type="text/javascript">
   let pendingBetAmount = null;
   let statusGame = null; //'prepare', 'playing', 'loading', 'crash'
+  
+  function getBalance() {
+    const balanceElement = document.getElementById('balance');
+
+    if (!balanceElement) {
+        console.warn('Элемент с id="balance" не найден');
+        return 0;
+    }
+
+    const balanceAttr = balanceElement.dataset.balance;
+    if (balanceAttr) {
+        const balanceValue = parseFloat(balanceAttr);
+        if (!isNaN(balanceValue)) {
+            return balanceValue;
+        }
+    }
+
+    // fallback через текст
+    const balanceText = balanceElement.innerText.trim().replace(/[\s,]/g, '');
+    const balanceValue = parseFloat(balanceText);
+
+    if (isNaN(balanceValue)) {
+        console.warn('Баланс не является числом:', balanceText);
+        return 0;
+    }
+
+    return balanceValue;
+}
 
   function handleBetButtonClick() {
     if (statusGame !== 'loading' && bet_user == 0) {
       if (pendingBetAmount === null) {
         pendingBetAmount = Number($('#av_leftInput').val());
+        balanceUser = getBalance();
+        console.log('amount'+pendingBetAmount)
+        console.log('balance'+balanceUser)
+        if(balanceUser < pendingBetAmount){
+          pendingBetAmount = null;
+          notification('error', 'The bet amount is greater than your balance.')
+          return;
+        }
+        if(pendingBetAmount < 10){
+          pendingBetAmount = null;
+          notification('error', 'Minimum bet amount 10.00 INR!')
+          return;
+        }
         disable('.av_blokLeft');
         changeButtonBet("left", "danger"); // меняем кнопку на "опасную" (ставка стоит)
         console.log('Ставка сохранена:', pendingBetAmount);
@@ -217,7 +280,7 @@
       }
       if (e.error) {
         undisable(that)
-        notification('error', 'Error')
+        notification('error', e.error)
       }
     })
   }
@@ -240,12 +303,10 @@
       }
       if (e.error) {
         undisable(that)
-        notification('error', 'Error')
+        notification('error', e.error)
       }
     })
   }
-
-
 
   function crashGive(that) {
     const info = {
@@ -300,7 +361,7 @@
       handlePlay(data);
       statusGame = 'playing';
     } else {
-      handleLoading(data.time);
+      handleLoading(data.text);
       statusGame = 'loading';
     }
   });
@@ -330,14 +391,14 @@
     text = Number(data.text)
     last = text
     //Игра
-    playing(text);
+    playing(Number(text));
     getAllBetsAv(text);
 
   }
 
   //Загрузка
   function handleLoading(time) {
-    loading(time, 10);
+    loading(time, 10, 2);
 
     if (bet_user == 1) {
       document.getElementById('av_BetButtonLeft').onclick = function() {
@@ -434,12 +495,6 @@
   });
 
 
-  socket.on('crashClear', e => {
-    $('#btnCrash span').html('Начать игру')
-    $('.crash__x-number').html('<span>00:10</span>')
-    $('.crash__history-users').html('')
-    $('.crash__x-number').css('color', "#fff")
-  })
 
   socket.on('crashDead', e => {
     statusGame = 'crash';
@@ -478,6 +533,7 @@
       document.getElementById('av_BetButtonLeft').onclick = function() {
         crashGive(this);
       };
+      playing(Number(1.00));
       changeButtonBet("left", "warning");
     }
   })
@@ -519,6 +575,8 @@
     await ping();
     setTimeout(run, 3000);
   }, 2000);
+
+
 </script>
 
 <script>

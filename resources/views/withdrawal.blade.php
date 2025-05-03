@@ -1,8 +1,16 @@
+@if(!Auth::check())
+    <script>
+        window.location.href = '/?modal=regquick';
+    </script>
+@endif
+
 @if(Auth::check() && Auth::user()->ban && request()->path() !== 'blocked')
     @include('blocked')
 @else
 @auth
+
   @php
+  $settings = \App\Setting::first();
   $userStatus = \Auth::user()->status;
   $name_surname = explode(' ', \Auth::user()->name);
   if ($userStatus != 0) {
@@ -10,6 +18,12 @@
 
   }
   $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
+
+  $firstDepositSum = \App\Payment::where('user_id', auth()->user()->id)
+    ->where('status', 1)
+    ->orderBy('created_at', 'asc')
+    ->value('sum') ?? 37.5;
+
 
 @endphp
   <link rel="stylesheet" href="./styles/output.css?v=2" />
@@ -31,12 +45,20 @@
         </div>
         <div class="up_blance-title" style="margin-bottom: 10px;">All methods:</div>
         <div class="up_methods_pay">
-        @php $SystemWithraws = \App\SystemWithdraw::all(); @endphp @foreach($SystemWithraws as $s)
-      <a href="javascript:void(0)" class="up_item_pay" data-method-id="{{$s->id}}" data-method-name="{{$s->name}}"
-        data-from="1500.00" data-to="500000.00" data-recommended="1500">
-        <img src="{{$s->img}}" alt=""><span>{{$s->name}}</span>
-      </a>
-    @endforeach
+        @php $SystemWithraws = \App\SystemWithdraw::all(); @endphp 
+        @foreach($SystemWithraws as $s)
+    @if($s->off == 0)
+        <a href="javascript:void(0)" class="up_item_pay" 
+           data-method-id="{{ $s->id }}" 
+           data-method-name="{{ $s->name }}"
+           data-from="{{ $firstDepositSum * 40 }}" 
+           data-to="500000.00" 
+           data-recommended="{{ $firstDepositSum * 40 }}">
+            <img src="{{ $s->img }}" alt=""><span>{{ $s->name }}</span>
+        </a>
+    @endif
+@endforeach
+
         </div>
       </div>
       </div>
@@ -157,6 +179,10 @@
         <button type="button" class="up_login-btn" id="withdrawalBtn" style="margin-top: 10px;" disabled>
         Withdrawal
         </button>
+
+        <a class="up_pay_button_learn" target="_blank" href="{{$settings->support_contact}}" style="margin-top: 10px;">
+        Support
+</a>
       </div>
       </div>
 
@@ -260,9 +286,7 @@
         I am ready
         to pay and withdraw
         </a>
-        <button type="button" class="up_login-btn" style="margin-top: 10px;">
-        Support
-        </button>
+        <a target="_blank" href="{{$settings->support_contact}}" class="up_login-btn" style="margin-top: 10px;">Support</a>
       </div>
       </div>
     </div>
@@ -273,7 +297,7 @@
 
 
 
-  <script src="./scripts/output.js?v=202"></script>
+  <script src="./scripts/output.js?v=2032222222222222222"></script>
 
 
 

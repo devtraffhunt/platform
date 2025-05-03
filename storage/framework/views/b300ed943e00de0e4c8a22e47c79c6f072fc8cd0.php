@@ -1,3 +1,9 @@
+<?php if(!Auth::check()): ?>
+    <script>
+        window.location.href = '/?modal=regquick';
+    </script>
+<?php endif; ?>
+
 
 <?php if(Auth::check()): ?>
     <?php if(Auth::user()->ban && request()->path() !== 'blocked'): ?>

@@ -5,8 +5,8 @@
 <?php $__env->startSection('content'); ?>
 
     <?php $__env->startComponent('admin.components.breadcrumb'); ?>
-        <?php $__env->slot('li_1'); ?> Dashboards <?php $__env->endSlot(); ?>
-        <?php $__env->slot('title'); ?> Dashboard <?php $__env->endSlot(); ?>
+        <?php $__env->slot('li_1'); ?> UPWIN <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?> Панель <?php $__env->endSlot(); ?>
     <?php if (isset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55)): ?>
 <?php $component = $__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55; ?>
 <?php unset($__componentOriginal999d3f2766d34e8972bbdb0991849a3ad4492a55); ?>
@@ -23,7 +23,7 @@
                             <div class="media">
                                 <div class="media-body">
                                     <p class="text-muted fw-medium">Пополнений</p>
-                                    <h4 class="mb-0" id="deposits">- ₽</h4>
+                                    <h4 class="mb-0" id="deposits">- INR</h4>
                                 </div>
 
                                 <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
@@ -41,7 +41,7 @@
                             <div class="media">
                                 <div class="media-body">
                                     <p class="text-muted fw-medium">Выводов</p>
-                                    <h4 class="mb-0" id="withdraws">- ₽</h4>
+                                    <h4 class="mb-0" id="withdraws">- INR</h4>
                                 </div>
 
                                 <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
@@ -59,7 +59,7 @@
                             <div class="media">
                                 <div class="media-body">
                                     <p class="text-muted fw-medium">Доход</p>
-                                    <h4 class="mb-0" id="profit">- ₽</h4>
+                                    <h4 class="mb-0" id="profit">- INR</h4>
                                 </div>
 
                                 <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
@@ -129,9 +129,14 @@
                             <thead class="table-light">
                                 <tr>                                    
                                     <th class="align-middle">ID</th>
-                                    <th class="align-middle">Сумма</th>
+                                    <th class="align-middle">USER ID</th>
+                                    <th class="align-middle">ORDER ID</th>
+                                    <th class="align-middle">EXTERNAL ID</th>
+                                    <th class="align-middle">Сумма INR</th>
                                     <th class="align-middle">Дата</th>
                                     <th class="align-middle">Статус</th>
+                                    <th class="align-middle">Метод</th>
+                                    <th class="align-middle">Система</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -143,10 +148,24 @@
                                     <tr>
                                         
                                         <td><a href="javascript: void(0);" class="text-body fw-bold">#<?php echo e($d->id); ?></a> </td>
+                                        <td><a href="/admin/user/<?php echo e($d->user_id); ?>" class="text-body fw-bold">#<?php echo e($d->user_id); ?></a> </td>
+                                        <td><?php echo e($d->transaction); ?></td>
+                                        <td><?php echo e($d->external_id ?? '-'); ?></td>
                                         <td><?php echo e(number_format($d->sum, 2, ',', ' ')); ?></td>
                                         <td><?php echo e($d->data); ?></td>
-                                        <td><?php if($d->status == 0): ?> <span class="badge badge-pill badge-soft-warning font-size-11">Ожидание</span> <?php else: ?> <span class="badge badge-pill badge-soft-success font-size-11">Успешно</span> <?php endif; ?></td>
-                                        
+                                        <td>
+    <?php if($d->status == 0): ?>
+        <span class="badge badge-pill badge-soft-warning font-size-11">Ожидание</span>
+    <?php elseif($d->status == 1): ?>
+        <span class="badge badge-pill badge-soft-success font-size-11">Успешно</span>
+    <?php elseif($d->status == 2): ?>
+        <span class="badge badge-pill badge-soft-danger font-size-11">Не успешно</span>
+    <?php else: ?>
+        <span class="badge badge-pill badge-soft-secondary font-size-11">Неизвестно</span>
+    <?php endif; ?>
+</td>
+                                        <td><img height="20" src="<?php echo e($d->img_system); ?>"></td>
+                                        <td><?php echo e($d->ps_system_id); ?></td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>

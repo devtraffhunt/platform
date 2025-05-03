@@ -3,7 +3,7 @@
     <div data-simplebar class="h-100">
         <div class="rightbar-title d-flex align-items-center px-3 py-4">
             
-            <h5 class="m-0 me-2">Settings</h5>
+            <h5 class="m-0 me-2">Настройки</h5>
 
             <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
                 <i class="mdi mdi-close noti-icon"></i>
@@ -12,7 +12,7 @@
 
         <!-- Settings -->
         <hr class="mt-0" />
-        <h6 class="text-center mb-0">Choose Layouts</h6>
+        <h6 class="text-center mb-0">Выберите тему</h6>
 
         <div class="p-4">
             <div class="mb-2">
@@ -30,22 +30,6 @@
             <div class="form-check form-switch mb-3">
                 <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch" data-bsStyle="assets/css/bootstrap-dark.min.css" data-appStyle="assets/css/app-dark.min.css">
                 <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
-            </div>
-    
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-3.jpg" class="img-fluid img-thumbnail" alt="">
-            </div>
-            <div class="form-check form-switch mb-5">
-                <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch" data-appStyle="assets/css/app-rtl.min.css">
-                <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
-            </div>
-
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-4.jpg" class="img-thumbnail" alt="layout images">
-            </div>
-            <div class="form-check form-switch mb-5">
-                <input class="form-check-input theme-choice" type="checkbox" id="dark-rtl-mode-switch">
-                <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
             </div>
             
         </div>

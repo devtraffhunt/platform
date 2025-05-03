@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
 use Redis;
@@ -19,6 +20,8 @@ use App\Authorization;
 use App\Status;
 use App\Repost;
 use App\Tourniers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str; 
 
 use ElephantIO\Client;
 use ElephantIO\Engine\SocketIO\Version2X;
@@ -310,52 +313,34 @@ class AdminController extends Controller
 
         if($type == 1){
             $setting->name = $r->name;
-            $setting->group_id = $r->group_id;
-            $setting->group_token = $r->group_token;
-            $setting->tg_id = $r->tg_id;
-            $setting->tg_bot_id = $r->tg_bot_id;
-            $setting->tg_token = $r->tg_token;
-            $setting->bonus_reg = $r->bonus_reg;
-            $setting->bonus_group = $r->bonus_group;
-            $setting->dep_transfer = $r->dep_transfer;
-            $setting->dep_createpromo = $r->dep_createpromo;
-            $setting->meta_tags = $r->meta_tags;
-            $setting->max_withdraw_bonus = $r->max_withdraw_bonus;
-            $setting->theme = $r->theme;
+            $setting->status = $r->status;
+            $setting->support_contact = $r->support_contact;
         }
 
-        if($type == 2){
-            $setting->fk_id = $r->fk_id;
-            $setting->fk_secret_1 = $r->fk_secret_1;
-            $setting->fk_secret_2 = $r->fk_secret_2;
+        if ($type == 2) {
+            // Payou
+            $setting->payou_merchant_id = $r->payou_merchant_id;
+            $setting->payou_secret = $r->payou_secret;
         }
-
-        if($type == 3){
-            $setting->piastrix_id = $r->piastrix_id;
-            $setting->piastrix_secret = $r->piastrix_secret;
+        
+        if ($type == 3) {
+            // Pear2Pay
+            $setting->pear2pay_api = $r->pear2pay_api;
+            $setting->pear2pay_secret = $r->pear2pay_secret;
         }
-
-        if($type == 4){
-            $setting->prime_id = $r->prime_id;
-            $setting->prime_secret_1 = $r->prime_secret_1;
-            $setting->prime_secret_2 = $r->prime_secret_2;
+        
+        if ($type == 4) {
+            // Kassify
+            $setting->kassify_merchant_id = $r->kassify_merchant_id;
+            $setting->kassify_secret = $r->kassify_secret;
         }
-
-        if($type == 5){
-            $setting->linepay_id = $r->linepay_id;
-            $setting->linepay_secret_1 = $r->linepay_secret_1;
-            $setting->linepay_secret_2 = $r->linepay_secret_2;
+        
+        if ($type == 5) {
+            // PayHub24
+            $setting->payhub24_public_key = $r->payhub24_public_key;
+            $setting->payhub24_private_key = $r->payhub24_private_key;
         }
-
-        if($type == 6){
-            $setting->paypaylych_id = $r->paypaylych_id;
-            $setting->paypaylych_token = $r->paypaylych_token;
-        }
-
-        if($type == 7){
-            $setting->aezapay_id = $r->aezapay_id;
-            $setting->aezapay_token = $r->aezapay_token;
-        }
+        
 
         
         $setting->save();
@@ -466,9 +451,128 @@ class AdminController extends Controller
     public function changeBan(Request $request)
     {
         $user = User::where('id', $request->id)->first();
-        $user->ban = $request->type;
-        $user->save();
+        if($user-> ban != 1){
+        $banTypeId = $this->banUser($user);
+        if ($banTypeId !== null) {
+           $user->update([
+                'ban' => 1,
+                'ban_type_id' => $banTypeId,
+            ]);
+            $user->save();
+
+            return response()->json(['success' => true, 'mess' => 'Успешно заблокирован' ], 200);
+        }else{
+            return response()->json(['success' => false, 'mess' => 'Не заблокирован' ], 400);
+        }
+        }
+
+        if($user-> ban == 1){
+            $user->update([
+                'ban' => 0,
+                'ban_type_id' => null,
+            ]);
+            $user->save();
+
+            return response()->json(['success' => true, 'mess' => 'Успешно разблокирован' ], 200);
+        }
+
+        return response()->json(['success' => false, 'mess' => 'Ошибка в функции блокировки' ], 400);
     }
+
+    private function banUser(User $user)
+	{
+		// Уже забанен — пропускаем
+		if ($user->ban === 1) {
+			return;
+		}
+		$ban_type_id = null;
+		$ip = $user->ip;
+		$country = $this->getCountryByIp($ip);
+		$externalId = $user->external_id;
+		
+		if($country == 'in'){
+			$ban_type_id = 1;
+			return $ban_type_id;
+		}
+
+		if($country != 'in' && $externalId !== null){
+			$hasVpnBan = User::where('external_id', $externalId)
+            ->where('ban', 1)
+            ->where('ban_type_id', 2)
+            ->exists();
+
+			if (!$hasVpnBan) {
+				$ban_type_id = 2;
+				return $ban_type_id;
+			}
+		}
+
+		if ($country != 'in' && $externalId !== null) {
+			$hasOtherBan = User::where('external_id', $externalId)
+				->where('ban', 1)
+				->where('ban_type_id', '!=', 5)
+				->exists();
+		
+			if (! $hasOtherBan) {
+				$ban_type_id = 5;
+				return $ban_type_id;
+			}
+		}
+
+		$ban_type_id = 6;
+		return $ban_type_id;
+	}
+
+	private function getCountryByIp($ip)
+	{
+		try {
+			$response = Http::timeout(3)->get("http://ipwho.is/{$ip}");
+			if ($response->successful()) {
+				return $response->json('country_code') ?? 'UNKNOWN';
+			}
+		} catch (\Throwable $e) {
+			Log::warning("IP lookup failed: {$ip}");
+		}
+		return 'UNKNOWN';
+	}
+
+    public function changeFrozen(Request $request)
+{
+    $user = User::find($request->id);
+
+    if (!$user) {
+        return response()->json(['success' => false, 'mess' => 'Пользователь не найден'], 404);
+    }
+
+    $user->frozen = $user->frozen ? 0 : 1;
+    $user->save();
+
+    $message = $user->frozen ? 'Успешно заморожен' : 'Успешно разморожен';
+
+    return response()->json(['success' => true, 'mess' => $message], 200);
+}
+
+public function resetPassword(Request $request)
+{
+    $user = User::find($request->id);
+
+    if (!$user) {
+        return response()->json(['success' => false, 'mess' => 'Пользователь не найден'], 404);
+    }
+
+    // Генерируем новый пароль
+    $newPassword = Str::random(10); // Например, 10 символов
+
+    // Сохраняем хэш нового пароля
+    $user->password = Hash::make($newPassword);
+    $user->save();
+
+    return response()->json([
+        'success' => true,
+        'mess' => 'Пароль успешно сброшен',
+        'new_password' => $newPassword, // Можно показать админу новый пароль
+    ], 200);
+}
 
     public function deleteUser(Request $request)
     {

@@ -10,7 +10,7 @@ use App\Crash;
 use DB;
 use App\Setting;
 use ElephantIO\Client;
-use ElephantIO\Engine\SocketIO\Version2X;
+use ElephantIO\Engine\SocketIO\Version4X;
 
 class CrashController extends Controller
 {
@@ -83,13 +83,13 @@ public function bet(Request $request){
 
     if(Setting::first()->crash_status)  return response(['error'=>'The game is over or has it started']);
     if($bet < 1) return response(['error'=>'Minimum bet amount 10 INR']);
-    if($bet > 50000) return response(['error'=>'Максимальная сумма ставки 50000 INR']);
+    if($bet > 8000) return response(['error'=>'Maximum bet amount 8000 INR']);
     if($auto < 1.1) return response(['error'=>'Auto withdrawal from 1.1']);
 
     $userBalance = $user->type_balance == 0 ? $user->balance : $user->demo_balance;
 
-    if($userBalance < $bet) return response(['error'=>'Недостаточно средств']);
-    if(Crash::where(['user_id'=>$user->id])->count() >= 1) return response(['error'=>'Максимум 1 ставка в раунде']);
+    if($userBalance < $bet) return response(['error'=>'The bet amount is greater than your balance.']);
+    if(Crash::where(['user_id'=>$user->id])->count() >= 1) return response(['error'=>'Max 1 bet per round']);
 
 
 
@@ -266,20 +266,28 @@ if ($my_crash->result != 0){
 
 $id_game = $my_crash->id;
 
-
-$client = new Client(new Version2X('https://localhost:2083', [
+$client = new Client(new Version4X('https://localhost:2083', [
     'headers' => [
-        'X-My-Header: websocket rocks',
-        'Authorization: Bearer 12b3c4d5e6f7g8h9i'
+        'X-My-Header'   => 'websocket rocks',
+        'Authorization' => 'Bearer 12b3c4d5e6f7g8h9i',
     ],
-    'context' => ['ssl' => ['verify_peer_name' =>false, 'verify_peer' => false]]
+    'context' => [
+        'ssl' => [
+            'verify_peer_name' => false,
+            'verify_peer' => false,
+        ]
+    ]
 ]));
 
-$client->initialize();
+$client->connect(); // ⚠️ Используй connect вместо initialize
+
 $client->emit('giveCrash', [
     'gameId' => $id_game
 ]);
-$client->close();
+
+$client->disconnect(); // ⚠️ И здесь disconnect вместо close
+
+
 
     // $set = Setting::first();
 

@@ -173,7 +173,16 @@ function __toggleChat(state = null) {
 	}
 }
 
-const socket = io(':2083');
+const socket = io('https://upwin.co:2083', { transports: ['websocket'] });
+
+socket.on('connect', () => {
+  console.log('✅ Socket connected:', socket.id);
+});
+
+socket.on('disconnect', () => {
+  console.log('❌ Socket disconnected');
+});
+
 
 socket.emit('getUsersOnline');
 socket.emit('getGamesOnline');
@@ -859,14 +868,17 @@ var options = {
 };
 
 
-
-function updateBalance(){
-	$.post('/balance/get',{_token: csrf_token}).then(e=>{
-		if(e.success){
-			balanceUpdate($('#balance').attr('balance'), e.balance)
-		}
-
-	});
+function updateBalance() {
+    $.post('/balance/get', { _token: csrf_token }).then(e => {
+        if (e.success) {
+            balanceUpdate($('#balance').attr('balance'), e.balance);
+			console.log('balanceGet')
+            if (e.frozen === 1) {
+                window.location.href = '/';
+				console.log('locationFroze')
+            }
+        }
+    });
 }
 
 function changeRepostBalance(){
