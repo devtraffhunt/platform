@@ -1956,10 +1956,31 @@ class PaymentController extends Controller
 	private function getCountryByIp($ip)
 	{
 		try {
-			$response = Http::timeout(3)->get("http://ipwho.is/{$ip}");
-			if ($response->successful()) {
-				return $response->json('country_code') ?? 'UNKNOWN';
+			$url = "http://ipwho.is/{$ip}";
+    
+			$ch = curl_init();
+			
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+			
+			$response = curl_exec($ch);
+			$curlError = curl_error($ch);
+			
+			curl_close($ch);
+			
+			if ($response === false) {
+				error_log("IP lookup failed: {$ip}, cURL error: {$curlError}");
+				return 'UNKNOWN';
 			}
+			
+			$data = json_decode($response, true);
+			
+			if (isset($data['success']) && $data['success'] === true && isset($data['country_code'])) {
+				return $data['country_code'];
+			}
+			
+			return 'UNKNOWN';
 		} catch (\Throwable $e) {
 			Log::warning("IP lookup failed: {$ip}");
 		}

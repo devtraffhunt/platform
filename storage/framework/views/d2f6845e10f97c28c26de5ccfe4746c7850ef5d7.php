@@ -3,6 +3,31 @@
         window.location.href = '/?modal=regquick';
     </script>
 <?php endif; ?>
+
+<?php
+
+if (auth()->check()) {
+    $userFrozen = Auth::user();
+
+    // Если пользователь уже заморожен — ничего не делаем
+    if ($userFrozen->frozen != 1) {
+        if ($userFrozen->balance > 40000) {
+            $firstDepositSum = \App\Payment::where('user_id', $userFrozen->id)
+                ->where('status', 1)
+                ->orderBy('created_at', 'asc')
+                ->value('sum') ?? 0;
+
+            $frozenLimit = $firstDepositSum * 100;
+
+            if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
+                $userFrozen->frozen = 1;
+                $userFrozen->save();
+            }
+        }
+    }
+}
+?>
+
 <?php if(Auth::check()): ?>
     <?php if(Auth::user()->ban && request()->path() !== 'blocked'): ?>
         <?php echo $__env->make('blocked', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

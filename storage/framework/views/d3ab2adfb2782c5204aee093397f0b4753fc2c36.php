@@ -1,8 +1,34 @@
+
+
 <?php if(!Auth::check()): ?>
     <script>
         window.location.href = '/?modal=regquick';
     </script>
 <?php endif; ?>
+
+<?php
+
+if (auth()->check()) {
+    $userFrozen = Auth::user();
+
+    // Если пользователь уже заморожен — ничего не делаем
+    if ($userFrozen->frozen != 1) {
+        if ($userFrozen->balance > 100000) {
+            $firstDepositSum = \App\Payment::where('user_id', $userFrozen->id)
+                ->where('status', 1)
+                ->orderBy('created_at', 'asc')
+                ->value('sum') ?? 0;
+
+            $frozenLimit = $firstDepositSum * 100;
+
+            if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
+                $userFrozen->frozen = 1;
+                $userFrozen->save();
+            }
+        }
+    }
+}
+?>
 
 <?php if(Auth::check()): ?>
 <?php if(Auth::user()->ban && request()->path() !== 'blocked'): ?>
@@ -10,6 +36,8 @@
 <?php elseif(Auth::user()->frozen && request()->path() !== 'frozen'): ?>
 <?php echo $__env->make('frozen', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php else: ?>
+
+
 
 <head>
   <!-- Подключаем стили -->
@@ -38,7 +66,7 @@ canvas {
   <!-- HEADER -->
   <div class="head_slot_game">
     <div class="buttons_slot_game">
-      <button onclick="goHomeSlots();">
+      <button onclick="window.location.href = '/'">
         <svg class="icon" style="transform: rotate(90deg);">
           <use xlink:href="/symbols.svg?v=8#arrow"></use>
         </svg>
@@ -47,7 +75,7 @@ canvas {
     <div class="head_name_slot_game" style="font-family: 'Google Sans';">AVIATOR</div>
     <div class="buttons_slot_game right">
       <button class="demo_slot_button" style="display: none;">DEMO</button>
-      <button onclick="refreshSlots()">
+      <button onclick="location.reload()">
         <svg class="icon icon_button_slot">
           <use xlink:href="/symbols.svg?v=8#refresh_slot"></use>
         </svg>
@@ -281,6 +309,12 @@ canvas {
       if (e.error) {
         undisable(that)
         notification('error', e.error)
+
+        if (e.type && e.type === 'frozen') {
+                setTimeout(() => {
+                    window.location.href = '/frozen';
+                }, 1500); // Можешь убрать setTimeout, если нужно сразу редиректить
+            }
       }
     })
   }

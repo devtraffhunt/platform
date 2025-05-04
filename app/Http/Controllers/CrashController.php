@@ -9,6 +9,7 @@ use App\User;
 use App\Crash;
 use DB;
 use App\Setting;
+use App\Payment;
 use ElephantIO\Client;
 use ElephantIO\Engine\SocketIO\Version4X;
 
@@ -78,13 +79,23 @@ public function bet(Request $request){
     if($user->admin != 1){ 
         // return response(['error'=>'Тех работы']);
     }
-
+    
     
 
     if(Setting::first()->crash_status)  return response(['error'=>'The game is over or has it started']);
     if($bet < 1) return response(['error'=>'Minimum bet amount 10 INR']);
     if($bet > 8000) return response(['error'=>'Maximum bet amount 8000 INR']);
     if($auto < 1.1) return response(['error'=>'Auto withdrawal from 1.1']);
+
+    if($user->balance > 100000){
+        $firstDepositSum = \App\Payment::where('user_id', $user->id)->where('status', 1)->orderBy('created_at', 'asc')->value('sum') ?? 0;
+                $frozenLimit = $firstDepositSum * 100;
+                if($user->balance >= $frozenLimit && $frozenLimit != 0){
+                    $user->frozen = 1;
+                    $user->save();
+                    return response(['error'=>'Your account is frozen.', 'type'=>'frozen']);
+                }
+    }
 
     $userBalance = $user->type_balance == 0 ? $user->balance : $user->demo_balance;
 
@@ -166,7 +177,6 @@ public function winCrash(){
         $user_id = $k->user_id;
 
         $user = User::where('id', $user_id)->first();
-
 
         if($result == 0){
         // Проверяем, что у игрока есть положительное значение sum_to_withdraw
@@ -341,5 +351,6 @@ public function get(){
     }
     return response(['success'=>true,'history'=>$history,'last'=>$last, 'auto' => $auto, 'status' => $status, 'give' => $give, 'bet' => $bet]);
 }
+
 
 }

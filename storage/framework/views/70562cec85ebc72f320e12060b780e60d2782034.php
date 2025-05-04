@@ -7,6 +7,7 @@ $status = \App\Status::where('id', $userStatus)->first();
 
 }
 $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
+$userF = \Auth::user();
 
 ?>
 
@@ -29,7 +30,7 @@ $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
         <div class="up_container">
           <div class="up_balance-box">
             <p class="up_balance-label">Available balance</p>
-            <p class="up_balance-amount" data-balance="<?php echo e(auth()->user()->balance); ?>">₹ 00.00</p>
+            <p class="up_balance-amount"  data-balance="<?php echo e($userF->balance); ?>">₹ <?php echo e($userF->balance); ?></p>
           </div>
           <div class="up_warning-title">
             <div class="up_primary-indicator"></div>
