@@ -78,69 +78,129 @@ var axisTicks = {
   color: 'rgba(0,0,0,0.05)'
 }
 
-function  statUpdate(id, that) {
-  $.post('/admin/chart',{_token: csrf_token, id}).then(e=>{
-
-    $('#deposits').html(parseFloat(e.deps_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' INR')
-    $('#withdraws').html(parseFloat(e.withdraws_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' INR')
-    $('#profit').html(parseFloat(e.profit_n).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")+' INR')
-
-    $('.stat-pills .nav-link').removeClass('active')
-    $(that).addClass('active')
-    $('#chart1').remove()
-    $('#chart2').remove()
-    $('.chartAdmin1').append('<div id="chart1" class="apex-charts" dir="ltr"></div>')
-    $('.chartAdmin2').append('<div id="chart2" class="apex-charts" dir="ltr"></div>')
-
-    var options = {
-
-      markers, yaxis, grid, colors, fill, legend, tooltip, chart, dataLabels, stroke,
-
-      series: [{
-        name: 'Депозиты',
-        data: e.deps
-      }, {
-        name: 'Выводы',
-        data: e.withdraws
-      }],
-      xaxis: {
-        type: 'datetime', axisBorder, axisTicks,
-        categories: e.labels                
-      },
-
-    };
-
-    var chart_render = new ApexCharts(
-      document.querySelector("#chart1"),
-      options
-      );
-    chart_render.render();
-
-    var options = {
-
-      markers, yaxis, grid, colors, fill, legend, tooltip, chart, dataLabels, stroke,
-
-      series: [{
-        name: 'Профит',
-        data: e.profit
-      }],
-      xaxis: {
-        type: 'datetime', axisBorder, axisTicks,
-        categories: e.labels                
-      },
-
-    }; 
-
-    var chart_render = new ApexCharts(
-      document.querySelector("#chart2"),
-      options
-      );
-    chart_render.render();
-
-  }).fail(e=>{
-    noty('error', JSON.parse(e.responseText).message)
+function statUpdate(id, that) {
+  $.post('/admin/chart', { _token: csrf_token, id }).then(data => {
+    updateSummary(data);
+    updateActiveTab(that);
+    renderCharts(data, id); // передаём id
+  }).fail(err => {
+    noty('error', JSON.parse(err.responseText).message);
   });
 }
+
+function formatCurrency(value) {
+  return parseFloat(value).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' INR';
+}
+
+function updateSummary(data) {
+  $('#deposits').html(formatCurrency(data.deps_n));
+  $('#withdraws').html(formatCurrency(data.withdraws_n));
+  $('#profit').html(formatCurrency(data.profit_n));
+}
+
+function updateActiveTab(element) {
+  $('.stat-pills .nav-link').removeClass('active');
+  $(element).addClass('active');
+}
+
+function renderCharts(data, id) {
+  $('#chart1, #chart2').remove();
+  $('.chartAdmin1').append('<div id="chart1" class="apex-charts" dir="ltr"></div>');
+  $('.chartAdmin2').append('<div id="chart2" class="apex-charts" dir="ltr"></div>');
+
+  const formatters = {
+    1: val => dayjs(val).format('HH:mm'),
+    2: val => dayjs(val).format('DD MMM'),
+    3: val => dayjs(val).format('DD MMM'),
+    4: val => dayjs(val).format('MMM')
+  };
+
+  const tooltipFormat = {
+    1: 'HH:mm',
+    2: 'dd MMM',
+    3: 'dd MMM',
+    4: 'MMM'
+  }[id];
+
+  const xaxisBase = {
+    type: 'datetime',
+    categories: data.labels,
+    tickPlacement: 'on',
+    labels: {
+      formatter: formatters[id],
+      rotate: -45
+    },
+    
+    ...axisOptions()
+  };
+
+  const chart1 = new ApexCharts(document.querySelector("#chart1"), {
+    ...commonChartOptions({ tooltipFormat }),
+    series: [{ name: 'Сумма', data: data.deps }],
+    xaxis: xaxisBase
+  });
+  chart1.render();
+
+  const chart2 = new ApexCharts(document.querySelector("#chart2"), {
+    ...commonChartOptions({
+      formatY: val => val.toFixed(0),
+      formatTooltip: val => val.toFixed(0),
+      tooltipFormat
+    }),
+    series: [
+      { name: 'Регистрации', data: data.regs },
+      { name: 'Уникальные регистрации', data: data.regs_uniqe },
+      { name: 'Депозиты', data: data.dep_counts },
+      { name: 'Уникальные депозиты', data: data.dep_unique_counts }
+    ],
+    colors: ['#556ee6', '#f1b44c', '#00b894', '#90b800'],
+    xaxis: xaxisBase
+  });
+  chart2.render();
+}
+
+
+function commonChartOptions({
+  formatY = val => formatYAxis(val),
+  formatTooltip = val => val.toFixed(2),
+  tooltipFormat = 'dd MMM'
+} = {}) {
+  return {
+    markers, yaxis, grid, colors, fill, legend,
+    tooltip: {
+      x: {
+        format: tooltipFormat
+      },
+      y: {
+        formatter: formatTooltip
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: formatY
+      }
+    },
+    chart, dataLabels, stroke
+  };
+}
+
+
+
+
+function formatYAxis(val) {
+  if (val >= 1_000_000_000) return (val / 1_000_000_000).toFixed(1) + 'B';
+  if (val >= 1_000_000)     return (val / 1_000_000).toFixed(1) + 'M';
+  if (val >= 1_000)         return (val / 1_000).toFixed(0) + 'K';
+  return val.toFixed(0);
+}
+
+
+function axisOptions() {
+  return {
+    axisBorder, axisTicks
+  };
+}
+
 
 function noty(type, msg) {
   alert(msg)

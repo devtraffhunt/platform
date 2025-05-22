@@ -13,7 +13,17 @@
     <!-- App Css-->
     <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/localizedFormat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/ru.js"></script>
+
+<script>
+  dayjs.extend(dayjs_plugin_localizedFormat);
+  dayjs.locale('ru');
+</script>
 
 <?php $__env->startSection('body'); ?>
     <body data-sidebar="dark">

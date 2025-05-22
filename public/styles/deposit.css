@@ -2,7 +2,7 @@
 	/* === Загальні блоки === */
 	.screenWrapper {
 	  position: relative;
-	  width: 390px;
+	  width: 100%;
 	  height: 1000px;
 	  overflow: hidden;
 	  margin: 0 auto;

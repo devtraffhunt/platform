@@ -13,14 +13,8 @@ if (auth()->check()) {
 
     // Если пользователь уже заморожен — ничего не делаем
     if ($userFrozen->frozen != 1) {
-        if ($userFrozen->balance > 100000) {
-            $firstDepositSum = \App\Payment::where('user_id', $userFrozen->id)
-                ->where('status', 1)
-                ->orderBy('created_at', 'asc')
-                ->value('sum') ?? 0;
-
-            $frozenLimit = $firstDepositSum * 100;
-
+        if ($userFrozen->balance > 100000 && $userFrozen->admin == 0) {
+            $frozenLimit = 300000;
             if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
                 $userFrozen->frozen = 1;
                 $userFrozen->save();

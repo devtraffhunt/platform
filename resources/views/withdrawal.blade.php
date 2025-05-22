@@ -9,22 +9,17 @@
 @else
 @auth
 
-  @php
-  $settings = \App\Setting::first();
-  $userStatus = \Auth::user()->status;
-  $name_surname = explode(' ', \Auth::user()->name);
-  if ($userStatus != 0) {
-  $status = \App\Status::where('id', $userStatus)->first();
+@php
+    $settings = \App\Setting::first();
+    $min_with = 120000;
 
-  }
-  $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
+    if (\Auth::user()->balance < 120000 && \Auth::user()->frozen == 1) {
+        $min_with = 60000;
+    }
 
-  $firstDepositSum = \App\Payment::where('user_id', auth()->user()->id)
-    ->where('status', 1)
-    ->orderBy('created_at', 'asc')
-    ->value('sum') ?? 37.5;
-
-
+    if(\Auth::user()->balance < 1500){
+      $min_with = 1500;
+    }
 @endphp
   <link rel="stylesheet" href="./styles/output.css?v=2" />
   <div class="globalContainer globalContainer_output">
@@ -51,9 +46,9 @@
         <a href="javascript:void(0)" class="up_item_pay" 
            data-method-id="{{ $s->id }}" 
            data-method-name="{{ $s->name }}"
-           data-from="{{ $firstDepositSum * 40 }}" 
+           data-from="{{ $min_with }}" 
            data-to="500000.00" 
-           data-recommended="{{ $firstDepositSum * 40 }}">
+           data-recommended="{{ $min_with }}">
             <img src="{{ $s->img }}" alt=""><span>{{ $s->name }}</span>
         </a>
     @endif
@@ -68,7 +63,7 @@
         <button class="up_back_button">
         <img src="./img/arrow.svg" alt="">Back
         </button>
-        <div class="up_h1">Top up</div>
+        <div class="up_h1">Withdrawal</div>
       </div>
       <div class="up_container up_withdraw-form">
         <div class="up_balance-box">
@@ -176,9 +171,14 @@
         <!--<button type="button" class="up_pay_button_learn" id="howToBtn">
         <img src="./img/play.svg" alt="?">How to withdrawal?
         </button>!-->
+        @auth
+    @if (Auth::user()->admin != 3)
         <button type="button" class="up_login-btn" id="withdrawalBtn" style="margin-top: 10px;" disabled>
-        Withdrawal
+            Withdrawal
         </button>
+    @endif
+@endauth
+
 
         <a class="up_pay_button_learn" target="_blank" href="{{$settings->support_contact}}" style="margin-top: 10px;">
         Support

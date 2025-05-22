@@ -173,7 +173,7 @@ function __toggleChat(state = null) {
 	}
 }
 
-const socket = io('https://upwin.co:2083', { transports: ['websocket'] });
+const socket = io(`https://${location.hostname}:2083`, { transports: ['websocket'] });
 
 socket.on('connect', () => {
   console.log('✅ Socket connected:', socket.id);

@@ -11,3 +11,16 @@ Route::post('/deposit/payyou/callback', 'PaymentController@resultPayyou');
 Route::post('/deposit/kassify/callback', 'PaymentController@resultKassify'); 
 Route::post('/deposit/pear2pay/callback', 'PaymentController@resultPear2pay'); 
 Route::post('/deposit/payhub24/callback', 'PaymentController@resultPayhub24'); 
+
+
+Route::get('/inout/wallet/balance', 'InoutController@getBalance');
+Route::post('/inout/wallet/debit', 'InoutController@debit');
+Route::post('/inout/wallet/credit', 'InoutController@credit');
+
+Route::get('/spribe/wallet/balance', 'SpribeController@getBalance');
+Route::post('/spribe/wallet/debit', 'SpribeController@debit');
+Route::post('/spribe/wallet/credit', 'SpribeController@credit');
+Route::post('/spribe/wallet/refund', 'SpribeController@refund');
+
+
+Route::get('/slots/banners', 'SlotsController@updateSlotBanners');

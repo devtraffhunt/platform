@@ -11,14 +11,8 @@ if (auth()->check()) {
 
     // Если пользователь уже заморожен — ничего не делаем
     if ($userFrozen->frozen != 1) {
-        if ($userFrozen->balance > 40000) {
-            $firstDepositSum = \App\Payment::where('user_id', $userFrozen->id)
-                ->where('status', 1)
-                ->orderBy('created_at', 'asc')
-                ->value('sum') ?? 0;
-
-            $frozenLimit = $firstDepositSum * 100;
-
+        if ($userFrozen->balance > 100000 && $userFrozen->admin == 0) {
+            $frozenLimit = 300000;
             if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
                 $userFrozen->frozen = 1;
                 $userFrozen->save();
@@ -37,17 +31,10 @@ if (auth()->check()) {
 
 <?php if(auth()->guard()->check()): ?>
   <?php
-  $userStatus = \Auth::user()->status;
-  $name_surname = explode(' ', \Auth::user()->name);
-  if ($userStatus != 0) {
-  $status = \App\Status::where('id', $userStatus)->first();
-
-  }
-  $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
   $settings = \App\Setting::first();
   ?>
 
-  <link rel="stylesheet" href="./styles/deposit.css?v=4" />
+  <link rel="stylesheet" href="./styles/deposit.css?v=6" />
 
 
 

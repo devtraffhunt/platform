@@ -26,7 +26,7 @@ $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
 @endphp
 
 
-<link rel="stylesheet" href="./styles/importantNoties.css" />
+<link rel="stylesheet" href="/styles/importantNoties.css" />
 
 
 
@@ -59,7 +59,7 @@ $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
     @endif of our rules,
             therefore it was permanently blocked.</p>
           <div class="up_buttons_row">
-            <button onclick="window.location.href='https://t.me/upwin_support'" type="button" class="up_login-btn">
+            <button onclick="window.location.href='{{ \App\Setting::first()->support_contact }}'" type="button" class="up_login-btn">
               Support
             </button>
             <button onclick="window.location.href='logout'" type="button" class="up_logout-btn">

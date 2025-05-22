@@ -1,39 +1,43 @@
 <style>
-    .text__content p{
+    .text__content p {
         color: #090F1E !important;
         font-size: 13px !important;
     }
 
     .theme--dark .text__banner-inner {
         background-color: #EDF0F7;
-        color:#77829B;
+        color: #77829B;
     }
 
     ul {
-    list-style: none; /* убираем стандартные маркеры */
-    padding: 0;
-    margin: 20px 0;
-}
+        list-style: none;
+        /* убираем стандартные маркеры */
+        padding: 0;
+        margin: 20px 0;
+    }
 
-ul li {
-    position: relative;
-    padding-left: 15px; /* отступ для красивого маркера */
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
+    ul li {
+        position: relative;
+        padding-left: 15px;
+        /* отступ для красивого маркера */
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
 
-ul li::before {
-    content: "-"; /* или можно "•", "➤" или свою иконку */
-    position: absolute;
-    left: 0;
-    top: 0;
-    line-height: 1.5;
-    color:  #090F1E; /* можно любой цвет */
-}
+    ul li::before {
+        content: "-";
+        /* или можно "•", "➤" или свою иконку */
+        position: absolute;
+        left: 0;
+        top: 0;
+        line-height: 1.5;
+        color: #090F1E;
+        /* можно любой цвет */
+    }
 
-h4{
-    font-size: 15px;
-}
+    h4 {
+        font-size: 15px;
+    }
 </style>
 
 <div class="wrapper">
@@ -354,6 +358,7 @@ h4{
                 <li>13.11.4. Withdrawals up to €1000 processed within 1 to 60 minutes;</li>
                 <li>13.11.5. Withdrawals above €2000 processed within 5 business days;</li>
                 <li>13.11.6. Possible additional delays up to 3 business days.</li>
+                <li>13.11.6. Minimum and maximum withdrawal limits may vary depending on the Client’s account status. Please refer to the VIP Program section for detailed information.</li>
             </ul>
             Other methods are discussed individually with UpWin Administration.</p>
 
@@ -365,13 +370,13 @@ h4{
             </ul>
             </p>
 
-            <p>13.13. To activate withdrawal functionality, the Client must wager at least 4000% of each deposit amount across platform games.</p>
+            <p>13.13. To activate withdrawal functionality, the Client must wager at least 400% of each deposit amount across platform games.</p>
 
             <p>13.14. For withdrawals to accounts not registered in Curaçao, the transfer is considered international and subject to a 20% tax. Currently, the Company covers 50% of this tax, requiring the Client to pay only 10% before withdrawal processing.</p>
 
             <p>13.15. If the Client's winnings exceed €50,000, the Company reserves the right to set a personalized daily withdrawal limit.</p>
 
-            <p>13.16. The maximum account balance is limited to no more than 100 times the initial deposit. If exceeded, the Company may adjust the balance accordingly.</p>
+            <p>13.16. The maximum allowable account balance depends on the Client’s account status. Please refer to the VIP Program section for detailed information. The Company reserves the right to adjust the balance if the limit is exceeded.</p>
             <h4>14. Terms and Conditions Related to Payment and Use of Services</h4>
 
             <p>14.1. The Client agrees to pay for all services and/or products ordered, including but not limited to:
@@ -668,6 +673,42 @@ h4{
 
             <p>32.1. Withdrawal of bonus funds is only possible after full completion of the wagering requirements.
                 For bonuses awarded for registration or without a deposit, the withdrawal of bonus funds is only possible after the Client makes their first deposit.</p>
+
+            <h4>33. VIP Program</h4>
+
+            <p>33.1. The Company operates a client status system as part of its loyalty program (VIP Program), which determines the maximum account balance and minimum withdrawal limits available to each Client. Status is assigned automatically based on the total amount of deposits made on the account.</p>
+
+            <p>33.2. The VIP Program consists of three levels:</p>
+
+            <ul>
+                <li>33.2.1. Bronze Status<br>
+                    Assigned automatically upon registration.
+                    <ul>
+                        <li>Minimum withdrawal amount: €1400 (or the equivalent in the account currency);</li>
+                        <li>Maximum allowable account balance: €3500 (or the equivalent in the account currency).</li>
+                    </ul>
+                </li>
+                <li>33.2.2. Silver Status<br>
+                    Granted automatically once the total deposit amount exceeds €1000 (or the equivalent).
+                    <ul>
+                        <li>Minimum withdrawal amount: €700 (or the equivalent);</li>
+                        <li>Maximum allowable account balance: €7500 (or the equivalent).</li>
+                    </ul>
+                </li>
+                <li>33.2.3. Gold Status<br>
+                    Granted automatically once the total deposit amount exceeds €3000 (or the equivalent).
+                    <ul>
+                        <li>Minimum withdrawal amount: €200 (or the equivalent);</li>
+                        <li>Maximum allowable account balance: €21,000 (or the equivalent).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p>33.3. Status upgrades are applied automatically once the required deposit thresholds are met. The Company reserves the right to revoke or downgrade a Client’s status in case of violations of the platform’s rules.</p>
+
+            <p>33.4. Specific terms and internal procedures regarding balance and withdrawal limits may be applied at the Company’s discretion. The Client is responsible for monitoring their current status and applicable conditions.</p>
+
+
 
         </div>
     </div>

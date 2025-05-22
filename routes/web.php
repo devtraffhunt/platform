@@ -212,6 +212,8 @@ Route::group(['prefix' => 'slots'], function () {
     Route::any('/getUrl', 'SlotsController@getGameURI');
 });
 
+Route::get('/games/{id}', 'SlotsController@gamePage');
+
 Route::get('logout', 'Auth\LoginController@logout');
 Route::any('/tournier/{id}', 'GeneralController@tournier_page');
 Route::any('/{page?}', 'GeneralController@page')->name('home');

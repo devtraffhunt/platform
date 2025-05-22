@@ -14,11 +14,18 @@
 							</li>
                             <li class="<?php echo e(request()->is('crash') ? 'active' : ''); ?>">
 								<a href="/crash" class="d-flex game-bar">
-									<img data-v-59450424="" src="img/aviator-game-logo.svg" height="20" width="75">
+									<img data-v-59450424="" src="/img/aviator-game-logo.svg" height="20" width="75">
 								</a>
 							</li>
+
+							<li class="<?php echo e(request()->is('chicken_road') ? 'active' : ''); ?>">
+								<a href="/games/chicken-road" class="d-flex game-bar">
+									<img data-v-59450424="" src="/img/icons/chicken-road.svg" height="20" width="75">
+								</a>
+							</li>
+
 							<li class="<?php echo e(request()->is('slots') ? 'active' : ''); ?>">
-								<a  onclick="load('slots'); return false;" class="d-flex align-center">
+								<a  href="/slots" return false;" class="d-flex align-center">
                                 <svg class="icon" width="20" height="20" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
   <path d="M23,3.723v5.277c0,2.209-1.791,4-4,4h-1v2h-5v-6h5v2h1c1.105,0,2-.895,2-2V3.723c-.727-.423-1.169-1.28-.938-2.224,.176-.72,.781-1.301,1.506-1.453,1.294-.271,2.433,.709,2.433,1.955,0,.738-.405,1.376-1,1.723ZM9,0C4.725,0,1.145,2.998,.232,7H17.768C16.855,2.998,13.275,0,9,0ZM4,24H14c2.209,0,4-1.791,4-4v-3H0v3c0,2.209,1.791,4,4,4Zm7-9v-6H7v6h4Zm-6-6H0v6H5v-6Z"/>
 </svg>
@@ -33,7 +40,7 @@
 							</li>!-->
 
 							<li>
-								<a href="https://t.me/upwin_support" target="_blank" class="d-flex align-center">
+								<a href="<?php echo e(\App\Setting::first()->support_contact); ?>" target="_blank" class="d-flex align-center">
 									<svg class="icon"><use xlink:href="images/symbols.svg?v=29#support"></use></svg>
 									<span>Support</span>
 									</a>
@@ -71,65 +78,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="header__user-profile d-flex align-center" id="dropdownUser">
-									<div class="user-split">
-										<div class="user-avatar" style="background: url(<?php echo e(\Auth::user()->avatar); ?>) no-repeat center center / cover;"></div>
-										<span><?php echo e(\Auth::user()->name); ?></span>
-									</div>
-
-									<div class="header__user-dropdown d-flex flex-column">
-										<a href="javascript:void(0)" class="header__user-dropdown--id d-flex align-center">
-											<span>ID: <b><?php echo e(\Auth::user()->id); ?></b></span>
-										</a>
-										<!--<a href="#" onclick="load('profile')" class="d-flex align-center">
-											<svg class="icon"><use xlink:href="images/symbols.svg#user"></use></svg>
-											<span>Profile</span>
-										</a>!-->
-										<!--<a href="#" rel="popup" data-popup="popup--coupon" onclick="return false;" class="d-flex align-center">
-											<svg class="icon"><use xlink:href="images/symbols.svg#coupon"></use></svg>
-											<span>Promo codes</span>
-										</a>!-->
-										<a onclick="location.href='deposit'" href="/deposit" class="d-flex align-center">
-										<svg class="icon" width="24" height="24" viewBox="0 0 24 24">
-										<path d="M22.5 18V19.875C22.5 20.9092 21.6585 21.75 20.625 21.75H4.5C2.8455 21.75 1.5 20.4045 1.5 18.75C1.5 18.75 1.5 6.01125 1.5 6C1.5 4.3455 2.8455 3 4.5 3H18.375C18.9967 3 19.5 3.504 19.5 4.125C19.5 4.746 18.9967 5.25 18.375 5.25H4.5C4.08675 5.25 3.75 5.586 3.75 6C3.75 6.414 4.08675 6.75 4.5 6.75H20.625C21.6585 6.75 22.5 7.59075 22.5 8.625V10.5H18.75C16.6823 10.5 15 12.1823 15 14.25C15 16.3177 16.6823 18 18.75 18H22.5Z"></path>
-										<path d="M22.5 12V16.5H18.75C17.5073 16.5 16.5 15.4927 16.5 14.25C16.5 13.0073 17.5073 12 18.75 12H22.5Z"></path>
-									</svg>
-											<span>Deposit</span>
-										</a>
-										<a onclick="location.href='withdrawal'" href="/withdrawal" class="d-flex align-center">
-										
-
-									<svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" id="Layer_1" viewBox="0 0 64 64"  xml:space="preserve">
-										<g>
-											<circle  cx="32" cy="14" r="3"/>
-											<path  d="M4,25h56c1.794,0,3.368-1.194,3.852-2.922c0.484-1.728-0.242-3.566-1.775-4.497l-28-17   C33.438,0.193,32.719,0,32,0s-1.438,0.193-2.076,0.581l-28,17c-1.533,0.931-2.26,2.77-1.775,4.497C0.632,23.806,2.206,25,4,25z    M32,9c2.762,0,5,2.238,5,5s-2.238,5-5,5s-5-2.238-5-5S29.238,9,32,9z"/>
-											<rect x="34" y="27"  width="8" height="25"/>
-											<rect x="46" y="27"  width="8" height="25"/>
-											<rect x="22" y="27"  width="8" height="25"/>
-											<rect x="10" y="27"  width="8" height="25"/>
-											<path  d="M4,58h56c0-2.209-1.791-4-4-4H8C5.791,54,4,55.791,4,58z"/>
-											<path  d="M63.445,60H0.555C0.211,60.591,0,61.268,0,62v2h64v-2C64,61.268,63.789,60.591,63.445,60z"/>
-										</g>
-									</svg>
-											<span>Withdrawal</span>
-										</a>
-
-										<!-- <a href="#" id="darkTheme" onclick="return false;" class="d-flex align-center">
-                                        <svg class="icon"><use xlink:href="images/symbols.svg?v=1#dark"></use></svg>
-                                        <span>Темная тема</span>
-                                        <em>new</em>
-                                    </a>
-                                    <a href="#" id="lightTheme" onclick="return false;" class="d-flex align-center">
-                                        <svg class="icon"><use xlink:href="images/symbols.svg?v=1#light"></use></svg>
-                                        <span>Светлая тема</span>
-                                    </a> -->
-
-										<a href="logout" onclick="location.href='logout'" class="d-flex align-center">
-											<svg class="icon"><use xlink:href="images/symbols.svg#exit"></use></svg>
-											<span>Exit</span>
-										</a>
-									</div>
-								</div>
+								
 								<?php else: ?>
 								
 								<div class="auth_block">

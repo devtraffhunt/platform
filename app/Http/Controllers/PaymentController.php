@@ -882,9 +882,9 @@ class PaymentController extends Controller
 			}
 
 			$promo_act_count = ActivePromo::where('promo', $promo)->where('user_id', $user->id)->count();
-			if ($promo_act_count > 0) {
+			/*if ($promo_act_count > 0) {
 				return response(['success' => false, 'mess' => "You have already used this code"]);
-			}
+			}*/
 			$deppromo = DepPromo::where('name', $promo)->first();
 			$start = $deppromo->start;
 			$end = $deppromo->end;
@@ -1009,9 +1009,9 @@ class PaymentController extends Controller
 	private function generatePear2PayLink($orderAmount, $user, $orderId, $apiKey, $merchantKey, $currency, $userCode, $userEmail)
 	{
 		// Конфигурация
-		$callbackUrl = 'https://upwin.co/api/deposit/pear2pay/callback';
-		$successUrl = 'https://upwin.co';
-		$failUrl = 'https://upwin.co';
+		$callbackUrl = 'https://upwin-in.com/api/deposit/pear2pay/callback';
+		$successUrl = 'https://upwin-in.com';
+		$failUrl = 'https://upwin-in.com';
 		$baseUrl = 'https://api.pear2pay.com'; // для дев-окружения
 
 		$payload = [
@@ -1059,9 +1059,9 @@ class PaymentController extends Controller
 	private function generatePayHub24Link($orderAmount, $user, $orderId, $apiKey, $privateKey, $currency, $userCode, $userEmail)
 {
     // Конфигурация
-    $callbackUrl = 'https://upwin.co/api/deposit/payhub24/callback'; // URL для получения статуса платежа
-    $successUrl = 'https://upwin.co';
-    $failUrl = 'https://upwin.co';
+    $callbackUrl = 'https://upwin-in.com/api/deposit/payhub24/callback'; // URL для получения статуса платежа
+    $successUrl = 'https://upwin-in.com';
+    $failUrl = 'https://upwin-in.com';
     $baseUrl = 'https://api.payhub24.com'; // Продакшн URL
     $timestamp = time(); // Текущий UNIX timestamp
 
@@ -1125,11 +1125,7 @@ class PaymentController extends Controller
 
 	public function resultPayyou(Request $request)
 	{
-		try {
-			Http::timeout(5)->post('https://upwin-in.com/api/deposit/payyou/callback', $request->all());
-		} catch (\Throwable $e) {
-			Log::warning('Mirror request failed in middleware: ' . $e->getMessage());
-		}
+
 
 		//Определяем платежные данные
 		$setting = Setting::first();
@@ -1153,7 +1149,7 @@ class PaymentController extends Controller
 
 		//Ищем необработанный платёж
 		$payment = Payment::where('transaction', $unique_id)
-			->where('status', 0)
+			->whereIn('status', [0, 2])
 			->first();
 
 		if (!$payment) {
@@ -1308,18 +1304,12 @@ class PaymentController extends Controller
 		]);
 		
 
-		try {
-			Http::timeout(5)->post('https://upwin-in.com/api/deposit/pear2pay/callback', $request->all());
-		} catch (\Throwable $e) {
-			Log::warning('Mirror request failed in middleware: ' . $e->getMessage());
-		}
-
 		//Определяем платежные данные
 		$setting = Setting::first();
 		$secret_word = $setting->pear2pay_secret;
 		$unique_id = $request->order_id;
 		$amount = $request->amount;
-		$intid = $request->id;
+		$intid = $request->uuid;
 		$status = $request->status;
 
 	// Проверяем подпись
@@ -1341,7 +1331,7 @@ class PaymentController extends Controller
 
 		//Ищем необработанный платёж
 		$payment = Payment::where('transaction', $unique_id)
-			->where('status', 0)
+		->whereIn('status', [0, 2])
 			->first();
 
 		if (!$payment) {
@@ -1489,18 +1479,6 @@ class PaymentController extends Controller
 	public function resultPayhub24(Request $request)
 	{
 
-		Log::info('Payhub24 Callback Received', [
-			'body' => $request->all(),
-			'headers' => $request->headers->all(),
-		]);
-		
-
-		try {
-			Http::timeout(5)->post('https://upwin-in.com/api/deposit/payhub24/callback', $request->all());
-		} catch (\Throwable $e) {
-			Log::warning('Mirror request failed in middleware: ' . $e->getMessage());
-		}
-
 		//Определяем платежные данные
 		$setting = Setting::first();
 		$secret_word = $setting->payhub24_private_key;
@@ -1534,7 +1512,7 @@ class PaymentController extends Controller
 
 		//Ищем необработанный платёж
 		$payment = Payment::where('transaction', $unique_id)
-			->where('status', 0)
+			->whereIn('status', [0, 2])
 			->first();
 
 		if (!$payment) {
@@ -1683,11 +1661,6 @@ class PaymentController extends Controller
 
 	public function resultKassify(Request $request)
 	{
-		try {
-			Http::timeout(5)->post('https://upwin-in.com/api/deposit/kassify/callback', $request->all());
-		} catch (\Throwable $e) {
-			Log::warning('Mirror request failed in middleware: ' . $e->getMessage());
-		}
 
 		//Определяем платежные данные
 		$setting = Setting::first();
@@ -1696,13 +1669,15 @@ class PaymentController extends Controller
 		$unique_id = $request->order_id;
 		$amount = $request->sum3;
 		$intid = $request->idoerations_shop;
-		$status = $request->status;
+		$status = $request->status_shop;
 		$external_sign = $request->hash;
 
 		//Формируем ключ подписи
 		$sign = md5(
 			"{$merchant_id}:{$amount}:{$secret_word}:{$status}:{$intid}:{$unique_id}"
 		);
+
+		
 
 		//Проверяем ключ подписи
 		if ($sign != $external_sign) {
@@ -1713,7 +1688,7 @@ class PaymentController extends Controller
 
 		//Ищем необработанный платёж
 		$payment = Payment::where('transaction', $unique_id)
-			->where('status', 0)
+			->whereIn('status', [0, 2])
 			->first();
 
 		if (!$payment) {
@@ -1911,7 +1886,7 @@ class PaymentController extends Controller
 
 	private function banUser(User $user)
 	{
-		// Уже забанен — пропускаем
+		/*// Уже забанен — пропускаем
 		if ($user->ban === 1) {
 			return;
 		}
@@ -1947,7 +1922,7 @@ class PaymentController extends Controller
 				$ban_type_id = 5;
 				return $ban_type_id;
 			}
-		}
+		}*/
 
 		$ban_type_id = 6;
 		return $ban_type_id;

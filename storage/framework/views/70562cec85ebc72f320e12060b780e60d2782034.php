@@ -11,7 +11,7 @@ $userF = \Auth::user();
 
 ?>
 
-<link rel="stylesheet" href="./styles/importantNoties.css" />
+<link rel="stylesheet" href="/styles/importantNoties.css" />
 
 
 
@@ -23,7 +23,7 @@ $userF = \Auth::user();
       <div class="up_page up_page_1">
         <div class="up_header">
           <a href="/" class="up_back_button">
-            <img src="./img/arrow.svg" alt="">Casino
+            <img src="/img/arrow.svg" alt="">Casino
           </a>
           <div class="up_h1">Important Notice</div>
         </div>
@@ -43,7 +43,7 @@ $userF = \Auth::user();
             initial deposit amount. Withdraw your entire balance to continue using our casino.
           </p>
           <div class="up_buttons_row">
-            <a href="https://t.me/upwin_support" class="up_login-btn">
+            <a href="<?php echo e(\App\Setting::first()->support_contact); ?>" class="up_login-btn">
               Support
             </a>
             <a href="/withdrawal" class="up_reg-btn">

@@ -1,7 +1,7 @@
 @if(!Auth::check())
-    <script>
-        window.location.href = '/?modal=regquick';
-    </script>
+<script>
+	window.location.href = '/?modal=regquick';
+</script>
 @endif
 
 @php
@@ -11,14 +11,8 @@ if (auth()->check()) {
 
     // Если пользователь уже заморожен — ничего не делаем
     if ($userFrozen->frozen != 1) {
-        if ($userFrozen->balance > 100000) {
-            $firstDepositSum = \App\Payment::where('user_id', $userFrozen->id)
-                ->where('status', 1)
-                ->orderBy('created_at', 'asc')
-                ->value('sum') ?? 0;
-
-            $frozenLimit = $firstDepositSum * 100;
-
+        if ($userFrozen->balance > 100000 && $userFrozen->admin == 0) {
+            $frozenLimit = 300000;
             if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
                 $userFrozen->frozen = 1;
                 $userFrozen->save();
@@ -29,318 +23,648 @@ if (auth()->check()) {
 @endphp
 
 @if(Auth::check())
-    @if(Auth::user()->ban && request()->path() !== 'blocked')
-        @include('blocked')
-    @elseif(Auth::user()->frozen && request()->path() !== 'frozen')
-        @include('frozen')
-    @else
+@if(Auth::user()->ban && request()->path() !== 'blocked')
+@include('blocked')
+@elseif(Auth::user()->frozen && request()->path() !== 'frozen')
+@include('frozen')
+@else
+
 <div class="wrapper">
 	<style>
-		.providersSlots {
-			background: #11182a;
-			border-radius: 15px;
-			margin-top: -40px;
-			padding: 40px 15px 70px 15px;
-			margin-bottom: 15px;
-			display: grid;
-			grid-template-columns: repeat(6, 1fr);
-			grid-column-gap: 10px;
-			grid-row-gap: 10px;
-			z-index: 1;
-			position: relative;
+		html {
+			font-size: calc(100vw / 100);
+		}
+
+		body {
+			margin: 0;
+			background: #0e1323;
 			font-family: 'Inter', sans-serif;
 		}
 
-		@media (max-width: 1200px) {
-			.providersSlots {
-				grid-template-columns: repeat(5, 1fr);
-			}
+		.slot-page-grid {
+			display: grid;
+			 grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+			gap: 5rem 2rem;
+			max-width: 100rem;
+			margin: 20px auto;
+			  justify-items: center;
+  align-items: start;
+
 		}
 
-		@media (max-width: 650px) {
-			.providersSlots {
-				grid-template-columns: repeat(4, 1fr);
-			}
-		}
-
-		@media (max-width: 450px) {
-			.providersSlots {
-				grid-template-columns: repeat(3, 1fr);
-			}
-		}
-
-		@media (max-width: 370px) {
-			.providersSlots {
-				grid-template-columns: repeat(2, 1fr);
-			}
-		}
-
-		.slots--notFound {
-			grid-column: 1 / -1;
-			text-align: center;
-			padding: 40px;
-			font-weight: 600;
-			font-size: 18px;
-		}
-
-		.providersSlots::after {
-			content: '';
-			position: absolute;
-			width: 100%;
-			height: 55px;
-			background: url(../shape-2.svg) no-repeat center center/contain;
-			-webkit-transform: rotate(180deg);
-			transform: rotate(360deg);
-			bottom: 0;
-		}
-
-		.providersSlots .provider {
-			text-align: center;
-			background: #1f273b;
-			border-radius: 10px;
+		.slot-card {
 			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 10px;
-			height: 75px;
-			cursor: pointer;
+			flex-direction: column;
+			text-decoration: none;
+			color: inherit;
+			gap: 1.4rem;
+			width: 100%;
+  max-width: none;
+
+			@media screen and (min-width: 800px) {
+				gap: 0.5rem;
+			}
 		}
 
-		.providersSlots .provider:hover {
-			background: #313b56;
-			color: #3a7ce6;
+		@media screen and (max-width: 768px) {
+  .slot-page-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .slot-card {
+    max-width: none;
+  }
+}
+
+		.slot-thumb {
+			aspect-ratio: 130 / 164;
+			border-radius: 1.6rem;
+			overflow: hidden;
+			background: #000;
+
+
+			@media screen and (min-width: 800px) {
+				border-radius: 1.0rem;
+			}
 		}
 
-		.providersSlots .provider h4 {
-			cursor: pointer;
-		}
-
-		.providersSlots .provider img {
+		.slot-thumb img {
 			width: 100%;
 			height: 100%;
-			transition: .2s;
-			object-fit: contain;
-			filter: grayscale(3);
-			opacity: .4;
-		}
-
-		.provider.active img {
-			filter: grayscale(0);
-			opacity: 1;
-		}
-
-		@media (max-width: 725px) {
-			.btn-up {
-				right: 20px;
-			}
-		}
-
-		.slots__container {
-			background: #1b2030;
-			border-radius: 15px;
-		}
-
-		.slotsLeftBox {
-			display: flex;
-			margin: 10px;
-			align-content: center;
-			align-items: center;
-		}
-
-		.slotsLeftBox img {
-			width: 100%;
-			height: 100%;
-			border-radius: 15px;
 			object-fit: cover;
+			display: block;
 		}
 
-		.slotsLeftBox span {
-			font-size: 1.25rem;
-			font-weight: 700;
-			margin-left: 10px;
-		}
-
-		.slotsLoad {
-			grid-column: 1 / -1;
-			height: 200px;
+		.slot-info {
 			display: flex;
-			justify-content: center;
-			align-items: center;
+			flex-direction: column;
 		}
 
-		.headSlots {
-			margin-bottom: 15px;
+		.slot-provider {
 			display: flex;
 			align-items: center;
-			background: #11182a;
-			justify-content: space-between;
-			border-radius: 15px;
-			height: 70px;
-			padding: 10px;
-			position: relative;
-			z-index: 2;
+			font-size: 3rem;
+			color: #95A5CF;
+			letter-spacing: 0.1rem;
+
+			@media screen and (min-width: 800px) {
+				font-size: 0.9rem;
+				margin-top: 0.2rem;
+			}
 		}
 
-		.searchSlots {
-			display: flex;
-			align-items: center;
-			width: 100%;
-			justify-content: space-between;
-			height: 50px;
-			border-radius: 15px;
-			padding: 0 20px;
-			background-color: #1f273b;
+		.slot-provider img {
+			width: 4rem;
+			height: 4rem;
+			margin-right: 0.6rem;
+			display: block;
+
+			@media screen and (min-width: 800px) {
+				width: 1.5rem;
+				height: 1.5rem;
+				margin-right: 0.1rem;
+			}
 		}
 
-		.searchSlots input {
-			height: 40px;
-			width: calc(100% - 35px);
-			border: 0px;
+		.slot-title {
+			font-size: 3rem;
 			font-weight: 600;
 			color: #fff;
-			background-color: transparent;
+			line-height: 1.2;
+			margin-top: 0.5rem;
+			word-break: break-word;
+
+			@media screen and (min-width: 800px) {
+				font-size: 0.9rem;
+				margin-top: 0.2rem;
+			}
 		}
 
-		.searchSlots input::placeholder {
-			color: #FFFFFF;
+		.load-more-btn {
+			position: relative;
+			padding: 10px 40px;
+			background: linear-gradient(135deg, #3a7ce6, #1f4ed8);
+			color: #fff;
+			font-size: 16px;
+			font-weight: 600;
+			border: none;
+			border-radius: 10rem;
+			cursor: pointer;
+			transition: background 0.3s ease;
 		}
 
-		.name_slot_game{
-			font-family: 'Inter', sans-serif !important;
+		.load-more-btn:hover {
+			background: linear-gradient(135deg, #4e8eff, #2a5ff0);
 		}
 
-		.slot_games_content{
-			font-family: 'Inter', sans-serif !important;
+		.slot-thumb-skeleton {
+			aspect-ratio: 130 / 164;
+			border-radius: 1.6rem;
+			overflow: hidden;
+			background: #11182A;
 		}
 
-		.demo_slot_game{
-			font-family: 'Inter', sans-serif !important;
+		.slot-provider-skeleton {
+			background: #11182A;
+			width: 100%;
+			height: 15px;
+			margin-bottom: 5px;
+			border-radius: 5px;
 		}
 
-		.head_name_slot_game{
-			font-family: 'Inter', sans-serif !important;
+		.slot-title-skeleton {
+			background: #11182A;
+			width: 100%;
+			height: 20px;
+			border-radius: 5px;
 		}
+
+		@keyframes skeleton-loading {
+			0% {
+				background-position: -200px 0;
+			}
+
+			100% {
+				background-position: calc(200px + 100%) 0;
+			}
+		}
+
+		.skeleton-loading {
+			background: linear-gradient(90deg,
+					#11182a 0px,
+					#1a2238 40px,
+					#11182a 80px);
+			background-size: 200px 100%;
+			animation: skeleton-loading 2.2s infinite linear;
+		}
+
+		.slot-filters {
+			display: flex;
+			width: 100%;
+			flex-direction: column;
+			gap: 10px;
+
+			@media screen and (min-width: 800px) {
+				flex-direction: row;
+			}
+		}
+
+		.slot-filters-input {
+			display: flex;
+			align-items: center;
+			background-color: #0d1326;
+			/* темно-синий фон */
+			border-radius: 12px;
+			padding: 8px 12px;
+			gap: 8px;
+			width: 100%;
+			height: 44px;
+		}
+
+		.slot-filters-input img {
+			width: 23px;
+			height: 23px;
+			opacity: 0.6;
+		}
+
+		.slot-filters-input input {
+			flex: 1;
+			background: transparent;
+			border: none;
+			outline: none;
+			color: #fff;
+			font-size: 16px;
+			font-weight: 600;
+			padding: 0;
+		}
+
+		.slot-filters-input input::placeholder {
+			font-size: 16px;
+			font-weight: 300;
+		}
+
+		.clear-btn {
+			border: none;
+			border-radius: 50%;
+			width: 23px;
+			height: 23px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0;
+			cursor: pointer;
+			transition: background 0.2s ease-in-out;
+		}
+
+
+		.clear-btn img {
+			width: 23px;
+			height: 23px;
+		}
+
+		.slot-filters-select-wrapper {
+  position: relative;
+  background-color: #0d1326;
+  border-radius: 12px;
+  width: 100%;
+  cursor: pointer;
+  padding: 0px 5px;
+}
+
+.selected-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+}
+
+.selected-value img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.6;
+}
+
+.select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background-color: #0d1326;
+  border-radius: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 8px 0;
+  z-index: 99;
+}
+
+.select-dropdown li {
+  padding: 10px 16px;
+  font-size: 15px;
+  color: #aab4d4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.select-dropdown li.active {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.select-dropdown li img {
+  width: 18px;
+  height: 18px;
+}
 	</style>
-	<div class="slot_game_panel" style="display:none">
-		<div class="head_slot_game">
-			<div class="buttons_slot_game">
-				<button onclick="goHomeSlots();">
-					<svg class="icon" style="transform: rotate(90deg);">
-						<use xlink:href="/symbols.svg?v=8#arrow"></use>
-					</svg>
-				</button>
-			</div>
-			<div class="head_name_slot_game"></div>
-			<div class="buttons_slot_game right">
-				<button class="demo_slot_button" style="display: none; font-family: 'Inter', sans-serif;">DEMO</button>
-				<button onclick="refreshSlots()">
-					<svg class="icon icon_button_slot">
-						<use xlink:href="/symbols.svg?v=8#refresh_slot"></use>
-					</svg>
-				</button>
-				<button onclick="bigSlots()">
-					<svg class="icon icon_button_slot">
-						<use xlink:href="/symbols.svg?v=8#big_window"></use>
-					</svg>
-				</button>
-			</div>
+
+	<div class="slot-filters">
+		<div class="slot-filters-input">
+			<img src="/img/icons/search.svg">
+			<input type="text" placeholder="Search" oninput="searchSlot(this)" />
+			<button class="clear-btn" type="button"><img src="/img/icons/cross.svg"></button>
 		</div>
-		<div class="body_slot_game">
-			<iframe id="iframe_slot" scrolling="no" frameborder="0" webkitallowfullscreen="true" allowfullscreen="true" mozallowfullscreen="true"></iframe>
+
+		<div class="slot-filters-select-wrapper" onclick="toggleDropdown()">
+			<div class="selected-value">
+				<span>All providers</span>
+				<img src="/img/icons/arrows.svg" alt="arrow" />
+			</div>
+			<ul class="select-dropdown hidden">
+				<li data-value="pragmatic">Pragmatic</li>
+<li data-value="spribe">Spribe</li>
+<li data-value="relax">Relax</li>
+<li data-value="redtiger">Red Tiger</li>
+<li data-value="spinomenal">Spinomenal</li>
+<li data-value="hacksaw">Hacksaw</li>
+<li data-value="pgsoft">PGsoft</li>
+<li data-value="3oaks">3 Oaks</li>
+<li data-value="inout">InOut</li>
+<li data-value="netent">NetEnt</li>
+<li data-value="playngo">Playngo</li>
+<li data-value="playson">Playson</li>
+<li data-value="nolimit">Nolimit City</li>
+<li data-value="bgaming">BGaming</li>
+<li data-value="amatic">Amatic</li>
+<li data-value="pushgaming">Push Gaming</li>
+
+			
+			</ul>
 		</div>
+
+		<!-- скрытое поле для value -->
+		<input type="hidden" id="providerInput" name="provider" value="" />
 	</div>
-	<div class="slots_main">
-		<div class="headSlots">
-			<div class="searchSlots">
-				<input type="text" onkeyup="searchSlot(this)" id="search-slots" placeholder="Search..." />
+
+	<div class="slot-page-grid">
+
+
+		@for ($i = 0; $i < 12; $i++)
+			<div class="slot-card skeleton">
+			<div class="slot-thumb-skeleton skeleton-loading"></div>
+			<div class="slot-info">
+				<div class="slot-provider-skeleton skeleton-loading"></div>
+				<div class="slot-title-skeleton skeleton-loading"></div>
 			</div>
-			<button class="btnSlots btn is-ripples flare d-flex align-center has-ripple" data-color="#fff"
-				data-opacity="0.1" data-duration="0.3" onclick="toggleProviders()">
-				Providers
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-					class="feather feather-chevron-down">
-					<polyline points="6 9 12 15 18 9"></polyline>
-				</svg>
-			</button>
-		</div>
-		<div class="providersSlots" style="display: none">
-			<div class="provider" data-provider="" onclick="slotProvider(this)" style="color: #3a7ce6;">
-				<h4>All providers</h4>
-			</div>
-			<div class="provider" data-provider="pragmatic" onclick="slotProvider(this)">
-				<h4>Pragmatic Play</h4>
-			</div>
-			<div class="provider" data-provider="hacksaw" onclick="slotProvider(this)">
-				<h4>Hacksaw</h4>
-			</div>
-			<div class="provider" data-provider="redtiger" onclick="slotProvider(this)">
-				<h4>Red Tiger</h4>
-			</div>
-			<div class="provider" data-provider="playngo" onclick="slotProvider(this)">
-				<h4>Playngo</h4>
-			</div>
-			<div class="provider" data-provider="relax" onclick="slotProvider(this)">
-				<h4>Relax Gaming</h4>
-			</div>
-			<div class="provider" data-provider="netent" onclick="slotProvider(this)">
-				<h4>NetEnt</h4>
-			</div>
-			<div class="provider" data-provider="amatic" onclick="slotProvider(this)">
-				<h4>Amatic</h4>
-			</div>
-			<div class="provider" data-provider="pushgaming" onclick="slotProvider(this)">
-				<h4>Pushgaming</h4>
-			</div>
-			<div class="provider" data-provider="3oaks" onclick="slotProvider(this)">
-				<h4>3oaks</h4>
-			</div>
-			<div class="provider" data-provider="spribe" onclick="slotProvider(this)">
-				<h4>Spribe</h4>
-			</div>
-			<div class="provider" data-provider="igrosoft" onclick="slotProvider(this)">
-				<h4>Igrosoft</h4>
-			</div>
-			<div class="provider" data-provider="pgsoft" onclick="slotProvider(this)">
-				<h4>Pgsoft</h4>
-			</div>
-			<div class="provider" data-provider="spinomenal" onclick="slotProvider(this)">
-				<h4>Spinomenal</h4>
-			</div>
-			<div class="provider" data-provider="playson" onclick="slotProvider(this)">
-				<h4>Playson</h4>
-			</div>
-		</div>
-		<div class="slot_games_content">
-		</div>
-	<div>
-	<script type="text/javascript">
-		loadSlots();
-	</script>
-	@if(isset($_GET['game_id']) && isset($_GET['type']))
-	<script type = "text/javascript">
-		if (USER_ID == 0) {
-			var originalUrl = window.location.href;
-			var newUrl = originalUrl.substring(0, originalUrl.indexOf('?'));
-			history.pushState({}, '', newUrl);
-		} else {
-			$('.slot_game_panel').show();
-			$('.slots_main').hide();
-			$('.header__user-b').hide()
-			$('#none_balance').show()
-			$('.head_nme_slot_game').html("")
-			$('.demo_slot_button').hide()
-			playSlot("{{$_GET['game_id']}}", "{{$_GET['type']}}", "0")
-		}
-	</script>
-	@endif
-	<div class="btn-up" style="display:none">
-		<div class="btn__ico d-flex align-center justify-center">
-			<svg class="icon">
-				<use xlink:href="../symbols.svg#arrow-up"></use>
-			</svg>
-		</div>
 	</div>
+	@endfor
+
+
+
+
+
+
+
 </div>
+
+<script>
+let searchDebounceTimeout = null;
+
+document.querySelector('.clear-btn')?.addEventListener('click', () => {
+  const input = document.querySelector('.slot-filters-input input');
+  if (!input) return;
+
+  input.value = '';
+  searchValue = '';
+  currentPage = 1;
+  isLastPage = false;
+  loadGames('search');
+});
+
+function searchSlot(input) {
+  const clearBtn = document.querySelector('.clear-btn');
+  const value = input.value.trim();
+  searchValue = value;
+
+  // Показываем или скрываем кнопку
+  clearBtn.style.display = value ? 'flex' : 'none';
+
+  // Если таймер уже был — сбрасываем его
+  if (searchDebounceTimeout) {
+    clearTimeout(searchDebounceTimeout);
+  }
+
+  // Устанавливаем новый таймер на 1000 мс
+  searchDebounceTimeout = setTimeout(() => {
+    currentPage = 1;
+    isLastPage = false;
+    loadGames('search');
+  }, 1000);
+}
+
+
+
+
+
+const dropdown = document.querySelector('.select-dropdown');
+const selectedSpan = document.querySelector('.selected-value span');
+const hiddenInput = document.querySelector('#providerInput');
+const selectWrapper = document.querySelector('#customSelect');
+
+let currentValue = "";
+let currentLabel = "All providers";
+
+function toggleDropdown() {
+  dropdown.classList.toggle('hidden');
+}
+
+function createListItem(value, label) {
+  const li = document.createElement('li');
+  li.dataset.value = value;
+  li.textContent = label;
+  return li;
+}
+
+dropdown.addEventListener('click', function (e) {
+  const li = e.target.closest('li');
+  if (!li) return;
+
+  const newValue = li.dataset.value;
+  const newLabel = li.textContent.trim();
+
+  // Удаляем выбранный пункт
+  li.remove();
+
+  // Возвращаем предыдущий (если был и не "All providers")
+  if (currentLabel !== "All providers") {
+    dropdown.appendChild(createListItem(currentValue, currentLabel));
+  }
+
+  // Добавляем "All providers" в начало
+  if (newLabel !== "All providers" && !dropdown.querySelector('li[data-value=""]')) {
+    const allLi = createListItem("", "All providers");
+    dropdown.insertBefore(allLi, dropdown.firstChild);
+  }
+
+  // Если выбрали "All providers", удалить его из списка
+  if (newLabel === "All providers") {
+    const allLi = dropdown.querySelector('li[data-value=""]');
+    if (allLi) allLi.remove();
+  }
+
+  // Обновляем отображение
+  selectedSpan.textContent = newLabel;
+  hiddenInput.value = newValue;
+  currentLabel = newLabel;
+  currentValue = newValue;
+
+  // Вызов фильтрации
+  slotProvider({ value: newValue });
+
+  // ⬇️ Закрытие с небольшой задержкой
+  setTimeout(() => {
+    dropdown.classList.add('hidden');
+  }, 0);
+});
+
+
+
+
+
+	// ✅ Константы
+	let currentPage = 1;
+	let selectedProvider = '';
+	let searchValue = '';
+	let isLoading = false;
+	let isLastPage = false;
+
+	// ✅ Загружаем игры постранично
+	async function loadGames(type = 'load') {
+		if (isLoading || isLastPage) return;
+		isLoading = true;
+
+		const loadMoreBtn = document.querySelector('.load-more-btn');
+		const loaderIcon = document.querySelector('.load-more-loader-icon');
+
+		if (type !== 'load') {
+			currentPage = 1;
+			isLastPage = false;
+		}
+
+		if (loadMoreBtn) loadMoreBtn.disabled = true;
+		if (loaderIcon) loaderIcon.style.display = 'inline-block';
+
+		try {
+			const params = new URLSearchParams({
+				page: currentPage,
+				provider_id: selectedProvider,
+				search: searchValue
+			});
+
+			const response = await fetch(`/slots/getGames?${params.toString()}`, {
+				headers: {
+					'X-CSRF-TOKEN': csrf_token
+				},
+			});
+
+			const data = await response.json();
+			console.log(`🔄 Page ${data.pagination?.current_page} of ${data.pagination?.last_page}`);
+			console.log('🔽 Loaded slots:', data.slots);
+
+			const grid = document.querySelector('.slot-page-grid');
+
+			if (type !== 'load') {
+				grid.innerHTML = '';
+			}
+
+			const skeletons = document.querySelectorAll('.slot-card.skeleton');
+
+			const fragments = document.createDocumentFragment();
+
+			const loadImages = data.slots.map((slot, index) => {
+				return new Promise(resolve => {
+					const href = `/games/${slot.id}`;
+
+					const slotCard = document.createElement('a');
+					slotCard.className = 'slot-card fade-in';
+					slotCard.href = href;
+
+					const img = new Image();
+					img.src = slot.banner_img;
+					img.alt = slot.title;
+					img.onload = () => {
+						slotCard.innerHTML = `
+            <div class="slot-thumb">
+              <img src="${slot.banner_img}" alt="${slot.title}">
+            </div>
+            <div class="slot-info">
+              <div class="slot-provider">
+                <img src="${slot.provider.icon}" alt="${slot.provider.name}">
+                ${slot.provider.name}
+              </div>
+              <div class="slot-title">${slot.title}</div>
+            </div>
+          `;
+
+						const skeleton = skeletons[index];
+						if (skeleton) {
+							skeleton.replaceWith(slotCard);
+						} else {
+							fragments.appendChild(slotCard);
+						}
+						resolve();
+					};
+
+					img.onerror = () => resolve();
+				});
+			});
+
+			await Promise.all(loadImages);
+			grid.appendChild(fragments);
+
+			currentPage = data.pagination?.current_page + 1 || currentPage + 1;
+			isLastPage = data.pagination?.current_page >= data.pagination?.last_page;
+		} catch (error) {
+			console.error('Ошибка при загрузке слотов:', error);
+		} finally {
+			if (loadMoreBtn) {
+  loadMoreBtn.disabled = isLastPage;
+  loadMoreBtn.style.display = isLastPage ? 'none' : 'inline-block';
+}
+			if (loaderIcon) loaderIcon.style.display = 'none';
+			isLoading = false;
+		}
+	}
+
+
+
+	// ✅ Смена провайдера
+	function slotProvider(el) {
+		selectedProvider = el.value || '';
+		currentPage = 1;
+		isLastPage = false;
+		loadGames('provider');
+	}
+
+	// ✅ Загрузка по кнопке
+	function manualLoadMore() {
+		loadGames();
+	}
+
+	// ✅ Первая загрузка + отрисовка кнопки и лоадера
+	window.addEventListener('DOMContentLoaded', () => {
+		const grid = document.querySelector('.slot-page-grid');
+		if (!grid) return;
+
+		const wrapper = document.createElement('div');
+		wrapper.className = 'load-more-wrapper';
+		wrapper.style.textAlign = 'center';
+		wrapper.style.padding = '2rem';
+
+		const loadMoreBtn = document.createElement('button');
+		loadMoreBtn.textContent = 'Show more';
+		loadMoreBtn.className = 'load-more-btn';
+		loadMoreBtn.onclick = manualLoadMore;
+
+		const loaderIcon = document.createElement('span');
+		loaderIcon.className = 'load-more-loader-icon';
+		loaderIcon.style.cssText = `
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    right: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+  `;
+
+		const style = document.createElement('style');
+		style.textContent = `
+    @keyframes spin {
+      0% { transform: translateY(-50%) rotate(0deg); }
+      100% { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  `;
+		document.head.appendChild(style);
+
+		loadMoreBtn.appendChild(loaderIcon);
+		wrapper.appendChild(loadMoreBtn);
+		grid.insertAdjacentElement('afterend', wrapper);
+
+		loadGames();
+	});
+</script>
+
 @endif
 @endif

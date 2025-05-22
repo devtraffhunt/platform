@@ -88,8 +88,8 @@ public function bet(Request $request){
     if($auto < 1.1) return response(['error'=>'Auto withdrawal from 1.1']);
 
     if($user->balance > 100000){
-        $firstDepositSum = \App\Payment::where('user_id', $user->id)->where('status', 1)->orderBy('created_at', 'asc')->value('sum') ?? 0;
-                $frozenLimit = $firstDepositSum * 100;
+        
+                $frozenLimit = 300000;
                 if($user->balance >= $frozenLimit && $frozenLimit != 0){
                     $user->frozen = 1;
                     $user->save();

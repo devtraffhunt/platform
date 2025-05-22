@@ -1,17 +1,8 @@
-const mysql = require('mysql');
-const util = require('util');
 const Redis = require('ioredis');
 const requestify = require('requestify');
+const { query } = require('../../utils/db');
 
 module.exports = (io) => {
-  const client = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-  });
-  client.query = util.promisify(client.query);
-  client.query('SET SESSION wait_timeout = ' + process.env.MYSQL_WAIT_TIMEOUT);
 
   const redis = new Redis(process.env.REDIS_URL);
   const domain = process.env.DOMAIN;
@@ -131,7 +122,7 @@ io.on('connection', function(socket) {
         if(statusCrashGo == 1){
             let gameId = parseInt(msg.gameId);
             
-            var gameCrash = await client.query('SELECT * FROM crash WHERE id = ?', [gameId])
+            var gameCrash = await query('SELECT * FROM crash WHERE id = ?', [gameId])
 
             crash_userId = gameCrash[0].user_id
             crash_userBet = gameCrash[0].bet
@@ -139,7 +130,7 @@ io.on('connection', function(socket) {
             crash_userCoeff = now_iks
             crash_userWin = crash_userCoeff * crash_userBet        
 
-            await client.query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
+            await query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
 
             io.sockets.emit('crashUpdate', {
                 type: '1',
@@ -154,18 +145,18 @@ io.on('connection', function(socket) {
 
             console.log('Bank: '+bankCrash+' WinAllCrash: '+winAllCrash)
 
-            var user_bd = await client.query('SELECT balance, demo_balance, type_balance FROM users WHERE id = ?', [crash_userId])
+            var user_bd = await query('SELECT balance, demo_balance, type_balance FROM users WHERE id = ?', [crash_userId])
 
             type_balance = user_bd[0]['type_balance']
 
             if(type_balance == 0){
                 balanceLast = user_bd[0]['balance']
                 balanceNew = crash_userWin + user_bd[0]['balance']
-                await client.query('UPDATE users SET balance = ?  WHERE id = ?', [balanceNew, crash_userId])
+                await query('UPDATE users SET balance = ?  WHERE id = ?', [balanceNew, crash_userId])
             }else{
                 balanceLast = user_bd[0]['demo_balance']
                 balanceNew = crash_userWin + user_bd[0]['demo_balance']
-                await client.query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
+                await query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
             }
             
 
@@ -244,7 +235,7 @@ async function waitCrash() {
     statusCrash = 0;
     crashBoom = 0
     var preFinishCrash = false;
-    await client.query('UPDATE settings SET crash_status = ?', [0])
+    await query('UPDATE settings SET crash_status = ?', [0])
     startCrash()
     return
 }
@@ -277,7 +268,7 @@ function startCrash() {
         })
         if (timer_crash <= 1) {
             io.sockets.emit('crashPrepare')
-            await client.query('UPDATE settings SET crash_status = ?', [1])
+            await query('UPDATE settings SET crash_status = ?', [1])
         }
 
         if (timer_crash <= 0 && !preFinishCrash) {
@@ -335,7 +326,7 @@ function startCrash() {
               // и в конце:
               result_crash = resultInt / 100;
 
-            var sssss = await client.query('SELECT * FROM settings')
+            var sssss = await query('SELECT * FROM settings')
 
             bankCrash = sssss[0].crash_bank;
 
@@ -355,7 +346,7 @@ function startCrash() {
             _data = [];
             _label = [];
 
-            await client.query('UPDATE settings SET crash_status = ?', [3])
+            await query('UPDATE settings SET crash_status = ?', [3])
             
 
             start_des = 0
@@ -369,7 +360,7 @@ function startCrash() {
             var gameCrashGo = 0
             var IndexCrash = 0
 
-            const crash = await client.query('SELECT * FROM crash ORDER BY auto ASC')
+            const crash = await query('SELECT * FROM crash ORDER BY auto ASC')
             crash.forEach(function(e, i, arr) {
                 if (gameCrash[e.auto] == null){
                     gameCrash[e.auto] = 0
@@ -387,7 +378,7 @@ function startCrash() {
 
             console.log(gameCrash)
 
-            var select_crash_counting = await client.query('SELECT SUM(`bet`) FROM crash WHERE result = 0')
+            var select_crash_counting = await query('SELECT SUM(`bet`) FROM crash WHERE result = 0')
             winAllCrash = select_crash_counting[0]['SUM(`bet`)']
             if(winAllCrash == null){
                 winAllCrash = 0
@@ -395,7 +386,7 @@ function startCrash() {
             betAllCrash = winAllCrash
             console.log('Bank: '+bankCrash+' WinAllCrash: '+winAllCrash)
 
-            var settings_crash = await client.query('SELECT * FROM settings')
+            var settings_crash = await query('SELECT * FROM settings')
             var youtube_crash = settings_crash[0].youtube_crash;
             var crash_bank = settings_crash[0].crash_bank;
             var crash_boom = settings_crash[0].crash_boom;
@@ -446,12 +437,12 @@ function startCrash() {
                 if (off == 1) {
                     statusCrashGo = 0
 
-                    var sel_crash = await client.query('SELECT user_id, bet, id, auto FROM crash WHERE result = 0 and auto <= ?', [now_iks])
+                    var sel_crash = await query('SELECT user_id, bet, id, auto FROM crash WHERE result = 0 and auto <= ?', [now_iks])
 
-                    var sel_crash_bet = await client.query('SELECT SUM(`bet`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
+                    var sel_crash_bet = await query('SELECT SUM(`bet`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
                     bets = sel_crash_bet[0]['SUM(`bet`)']
 
-                    var sel_crash_win = await client.query('SELECT SUM(`win`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
+                    var sel_crash_win = await query('SELECT SUM(`win`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
                     wins = sel_crash_win[0]['SUM(`win`)']
 
                     bankCrash -= wins
@@ -478,20 +469,20 @@ function startCrash() {
                         crash_userCoeff = e.auto
                         crash_userWin = crash_userCoeff * crash_userBet        
                         
-                        await client.query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
+                        await query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
 
-                        var user_bd = await client.query('SELECT balance, demo_balance, type_balance FROM users WHERE id = ?', [crash_userId])
+                        var user_bd = await query('SELECT balance, demo_balance, type_balance FROM users WHERE id = ?', [crash_userId])
 
                         type_balance = user_bd[0]['type_balance']
 
                         if(type_balance == 0){
                             balanceLast = user_bd[0]['balance']
                             balanceNew = crash_userWin + user_bd[0]['balance']
-                            await client.query('UPDATE users SET balance = ?  WHERE id = ?', [balanceNew, crash_userId])
+                            await query('UPDATE users SET balance = ?  WHERE id = ?', [balanceNew, crash_userId])
                         }else{
                             balanceLast = user_bd[0]['demo_balance']
                             balanceNew = crash_userWin + user_bd[0]['demo_balance']
-                            await client.query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
+                            await query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
                         }
                         
 
@@ -515,7 +506,7 @@ function startCrash() {
                         label: _label
                     })
 
-                    await client.query('UPDATE settings SET crash_status = 2, crash_boom = 0, crash_result = 0, youtube_crash = 0')
+                    await query('UPDATE settings SET crash_status = 2, crash_boom = 0, crash_result = 0, youtube_crash = 0')
 
 
 
@@ -529,7 +520,7 @@ function startCrash() {
                     
                     console.log('Win done...') 
 
-                    var selectcrash = await client.query('SELECT * FROM crash')
+                    var selectcrash = await query('SELECT * FROM crash')
                     var arr_win = []
                     var arr_lose = []
                     selectcrash.forEach(function(e, i, arr) {
@@ -550,15 +541,15 @@ function startCrash() {
                     })
 
                     if (youtube_crash == 0 && auto_crash == 1 && crash_boom == 0) {
-                        await client.query('UPDATE settings SET crash_bank = ?', [bankCrash])
+                        await query('UPDATE settings SET crash_bank = ?', [bankCrash])
                     }else{
-                        await client.query('UPDATE settings SET crash_bank = crash_bank - ?', [betAllCrash])
+                        await query('UPDATE settings SET crash_bank = crash_bank - ?', [betAllCrash])
                     }
 
-                    await client.query('TRUNCATE crash')
+                    await query('TRUNCATE crash')
                     var str = String(result_crash.toFixed(2));
-                    await client.query('INSERT INTO `crash_history` (`num`) VALUES (?)', [result_crash])
-                    const s = await client.query('SELECT * FROM crash_history order by id desc LIMIT 0,30')
+                    await query('INSERT INTO `crash_history` (`num`) VALUES (?)', [result_crash])
+                    const s = await query('SELECT * FROM crash_history order by id desc LIMIT 0,30')
                     now_iks = 0
 
                     io.sockets.emit('crashFinish', {
@@ -582,12 +573,12 @@ function startCrash() {
                         if(gameCrashCoeffs[IndexCrash] <= now_iks){
                             IndexCrash += 1
                             upd = 0
-                            var sel_crash = await client.query('SELECT user_id, bet, id, auto FROM crash WHERE result = 0 and auto <= ?', [now_iks])
+                            var sel_crash = await query('SELECT user_id, bet, id, auto FROM crash WHERE result = 0 and auto <= ?', [now_iks])
                             
-                            var sel_crash_bet = await client.query('SELECT SUM(`bet`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
+                            var sel_crash_bet = await query('SELECT SUM(`bet`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
                             bets = sel_crash_bet[0]['SUM(`bet`)']
 
-                            var sel_crash_win = await client.query('SELECT SUM(`win`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
+                            var sel_crash_win = await query('SELECT SUM(`win`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
                             wins = sel_crash_win[0]['SUM(`win`)']
 
                             bankCrash -= wins
@@ -611,20 +602,20 @@ function startCrash() {
                                 crash_userCoeff = e.auto
                                 crash_userWin = crash_userCoeff * crash_userBet        
 
-                                await client.query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
+                                await query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
 
-                                var user_bd = await client.query('SELECT balance, demo_balance, type_balance FROM users WHERE id = ?', [crash_userId])
+                                var user_bd = await query('SELECT balance, demo_balance, type_balance FROM users WHERE id = ?', [crash_userId])
 
                                 type_balance = user_bd[0]['type_balance']
 
                                 if(type_balance == 0){
                                     balanceLast = user_bd[0]['balance']
                                     balanceNew = crash_userWin + user_bd[0]['balance']
-                                    await client.query('UPDATE users SET balance = ?  WHERE id = ?', [balanceNew, crash_userId])
+                                    await query('UPDATE users SET balance = ?  WHERE id = ?', [balanceNew, crash_userId])
                                 }else{
                                     balanceLast = user_bd[0]['demo_balance']
                                     balanceNew = crash_userWin + user_bd[0]['demo_balance']
-                                    await client.query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
+                                    await query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
                                 }
                                 
 

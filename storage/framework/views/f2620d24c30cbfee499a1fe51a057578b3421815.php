@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.Dashboards'); ?> <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -81,7 +79,7 @@
             <div class="card">
                 <div class="card-body chartAdmin1">
                     <div class="d-sm-flex flex-wrap">
-                        <h4 class="card-title mb-4">Статистика</h4>
+                        <h4 class="card-title mb-4">Депозиты</h4>
                         <div class="ms-auto">
                             <ul class="nav nav-pills stat-pills">
                                 <li class="nav-item">
@@ -107,7 +105,7 @@
              <div class="card">
                 <div class="card-body chartAdmin2">
                     <div class="d-sm-flex flex-wrap">
-                        <h4 class="card-title mb-4">Статистика профита</h4>
+                        <h4 class="card-title mb-4">Статистика</h4>
                     </div>
 
                     <div id="chart2" class="apex-charts" dir="ltr"></div>

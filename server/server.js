@@ -17,7 +17,6 @@ const io = new Server(server, {
 });
 
 require('./src/games/crash/crash.module')(io);
-require('./src/modules/users/users.module')(io, client, redis);
 
 
 server.listen(process.env.PORT, () => {
