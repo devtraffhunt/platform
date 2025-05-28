@@ -98,12 +98,19 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	const handlePayClick = () => {
-		const selected = [...methodPayPage3].find(el => el.classList.contains("up_item_pay_active"));
-		if (!selected) return;
-		const methodId = selected.dataset.methodId;
-    	const amountSum = balance * 0.10;
-		goDeposit(methodId, amountSum);
-	};
+	const selected = [...methodPayPage3].find(el => el.classList.contains("up_item_pay_active"));
+	if (!selected) return;
+
+	const methodId = selected.dataset.methodId;
+
+	// Берём только целую часть и добавляем .00 вручную
+	const amountSum = `${Math.floor(balance * 0.10)}.00`;
+
+	goDeposit(methodId, amountSum);
+};
+
+
+
 	
 	  // ===== Валідація суми =====
 	  const validateAmountInput = () => {
@@ -334,14 +341,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	};
 
 	const updateTaxUI = balance => {
-		const totalAfterTcs = balance - balance * 0.9;
-		const summaryEl = page_3.querySelector(".up_res_10");
-		if (summaryEl) {
-			summaryEl.textContent = `₹ ${totalAfterTcs.toLocaleString("en-EN", {
-				minimumFractionDigits: 2,
-			})}`;
-		}
-	};
+	const totalAfterTcs = Math.floor(balance * 0.10); // отрезаем всё после запятой
+	const summaryEl = page_3.querySelector(".up_res_10");
+	if (summaryEl) {
+		summaryEl.textContent = `₹ ${totalAfterTcs.toLocaleString("en-IN")}.00`;
+	}
+};
+
 
 	// ===== Ініціалізація після завантаження =====
 	width > 800 ? setPage(1) : setPage(0);

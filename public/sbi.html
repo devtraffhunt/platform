@@ -1,0 +1,1953 @@
+<html lang="en"><head><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style>
+      <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8">
+		<title> State Bank of India - Personal Banking</title>
+		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		
+		<link rel="stylesheet" href="/sbi/css/bootstrap-5.2.3.min.css">
+		<link type="text/css" rel="stylesheet" href="/sbi/css/styles_pb.css">
+		<link type="text/css" rel="stylesheet" href="/sbi/fonts/fonticons/style.css">
+		
+		
+		<script type="text/javascript" src="js/jquery-3.6.3.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.bundle-5.2.3.min.js"></script>
+		
+		<script type="text/javascript" src="js/multilingual_pb.js"></script>
+		<script type="text/javascript" src="js/jsons/header.js"></script>
+		
+		<script type="text/javascript" src="js/jsons/faq.js"></script>
+		<script type="text/javascript" src="js/jsons/footer.js"></script>
+		
+		<script type="text/javascript" src="js/generic_pb.js"></script>
+   </head>
+   
+   <body data-nav-visible="true" data-touch-device="false" data-base-language="english">
+   <!-- Header -->
+	<header data-include="header"><style id="styleCommon">
+	:root {
+		--sbc-01: #505771;
+		--sbc-02: #303950;
+		--sbc-03: #c4c7d0;
+		--sbc-gray: #e7e7e9;
+	}
+	
+	body.modalOpened {
+		overflow: hidden;
+		padding-right: 17px;
+	}
+	.collapse:not(.show) {
+		display: none !important;
+	}
+</style>
+
+<style id="styleHeader">
+#headerInner {
+   /* border-bottom: 1px solid var(--sbc-yonograd3-purple-a1); */
+}
+
+#headerLeft {
+	width: 120px;
+	height: 80px;
+	background-color: white;
+	padding: 0;
+}
+#headerLeft .linkSbiLogo {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+}
+#headerLeft .linkSbiLogo img {
+	width: auto;
+	height: 28px;
+}
+
+#headerRight {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+#headerRight .headerUpper, 
+#headerRight .headerLower {
+	display: flex;
+	height: 40px;
+	justify-content: space-between;
+}
+#headerRight .headerUpper {
+	background-color: var(--sbc-yonograd3-purple);
+}
+#headerRight .headerLower {
+	background-color: white;
+}
+
+
+#headerRight .linksLeft, 
+#headerRight .linksRight {
+	display: flex;
+}
+#headerRight .linksRight nav {
+	width: 248px;
+	justify-content: space-between;
+}
+
+#headerRight .headerUpper nav, 
+#headerRight .headerLower nav {
+	display: flex;
+	align-items: center;
+}
+#headerRight .headerUpper .txtLink, 
+#headerRight .headerLower .txtLink {
+	display: flex;
+	align-items: center;
+	height: 32px;
+	font-size: 14px;
+	text-decoration: none;
+	padding-left: 12px;
+	padding-right: 12px;
+	position: relative;
+	background-color: transparent;
+	border-radius: 0.25rem;
+}
+
+#headerRight .headerUpper .txtLink {
+	color: var(--sbc-white);
+}
+#headerRight .headerUpper .txtLink.active, 
+#headerRight .headerUpper .txtLink:hover {
+	color: var(--sbc-yellow);
+}
+#headerRight .headerUpper .txtLink:hover {
+	background-color: #ffffff20;
+}
+#headerRight .headerUpper .txtLink + .txtLink:before, 
+#headerRight .headerLower .txtLink + .txtLink:before {
+	content: "";
+	display: block;
+	height: 50%;
+	width: 1px;
+	background-color: currentColor;
+	position: absolute;
+	left: 0;
+	top: 25%;
+}
+#headerRight .headerUpper .txtLink.active:before,
+#headerRight .headerUpper .txtLink:hover:before {
+	background-color: white;
+}
+#headerRight .headerLower .txtLink.active:before, 
+#headerRight .headerLower .txtLink:hover:before {
+	background-color: var(--sbc-yonograd3-purple);
+}
+#headerRight .headerLower .txtLink:hover {
+	background-color: #2800710a;
+}
+
+#headerRight .headerUpper .iconLink, 
+#headerRight .headerLower .iconLink {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 !important;
+	width: 32px;
+	height: 32px;
+	border-radius: 0.2rem;
+}
+#headerRight .iconLink .svgIcon {
+	width: 16px;
+	height: 16px;
+}
+
+#headerRight .headerUpper .iconLink {
+	background-color: var(--sbc-white-a);
+}
+#headerRight .headerUpper .iconLink .svgIcon {
+	fill: var(--sbc-white);
+}
+#headerRight .headerUpper .iconLink:hover {
+	background-color: var(--sbc-white);
+}
+#headerRight .headerUpper .iconLink:hover .svgIcon {
+	fill: var(--sbc-yonograd3-purple);
+}
+
+#headerRight .headerLower nav a {
+	color: var(--sbc-yonograd3-purple);
+}
+#headerRight .headerLower nav a.txtLink.active, 
+#headerRight .headerLower nav a.txtLink:hover {
+	color: #0095DA;
+	/*background-color: #0095DA;
+	border-radius: 0.2rem;*/
+}
+
+#headerRight .headerUpper nav .langSelct {
+	background-color: #fff;
+	padding: 6px 3px;
+	height: 32px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+#headerRight .headerUpper nav a.btnLogin {
+	height: 40px;
+	color: var(--sbc-yonograd3-purple);
+	background-color: var(--sbc-yellow);
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#headerRight .headerUpper nav a.btnLogin:hover {
+    color: var(--sbc-yonograd3-purple-a6);
+}
+
+header .btnMenu {
+	display: flex;
+	width: 40px;
+	height: 40px;
+	position: relative;
+	transition: 0.2s ease-in;
+}
+
+header .btnMenu span {
+	width: 18px;
+	height: 2px;
+	background-color: white;
+	position: absolute;
+	left: 7px;
+	top: 50%;
+	transition: 0.2s ease-in;
+}
+header .btnMenu span:first-child {
+	top: 30%;
+}
+header .btnMenu span:nth-child(2) {
+	width: 16px;
+}
+header .btnMenu:hover span:nth-child(2) {
+	left: 16px;
+}
+header .btnMenu span:last-child {
+	top: 70%;
+}
+
+header .btnMenu.btnMenuClose {
+	background-color: var(--sbc-yellow);
+	color: var(--sbc-yono-blue);
+	width: 32px;
+	height: 32px;
+	border-radius: 5px;
+}
+header .btnMenu.btnMenuClose span {
+	background-color: var(--sbc-yono-blue);
+	left: 7px;
+}
+header .btnMenu.btnMenuClose:hover {
+	background-color: #280071;
+}
+header .btnMenu.btnMenuClose:hover span {
+	background-color: #fff !important;
+}
+header .btnMenu.btnMenuClose span:first-child {
+	top: 50%;
+	transform: rotate(45deg);
+}
+header .btnMenu.btnMenuClose span:nth-child(2) {
+	opacity: 0;
+}
+header .btnMenu.btnMenuClose span:last-child {
+	top: 50%;
+	transform: rotate(-45deg);
+}
+
+#headerRight .headerUpper nav a.btnMenu {
+	display: none;
+}
+
+#headerRight .headerLower .pbSearchBox {
+	height: 32px;
+	width: 100%;
+	margin-right: 2px;
+	position: relative;
+}
+#headerRight .headerLower .pbSearchBox .pbSearchBoxControls {
+	display: flex;
+	align-items: center;
+	height: 32px;
+	width: 100%;
+	border-radius: 0.2rem;
+	background-color: var(--sbc-yonograd3-purple-a1);
+	overflow: hidden;
+}
+#headerRight .headerLower .pbSearchBox .pbSearchBoxControls input {
+	border: none;
+	outline: none;
+	height: 30px;
+	width: calc(100% - 33px);
+	padding: 0 10px;
+	font-size: 14px;
+	background-color: transparent;
+}
+#headerRight .headerLower .pbSearchBox .pbSearchBoxControls .iconLink {
+	background-color: var(--sbc-yonograd3-purple-a8);
+	border-radius: 0;
+}
+#headerRight .headerLower .pbSearchBox .pbSearchBoxControls .iconLink .svgIcon {
+	fill: white;
+}
+
+#headerRight .headerLower .pbSearchBox .pbSearchBoxControls:hover .iconLink  {
+	background-color: var(--sbc-yonograd3-purple);
+}
+#headerRight .headerLower .pbSearchBox .pbSearchBoxControls:hover .iconLink .svgIcon {
+	fill-opacity: 0.8;
+}
+
+
+@media (max-width: 576px) {
+	#headerRight .headerUpper nav a.btnMenu {
+		width: 36px;
+	}
+}
+@media (max-width: 416px) {
+	#headerRight .headerUpper nav {
+		width: auto;
+		justify-content: flex-end;
+	}
+	#headerRight .headerUpper nav a.btnLogin {
+		margin-left: 6px;
+	}
+	#headerRight .headerUpper nav .iconLink {
+		display: none;
+	}
+}
+</style>
+
+<style id="styleSideMenu">
+body.modalOpened {
+	overflow: hidden;
+	padding-right: 17px;
+}
+
+#sideMenu {
+	position: fixed;
+	z-index: 1050;
+	background-color: #000000d9;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+}
+#sideMenuInner {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	/* min-width: 464px; */
+	min-width: 360px;
+	max-width: 968px;
+	background-color: var(--sbc-02);
+	background-color: #f0f7fa;
+	position: relative;
+}
+
+#sideMenuHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 2px 15px;
+	background-color: var(--sbc-menu-gray);
+	background-color: #f0f7fa;
+	padding: 15px 15px 15px 15px;
+    border-bottom: 1px solid #28007112;
+}
+#sideMenuHeader > * {
+	margin: 0;
+}
+#sideMenuHeader h3 {
+	font-size: 16px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: var(--sbc-03);
+}
+
+#sideMenuBody {
+	min-height: calc(100vh - 40px);
+	overflow-y: auto;
+	padding: 0;
+}
+.sideMenuBodyInner {
+	min-height: 100%;
+	display: grid;
+	grid-template-rows: auto 1fr;
+}
+#sideMenuBody .mainLinks {
+	display: flex;
+	flex-wrap: wrap;
+	color: var(--sbc-03);
+}
+#sideMenuBody .mainLinks > a {
+	display: inline-flex;
+	text-decoration: none;
+	
+	padding: 5px 13px;
+	margin: 6px 4px;
+	align-items: center;
+	
+	border-color: #280071;
+	border-radius: 7px;
+	border: 1px solid #28007112;
+	background-color: #280071;
+	color: #fff;
+	font-size: 0.85rem;
+}
+#sideMenuBody .mainLinks > span {
+	font-size: 16px;
+	display: inline-flex;
+	height: 30px;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	line-height: unset;
+	margin: 4px 0;
+}
+#sideMenuBody .mainLinks > a .symbol {
+	display: initial;
+}
+#sideMenuBody .mainLinks > a:hover {
+	color: white;
+	text-decoration: underline;
+}
+#sideMenuBody .mainLinks {
+	display: none;
+}
+@media (max-width: 810px) {
+	#sideMenuBody .mainLinks {
+		display: flex;
+	}
+}
+
+
+#sideMenuBody .coreLinks .accordionAOO {
+	width: 100%;
+	min-height: 100%;
+}
+
+#sideMenuBody .coreLinks .smTwoColMode {
+	display: none;
+	min-height: 100%;
+}
+@media (min-width: 768px) {
+	#sideMenuBody .coreLinks .smTwoColMode {
+		display: flex;
+	}
+}
+
+#sideMenuBody .coreLinks .smTwoColMode .contents {
+	margin-left: 1rem;
+	border-radius: 4px;
+	background-color: var(--sbc-menu-gray);
+	background-color: #fff;
+	border: 1px solid #28007150;
+}
+
+#sideMenuBody .coreLinks .accordionAOO .accordion-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	text-decoration: none;
+	color: #280071;
+	padding: 10px;
+	border-radius: 4px;
+	width: 190px;
+	position: relative;
+	background-color: var(--sbc-menu-gray);
+	background-color: #fff;
+	border: 1px solid #28007112;
+}
+#sideMenuBody .coreLinks .accordionAOO .accordion-header + .accordion-header {
+	margin-top: 1rem;
+}
+#sideMenuBody .coreLinks .accordionAOO .accordion-header .icon {
+	font-size: 32px;
+	margin: 0 0 0 -8px;
+}
+#sideMenuBody .coreLinks .accordionAOO .accordion-header .text {
+	padding: 20px 0 0 0;
+}
+#sideMenuBody .coreLinks .accordionAOO .accordion-header .arrowIcon {
+	display: none;
+}
+#sideMenuBody .coreLinks .accordionAOO .accordion-header:hover {
+	background-color: var(--sbc-yonograd3-purple);
+	color: #fff;
+}
+#sideMenuBody .coreLinks .accordionAOO .accordion-header:not(.collapsed) {
+	pointer-events: none;
+	border: 1px solid #28007150;
+}
+#sideMenuBody .coreLinks .accordionAOO .accordion-header[aria-expanded="true"]:after {
+	content: "";
+	display: block;
+	width: 0px;
+	height: 7px;
+	border-top: 9px solid transparent;
+	border-bottom: 9px solid transparent;
+	border-right: 18px solid #28007150;
+	position: absolute;
+	left: calc(100% - 0px);
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+	#sideMenuBody .coreLinks .accordionAOO .accordion-header {
+		flex-direction: row;
+		width: 100%;
+		height: auto;
+		margin: 4px 0;
+		align-items: center;
+		justify-content: flex-start;
+	}
+	#sideMenuBody .coreLinks .accordionAOO .accordion-header .icon {
+		margin: 0 8px 0 0;
+	}
+	#sideMenuBody .coreLinks .accordionAOO .accordion-header .text {
+		padding: 0;
+	}
+	#sideMenuBody .coreLinks .accordionAOO .accordion-header .arrowIcon {
+		display: flex;
+		margin-left: auto;
+	}
+	#sideMenuBody .coreLinks .accordionAOO .accordion-header[aria-expanded="true"]:after {
+		display: none;
+	}
+	#sideMenuBody .coreLinks .accordionAOO .accordion-header.collapsed .arrowIcon.fipb_angle-up {
+		display: none;
+	}
+	#sideMenuBody .coreLinks .accordionAOO .accordion-header:not(.collapsed) .arrowIcon.fipb_angle-down {
+		display: none;
+	}
+}
+
+#sideMenuHeader .baseLinks {
+	display: flex;
+}
+#sideMenuHeader .baseLinks a {
+	display: flex;
+	height: 32px;
+	width: 32px;
+	padding: 8px;
+	margin: 0 2px;
+	background: var(--sbc-white-a);
+	background-color: #280071;
+    border-radius: 0.25rem;
+}
+#sideMenuHeader .baseLinks a:hover {
+	background: var(--sbc-yellow);
+}
+#sideMenuHeader .baseLinks a:hover .svgIcon{
+	fill: var(--sbc-yono-blue);
+}
+#sideMenuHeader .baseLinks a .svgIcon {
+	fill: white;
+}
+#sideMenuHeader .baseLinks a:hover .svgIcon {
+	fill: var(--sbc-yonograd3-purple);
+}
+#sideMenuHeader .pbSearchBox {
+	display: flex;
+	margin-left: auto;
+	align-items: center;
+	position: relative;
+}
+#sideMenuHeader .pbSearchBox .SBsearchInput {
+	border: none;
+	outline: none;
+	height: 32px;
+	padding: 0 10px;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: var(--sbc-white);
+	color: var(--sbc-yonograd3-purple);
+	border-radius: 0px 0.25rem 0.25rem 0px;
+}
+
+#sideMenuHeader .pbSearchBox .SBsearchBtn {
+	border-radius: 0.25rem 0px 0px 0.25rem;
+    margin-right: 0px;
+}
+
+@media (max-width: 810px) {
+	#headerRight .headerUpper nav a.btnMenu {
+		display: flex;
+	}
+	#headerLeft {
+		width: 120px;
+		height: 40px;
+	}
+	#headerRight .headerLower {
+		display: none;
+	}
+	#headerRight .headerUpper nav a.txtLink {
+		display: none;
+	}
+}
+
+#sideMenuBody #accordCoreLinks .accordCoreLinksContent {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 15px;
+	background-color: var(--sbc-yonograd3-purple-a1);
+	margin-top: -4px;
+}
+#sideMenuBody #accordCoreLinks .smTwoColMode .accordCoreLinksContent {
+	background-color: transparent;
+	margin-top: 0;
+}
+
+#sideMenuBody #accordCoreLinks .accordCoreLinksContent > a {
+	display: flex;
+	text-decoration: none;
+	align-items: center;
+	padding: 5px 13px;
+	margin: 6px 4px;
+	color: #280071;
+	font-size: 0.85rem;
+	border-radius: 7px;
+	background-color: white;
+}
+#sideMenuBody #accordCoreLinks .smTwoColMode .accordCoreLinksContent > a {
+	border: 1px solid #28007112;
+}
+#sideMenuBody #accordCoreLinks .accordCoreLinksContent > a .icon {
+	padding-right: 10px;
+	display: none;
+}
+#sideMenuBody #accordCoreLinks .accordCoreLinksContent > a:hover {
+	border-color: var(--sbc-03);
+	border-color: #280071;
+	background-color: #280071;
+	color: #fff;
+}
+
+.kwordsList {
+	position: absolute;
+	z-index: 100;
+	top: 34px;
+	left: 0;
+	width: 100%;
+	max-height: 408px;
+	background-color: var(--sbc-yono-blue);
+	padding: 2px;
+	color: white;
+	font-size: 14px;
+	border-radius: 4px;
+	overflow-y: auto;
+}
+.kwordsList .kwordItem {
+	padding: 4px 12px 4px 12px;
+	background-color: #ffffff10;
+	border-radius: 2px;
+	margin: 2px;
+}
+.kwordsList .kwordItem:hover {
+	background-color: #ffffffe0;
+	color: var(--sbc-yono-blue);
+}
+</style>
+
+<style id="styleCoreMenu">
+#coreMenu {
+	position: fixed;
+	z-index: 99;
+	top: 220px;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	transform: translateX(calc(100% - 50px));
+}
+@media (max-width: 768px) {
+	#coreMenu {
+		padding-right: 8px;
+	}
+}
+#coreMenu a {
+	display: flex;
+	align-items: center;
+	height: 48px;
+	border-radius: 25px 0 0 25px;
+	background: var(--sbc-yonograd-coreMenu) !important;
+	color: white;
+	font-size: 0.8rem;
+	padding-left: 2px;
+	padding-right: 12px;
+	margin-bottom: 2px;
+	text-decoration: none;
+	transition: transform 0.2s ease-in-out;
+	position: relative;
+	left: 0;
+}
+#coreMenu a:hover  {
+	transform: translateX(calc(-100% + 50px));
+}
+#coreMenu a[data-anim="in"]  {
+	transform: translateX( 0);
+}
+
+#coreMenu a .icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background-color: #ffffff11;
+	font-size: 32px;
+	margin-right: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+</style>
+
+<style id="styleMenuBreadCrumb">
+	#secBreadCrumb {
+		margin-top: 20px;
+		position: relative;
+	}
+	#secBreadCrumb .btnMenu {
+		display: flex;
+		align-items: center;
+		height: 40px;
+		background-color: var(--sbc-yono-blue);
+		border-radius: 0px 5px 5px 0px;
+		position: absolute;
+		left: 0;
+	}
+	
+	#secBreadCrumb .breadCrumbInner {
+		margin: auto;
+		padding: 0;
+	}
+	@media (min-width: 992px) {
+		#secBreadCrumb .breadCrumbInner {
+			width: 90%;
+		}
+	}
+	#secBreadCrumb .breadCrumb {
+		background-color: #fff;
+		border-radius: 5px;
+		font-size: 0.75rem;
+		font-style: italic;
+		padding: 6px 3rem;
+	}
+	@media screen and (max-width: 991px) {
+		#secBreadCrumb .breadCrumb {
+			padding: 6px 1rem;
+		}
+	}
+	
+	#secBreadCrumb .breadCrumb a {
+		text-decoration: underline;
+		color: inherit;
+		padding-right: 4px;
+	}
+	#secBreadCrumb .breadCrumb a:last-child {
+		text-decoration: none;
+		pointer-events: none;
+		opacity: 0.8;
+	}
+	#secBreadCrumb .arrowBC:before {
+		content: "\e982";
+		font-family: "sbi_pb";
+		font-size: 0.80rem;
+		font-weight: 900;
+		padding: 0 2px;
+	}
+	body[data-page="sbi_home"] #secBreadCrumb {
+		display: none;
+	}
+	@media (max-width: 810px) {
+		body:not([data-page="sbi_home"]) #secBreadCrumb .btnMenu {
+			display: none;
+		}
+	}
+</style>
+
+<style id="styleSearchResults">
+#searchResults .modal-footer .btn {
+	background-color: var(--sbc-yonograd3-purple);
+	color: var(--sbc-white);
+}
+</style>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+	<defs>
+		<symbol id="svg-search" viewBox="0 0 512 512">
+			<path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
+		</symbol>
+		<symbol id="svg-home" viewBox="0 0 512 512">
+			<path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
+		</symbol>
+		<symbol id="svg-phone" viewBox="0 0 512 512">
+			<path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"></path>
+		</symbol>
+		<symbol id="svg-menu" viewBox="0 0 960 960">
+			<path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"></path>
+		</symbol>
+	</defs>
+</svg>
+
+<script id="jsCommon">
+function closeKeywordList() {
+	$('.kwordsList').addClass('d-none').data('visible', false);
+	$('.SBsearchInput').val('');
+}
+</script>
+
+
+<!-- ALL NAV LINKS (template) -->
+<nav id="navLinkSource" class="d-none">
+	<a class="template01 txtLink" href="aboutus.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_2">About OnlineSBI</span>
+	</a>
+	<a class="template02 txtLink" href="reg_forms.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_3">Forms</span>
+	</a>
+	<a class="template03 txtLink" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#netBankingBranches">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_4">Net Banking Branches</span>
+	</a>
+	
+	<a class="template04 txtLink" href="https://yonobusiness.sbi/">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_8">Corporate Banking</span>
+	</a>
+	<a class="template05 txtLink" href="rinb_videos.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_9">How Do I (Help)</span>
+	</a>
+	<a class="template06 txtLink" href="security_tips.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_10">Security Tips</span>
+	</a>
+	<a class="template07 txtLink" href="sitemap.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_11">Sitemap</span>
+	</a>
+	
+	
+
+		
+	<div class="usefulLinks">
+		<div class="linkGroup">
+			<a class="" href="https://crcf.bank.sbi/ccf/home/UnAuth/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Register Complaint of Unauthorized Transaction</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://qms.bank.sbi/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Queue Management System</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://rbiretaildirect.org.in" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">RBI Retail Direct portal</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/retail/blockatmcardintermediate.htm" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Block ATM Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/npersonal/reg_forms.html" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Banking Forms</span>
+		</div>	
+		<div class="linkGroup">
+			<a class="" href="https://www.psballiance.com/doorstep-banking.html" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Doorstep Banking</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.sbigeneral.in/portal/downloads" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">SBI General Insurance Document Download</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://fastag.bank.sbi" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">SBI FasTag</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://bank.sbi/web/salary-account" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">SBI Salary Account</span>
+		</div>		
+		<div class="linkGroup">
+			<a class="" href="https://bank.sbi/web/nri/home" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">NRI Services</span>
+		</div>						
+		<div class="linkGroup">
+			<a class="" href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">CYBER CRIME HELPLINE</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.sbisecurities.in/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">SBI Securities</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://remit.onlinesbi.com/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">SBI Express Remit</span>
+		</div>																		
+		<div class="linkGroup">
+			<a class="" href="https://www.sbimf.com/en-us/quick-invest?arn_code=ARN12195" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_155">SBI Mutual Fund</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.sbilife.co.in" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_156">SBI Life Insurance</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="http://www.sbicard.com/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">SBI Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbiglobal.com/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">OnlineSBI Global </span>
+		</div>								
+		<div class="linkGroup">
+			<a class="" href="https://prepaid.sbi/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Foreign Travel/EZ-Pay/Gift Cards</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="http://www.sbigeneral.in" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_160">SBI General Insurance</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://newcmp.sbi" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Cash Management Product</span>
+		</div>			
+		<div class="linkGroup">
+			<a class="" href="https://rewardz.sbi/" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">State Bank Loyalty Rewardz</span>
+		</div>
+		<!-- Online Locker Enquiry link removal from Useful Links Section 02-08-2024
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/preretail/prelogineLockerInitial.htm"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Online Locker Enquiry</span>
+		</div>
+		-->
+		<!-- LOAN AGAINST SHARES - REMOVAL OF LINK  AT INB PRE-LOGIN PAGE on 22-04-2024 
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/las/loanagainstsharesinit.htm" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Loan Against Shares</span>
+		</div>
+		-->
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/documents/GSTN_Transactions_Updation_Process.pdf" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">GSTN Updation</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://esbtr.onlinesbi.sbi/ESBTR1/OnlineReg.do?method=fetchDistrictList" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">eSBTR Challan Generation</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/sbijava/retail/html/faq_noida_metro.html" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Noida Metro Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://sbicaptrustee.in/mywill/index.jsp" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">SBICAP Trustee Company Ltd My WILL Services Online</span>
+		</div>		
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/sbijava/retail/html/faq_nagpur_metro.html" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Nagpur Metro Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://bank.sbi/web/business/sme/sme-loans/pm-mudra-yojana" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">PM Mudra Yojana</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.sbiepay.sbi/secure/billpayment/checkout?m=0eb754aa77d0dea8efa1cbccd31c2a4f652e6b138a688d57d86837c685660446&amp;u=0eb754aa77d0dea8efa1cbccd31c2a4f652e6b138a688d57d86837c685660446" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Loan Repayment via Digital Mode (ePay)</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://eportal.incometax.gov.in/iec/foservices/#/pre-login/bl-link-aadhaar" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Linking of PAN with Aadhaar</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://bank.sbi/web/business/sme/current-accounts" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Current Account</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://bank.sbi/web/personal-banking/misc/bharat-aadhaar-seeding-enabler" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Aadhaar Seeding Service: BASE</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/documents/Yono_Business_Fair_Practice_Lending_Code.pdf" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_long-arrow-right"></span>
+			<span class="lbl lang_html_">Fair Lending Practice Code</span>
+		</div>
+	</div>
+
+	<div class="quickLinks">
+		<div class="linkGroup">
+			<a class="" href="etdr_estdr_faq.html"></a>
+			<span class="icon fipb fipb_eTDReSTDR"></span>
+			<span class="lbl lang_html_24">e-TDR/e-STDR</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="tax_retail.html"></a>
+			<span class="icon fipb fipb_eTax"></span>
+			<span class="lbl lang_html_25">SBI e-Tax</span>
+		</div>
+		<div class="linkGroup">
+			<a class="lang_href_1" href="https://bank.sbi/web/personal-banking/investments-deposits/stocks-securities/demat-services" rel="external" target="_blank"></a>
+			<span class="icon fipb fipb_demat"></span>
+			<span class="lbl lang_html_26">Demat</span>
+		</div>
+		<div class="linkGroup">
+			<a class="lang_href_4" href="https://bank.sbi/web/personal-banking/investments-deposits/stocks-securities/asba" rel="external" target="_blank"></a>
+			<span class="icon fipb fipb_aSBA"></span>
+			<span class="lbl lang_html_27">ASBA</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://customer.sbiunipay.sbi/CustomerPortal/quickPay" id="pay" target="_blank" rel="noopener noreferrer"></a>
+			<span class="icon fipb fipb_mobileDTH"></span>
+			<span class="lbl lang_html_95">Mobile / DTH Recharge</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="safe_online_banking.html"></a>
+			<span class="icon fipb fipb_safeOnline"></span>
+			<span class="lbl lang_html_96">Safe Online Banking</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://corp.onlinesbi.sbi/corporate/sbi/corp_merchantslist.html" rel="external" target="_blank"></a>
+			<span class="icon fipb fipb_merchantList"></span>
+			<span class="lbl lang_html_98">Merchant List for Online Payment</span>
+		</div>
+	</div>
+	
+	<div class="whatsNewLinks">
+		<div class="linkGroup">
+			<a class="" href="https://bank.sbi/web/yono/travel-holiday-deals" target="_blank"></a>
+			<span class="icon fipb fipb_holidaySavingAccount"></span>
+			<span class="lbl lang_html_31">SBI Holiday Savings Account</span>
+		</div>
+		<div class="linkGroup">
+			<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#viewSBI_Rewards"></a>
+			<span class="icon fipb fipb_viewRewardLoyaltyPoints"></span>
+			<span class="lbl lang_html_32">View State Bank Rewardz Loyalty Points</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/sbi/downloads/State_Bank_mCash.pdf"></a>
+			<span class="icon fipb fipb_mCash"></span>
+			<span class="lbl lang_html_33">mCash</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/retail/mcashclaim.htm?bankCode=0"></a>
+			<span class="icon fipb fipb_mCashClaimMoney"></span>
+			<span class="lbl lang_html_34">mCash - Claim Money</span>
+		</div>
+		<div class="linkGroup">
+			<a class="lang_href_2" href="https://bank.sbi/web/personal-banking/loans/loans-against-securities/loan-against-time-deposit"></a>
+			<span class="icon fipb fipb_overDraftFixedDeposit"></span>
+			<span class="lbl lang_html_35">Over Draft against Fixed Deposit</span>
+		</div>
+		<!-- LOAN AGAINST SHARES - REMOVAL OF LINK  AT INB PRE-LOGIN PAGE on 22-04-2024 
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/las/loanagainstsharesinit.htm"></a>
+			<span class="icon fipb fipb_loanAgainstShares"></span>
+			<span class="lbl lang_html_36">Loan Against Shares</span>
+		</div>
+		-->
+		<!-- OnlineSBI transaction limits and charges information - update on 20-08-2024
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/sbijava/retail/html/faq_imt.html" target="_blank" title="IMT FAQ"></a>
+			<span class="icon fipb fipb_instantMoneyTransfer"></span>
+			<span class="lbl lang_html_37">Instant Money Transfer(IMT)</span>
+		</div>
+		-->
+		<div class="linkGroup">
+			<a class="" href="https://epolicy.sbilife.co.in"></a>
+			<span class="icon fipb fipb_lifeinsuranceCover"></span>
+			<span class="lbl lang_html_38">Life insurance cover of Rs.1 Cr for Rs.18 a day</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://onlineapply.sbi.co.in/personal-banking/"></a>
+			<span class="icon fipb fipb_applyHCPELoan"></span>
+			<span class="lbl lang_html_39">Apply online for Home / Car / Personal / Education loan</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://play.google.com/store/apps/details?id=com.mmi.sbi.locator&amp;hl=en" target="_blank"></a>
+			<span class="icon fipb fipb_sbiFinder"></span>
+			<span class="lbl lang_html_44">SBI Finder</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://customer.sbiunipay.sbi/CustomerPortal/quickPay"></a>
+			<span class="icon fipb fipb_mobileDTHRecharge"></span>
+			<span class="lbl lang_html_45">Mobile/DTH Recharge</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_eAnnuity_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_eAnnuityDeposit"></span>
+			<span class="lbl lang_html_46">E Annuity Deposit</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://epolicy.sbilife.co.in/" rel="external"></a>
+			<span class="icon fipb fipb_buyAffordableLifeInsCover"></span>
+			<span class="lbl lang_html_47">Buy Affordable e-Life Insurance Cover!</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="block_atmcard.html"></a>
+			<span class="icon fipb fipb_blockATMCard"></span>
+			<span class="lbl lang_html_48">Block ATM Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="forex_outward_faq.html"></a>
+			<span class="icon fipb fipb_forexOutRemittScheme"></span>
+			<span class="lbl lang_html_51">Forex Outward Remittance Scheme</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="smart_payout_card.html"></a>
+			<span class="icon fipb fipb_smartPayoutCard"></span>
+			<span class="lbl lang_html_52">Smart Pay-out Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_etdr_itss_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_onFixDeptInTaxSvngSch"></span>
+			<span class="lbl lang_html_54">Online Fixed Deposit under Income Tax Savings Scheme</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="tax_retail.html"></a>
+			<span class="icon fipb fipb_taxPayments"></span>
+			<span class="lbl lang_html_55">Tax payments</span>
+		</div>
+	</div>
+	
+	<div class="productLinks" data-group="PaymentsTransfer">
+		<img src="images/card-images/products/payments_transfer.jpg" class="card-img-top" alt="...">
+		<h6 class="lang_html_56">Payments/Transfer</h6>
+		<div class="linkGroup">
+			<a class="" href="fund_transfer.html"></a>
+			<span class="icon fipb fipb_fundsTransfer"></span>
+			<span class="lbl lang_html_57">Funds Transfer</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="javascript:void(0)"></a>
+			<span class="icon fipb fipb_intraBankTransfer"></span>
+			<span class="lbl lang_html_58">Intra-Bank Transfer</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="neft_rtgs_faq.html"></a>
+			<span class="icon fipb fipb_rtgsNEFT"></span>
+			<span class="lbl lang_html_59">RTGS/NEFT</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="visa_faq.html"></a>
+			<span class="icon fipb fipb_creditCardVISA"></span>
+			<span class="lbl lang_html_60">Credit Card (VISA)</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbijava/imps_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_iMPSPayments"></span>
+			<span class="lbl lang_html_61">IMPS Payments</span>
+		</div>
+	</div>
+	
+	<div class="productLinks" data-group="eDeposits">
+		<img src="images/card-images/products/e_deposits.jpg" class="card-img-top" alt="...">
+		<h6 class="lang_html_63">E – Deposits</h6>
+		<div class="linkGroup">
+			<a class="" href="etdr_estdr_faq.html"></a>
+			<span class="icon fipb fipb_eTDR"></span>
+			<span class="lbl lang_html_64">E-TDR/e-STDR</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_etdr_itss_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_eTDReSTDRIncTaxSSch"></span>
+			<span class="lbl lang_html_65">E-TDR/e-STDR under Income Tax Savings Scheme</span>
+		</div>
+		
+		<!--
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_e-RD_Flexi_faq.html"  rel="external"></a>
+			<span class="icon fipb fipb_sbiFlexiDeposit"></span>
+			<span class="lbl lang_html_66">SBI Flexi Deposit</span>
+		</div>
+		-->
+
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_eAnnuity_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_eAnnuityDepositScheme"></span>
+			<span class="lbl lang_html_67">E-Annuity Deposit Scheme</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_e-RD_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_eRecurringDeposits"></span>
+			<span class="lbl lang_html_68">E- Recurring Deposits</span>
+		</div>
+		
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/sbijava/osbi_etdr_itss_nro_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_sbiFlexiDeposit"></span>
+			<span class="lbl ">E-TDR / E-STDR under Income Tax Saving Scheme (NRO Customers Only)</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://retail.onlinesbi.sbi/sbijava/osbi_etdr_mod_faq.html" rel="external"></a>
+			<span class="icon fipb fipb_sbiFlexiDeposit"></span>
+			<span class="lbl ">FAQ's for E-TDR / E-STDR (MOD) Multi Option Deposit </span>
+		</div>
+		
+		
+	</div>
+	
+	<div class="productLinks" data-group="SmartCards">
+		<img src="images/card-images/products/smart_cards.jpg" class="card-img-top" alt="...">
+		<h6 class="lang_html_69">Smart Cards</h6>
+		<div class="linkGroup">
+			<a class="" href="https://prepaid.onlinesbi.com" target="_blank"></a>
+			<span class="icon fipb fipb_giftCard"></span>
+			<span class="lbl lang_html_70">Gift Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://prepaid.onlinesbi.com" target="_blank"></a>
+			<span class="icon fipb fipb_smartPayoutCard"></span>
+			<span class="lbl lang_html_71">Smart Pay-out Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://prepaid.onlinesbi.com" target="_blank"></a>
+			<span class="icon fipb fipb_stateBankeZPayCard"></span>
+			<span class="lbl lang_html_72">State Bank eZ Pay Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://prepaid.onlinesbi.com" target="_blank"></a>
+			<span class="icon fipb fipb_stateBankAchieverCard"></span>
+			<span class="lbl lang_html_73">State Bank Achiever Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://prepaid.onlinesbi.com" target="_blank"></a>
+			<span class="icon fipb fipb_vISAForeignTravelCard"></span>
+			<span class="lbl lang_html_76">VISA Foreign Travel Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="https://www.sbitravelcard.com/" target="_blank"></a>
+			<span class="icon fipb fipb_masterCardForeignTravelCard"></span>
+			<span class="lbl lang_html_77">MasterCard Foreign Travel Card</span>
+		</div>
+	</div>
+	
+	<div class="productLinks" data-group="Others">
+		<img src="images/card-images/products/jv_others.jpg" class="card-img-top" alt="...">
+		<h6 class="lang_html_">Others</h6>
+		<div class="linkGroup">
+			<a class="" href="https://www.onlinesbi.sbi/sbicollect/icollecthome.htm" rel="external"></a>
+			<span class="icon fipb fipb_stateBankCollect"></span>
+			<span class="lbl lang_html_78">State Bank Collect</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="bill_payment.html"></a>
+			<span class="icon fipb fipb_billPayments"></span>
+			<span class="lbl lang_html_79">Bill Payments</span>
+		</div>
+		<div class="linkGroup">	
+			<a class="" href="javascript:void(0)"></a>
+			<span class="icon fipb fipb_npsContribution"></span>
+			<span class="lbl lang_html_80">NPS Contribution</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="javascript:void(0)"></a>
+			<span class="icon fipb fipb_powerJyotiFeeCollect"></span>
+			<span class="lbl lang_html_81">Power Jyoti Fee Collection (PUL)</span>
+		</div>
+		<!-- LOAN AGAINST SHARES - REMOVAL OF LINK  AT INB PRE-LOGIN PAGE on 22-04-2024 
+		<div class="linkGroup">
+			<a class="" href="loan_against_shares.html"></a>
+			<span class="icon fipb fipb_loanAgainstShares"></span>
+			<span class="lbl lang_html_82">Loan against Shares</span>
+		</div>
+		-->
+		<div class="linkGroup">
+			<a class="" href="https://www.sbicard.com/en/personal/sbi-credit-card.page?GEMID1=onlinesbi&amp;GEMID2=onlinesbi-prdct-srvc&amp;CHN=901#all" rel="external"></a>
+			<span class="icon fipb fipb_applySBICreditCard"></span>
+			<span class="lbl lang_html_83">Apply SBI Credit Card</span>
+		</div>
+	</div>
+	
+	<div class="valueLinks">
+		<div class="linkGroup">
+			<a class="" href="online_railway_tickets.html"></a>
+			<span class="icon fipb fipb_etickets"></span>
+			<span class="lbl lang_html_84">E-tickets</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="homeloan_certificate_1213.html"></a>
+			<span class="icon fipb fipb_homeLoanProvCert"></span>
+			<span class="lbl lang_html_85">Home Loan Provisional Interest Certificate</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="visa_faq.html"></a>
+			<span class="icon fipb fipb_creditCardBillPay"></span>
+			<span class="lbl lang_html_86">Credit Card (VISA) Bill Pay</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="tax_retail.html"></a>
+			<span class="icon fipb fipb_payTaxATMDebitCard"></span>
+			<span class="lbl lang_html_87">Pay Tax using ATM cum Debit Card</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="upsc_ssc.html"></a>
+			<span class="icon fipb fipb_sscUPSCOnFeeCollect"></span>
+			<span class="lbl lang_html_88">SSC and UPSC Online Fee Collection</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="http://www.sbimf.com/"></a>
+			<span class="icon fipb fipb_mutualFundsInvest"></span>
+			<span class="lbl lang_html_89">Mutual Funds Investment</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="view_tax_credit.html"></a>
+			<span class="icon fipb fipb_viewingTaxCreditStatement"></span>
+			<span class="lbl lang_html_90">Viewing of Tax Credit Statement Form(26AS)</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="pension_faq.html"></a>
+			<span class="icon fipb fipb_pensionSlipEnquiry"></span>
+			<span class="lbl lang_html_91">Pension Slip Enquiry</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="etds_faq.html"></a>
+			<span class="icon fipb fipb_tDSEnquiry"></span>
+			<span class="lbl lang_html_92">TDS Enquiry</span>
+		</div>
+		<div class="linkGroup">
+			<a class="" href="government_ptax.html"></a>
+			<span class="icon fipb fipb_profTaxPayment"></span>
+			<span class="lbl lang_html_93">Maharashtra Government Professional Taxes (PTRC &amp; PTEC) payment</span>
+		</div>
+	</div>
+
+	<script id="jsLoadLinksFunction">
+		function loadLinks( _sourceSelectorString, _targetSelectorString, _needIcon, _needLabel ) {
+			var navLinkSource = $('#navLinkSource');
+			if( navLinkSource ) {
+				//var linkGroups = navLinkSource.find('.quickLinks .linkGroup');
+				var linkGroups = navLinkSource.find( _sourceSelectorString );
+				
+				linkGroups.each(function(ix0, elt0) {
+					var linkGroup = $(elt0).clone();
+					
+					var a = linkGroup.find('a'), 
+						icon = linkGroup.find('.icon'), 
+						lbl = linkGroup.find('.lbl');
+					
+					if( _needIcon != false ) a.append(icon);
+					
+					if( _needLabel != false ) a.append(lbl);
+
+					$( _targetSelectorString ).append(a);
+				});
+			}
+		}
+	</script>
+</nav>
+
+
+<aside id="sideMenu" class="d-none">
+	<div id="sideMenuInner">
+		<div id="sideMenuHeader">
+			<nav class="baseLinks w-100 me-2" style="">
+			
+				
+				
+			</nav>
+			
+			<a class="iconBtn btnMenu btnMenuClose" href="javascript:void(0)">
+				<span></span>
+				<span></span>
+				<span></span>
+			</a>
+		</div>
+		
+		<div id="sideMenuBody" class="p-3">
+			<div class="sideMenuBodyInner">
+				<nav class="mainLinks pb-3">
+					<a class="template01 txtLink" href="aboutus.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_2">About OnlineSBI</span>
+	</a>
+					<a class="template02 txtLink" href="reg_forms.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_3">Forms</span>
+	</a>
+					<a class="template03 txtLink" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#netBankingBranches">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_4">Net Banking Branches</span>
+	</a>
+					<a class="template04 txtLink" href="https://yonobusiness.sbi/">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_8">Corporate Banking</span>
+	</a>
+					<a class="template05 txtLink" href="rinb_videos.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_9">How Do I (Help)</span>
+	</a>
+					<a class="template06 txtLink" href="security_tips.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_10">Security Tips</span>
+	</a>
+					<a class="template07 txtLink" href="sitemap.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_11">Sitemap</span>
+	</a>
+				</nav>
+		
+				<nav class="coreLinks pb-5">
+					<div id="accordCoreLinks" class="accordionAOO">
+						<div class="smTwoColMode">
+							<div class="headers"><div id="btnUsefulLinks" role="button" class="accordion-header" data-bs-toggle="collapse" data-bs-target="#linksUsefulLinks" aria-expanded="true" aria-controls="linksUsefulLinks">
+							<span class="icon fipb fipb_external-links" style="padding: 0px 13px;font-size: 20px;"></span>
+							<span class="text">Useful Links</span>
+							<span class="arrowIcon fipb fipb_angle-up"></span>
+							<span class="arrowIcon fipb fipb_angle-down"></span>
+						</div><div id="btnQuickLinks" role="button" class="accordion-header collapsed" data-bs-toggle="collapse" data-bs-target="#linksQuickLinks" aria-expanded="false" aria-controls="linksQuickLinks">
+							<span class="icon fipb fipb_paper-plane" style="padding: 0px 13px;font-size: 20px;"></span>
+							<span class="text">Quick Links</span>
+							<span class="arrowIcon fipb fipb_angle-up"></span>
+							<span class="arrowIcon fipb fipb_angle-down"></span>
+						</div><div id="btnWhatsNewLinks" role="button" class="accordion-header collapsed" data-bs-toggle="collapse" data-bs-target="#linksWhatsNewLinks" aria-expanded="false" aria-controls="linksWhatsNewLinks">
+							<span class="icon fipb fipb_whatsNew"></span>
+							<span class="text">Whats New</span>
+							<span class="arrowIcon fipb fipb_angle-up"></span>
+							<span class="arrowIcon fipb fipb_angle-down"></span>
+						</div><div id="btnProductLinks" role="button" class="accordion-header collapsed" data-bs-toggle="collapse" data-bs-target="#linksProductLinks" aria-expanded="false" aria-controls="linksProductLinks">
+							<span class="icon fipb fipb_productServices"></span>
+							<span class="text">Product and Services</span>
+							<span class="arrowIcon fipb fipb_angle-up"></span>
+							<span class="arrowIcon fipb fipb_angle-down"></span>
+						</div><div id="btnValueLinks" role="button" class="accordion-header collapsed" data-bs-toggle="collapse" data-bs-target="#linksValueLinks" aria-expanded="false" aria-controls="linksValueLinks">
+							<span class="icon fipb fipb_valueServices"></span>
+							<span class="text">Value Added Services</span>
+							<span class="arrowIcon fipb fipb_angle-up"></span>
+							<span class="arrowIcon fipb fipb_angle-down"></span>
+						</div></div><div class="contents"><div id="linksUsefulLinks" class="accordion-collapse collapse show" data-bs-parent="#accordCoreLinks">
+							<div class="accordCoreLinksContent"><a class="" href="https://crcf.bank.sbi/ccf/home/UnAuth/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Register Complaint of Unauthorized Transaction</span></a><a class="" href="https://qms.bank.sbi/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Queue Management System</span></a><a class="" href="https://rbiretaildirect.org.in" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">RBI Retail Direct portal</span></a><a class="" href="https://retail.onlinesbi.sbi/retail/blockatmcardintermediate.htm" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Block ATM Card</span></a><a class="" href="https://retail.onlinesbi.sbi/npersonal/reg_forms.html" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Banking Forms</span></a><a class="" href="https://www.psballiance.com/doorstep-banking.html" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Doorstep Banking</span></a><a class="" href="https://www.sbigeneral.in/portal/downloads" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">SBI General Insurance Document Download</span></a><a class="" href="https://fastag.bank.sbi" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">SBI FasTag</span></a><a class="" href="https://bank.sbi/web/salary-account" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">SBI Salary Account</span></a><a class="" href="https://bank.sbi/web/nri/home" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">NRI Services</span></a><a class="" href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">CYBER CRIME HELPLINE</span></a><a class="" href="https://www.sbisecurities.in/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">SBI Securities</span></a><a class="" href="https://remit.onlinesbi.com/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">SBI Express Remit</span></a><a class="" href="https://www.sbimf.com/en-us/quick-invest?arn_code=ARN12195" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_155">SBI Mutual Fund</span></a><a class="" href="https://www.sbilife.co.in" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_156">SBI Life Insurance</span></a><a class="" href="http://www.sbicard.com/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">SBI Card</span></a><a class="" href="https://www.onlinesbiglobal.com/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">OnlineSBI Global </span></a><a class="" href="https://prepaid.sbi/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Foreign Travel/EZ-Pay/Gift Cards</span></a><a class="" href="http://www.sbigeneral.in" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_160">SBI General Insurance</span></a><a class="" href="https://newcmp.sbi" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Cash Management Product</span></a><a class="" href="https://rewardz.sbi/" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">State Bank Loyalty Rewardz</span></a><a class="" href="https://www.onlinesbi.sbi/documents/GSTN_Transactions_Updation_Process.pdf" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">GSTN Updation</span></a><a class="" href="https://esbtr.onlinesbi.sbi/ESBTR1/OnlineReg.do?method=fetchDistrictList" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">eSBTR Challan Generation</span></a><a class="" href="https://retail.onlinesbi.sbi/sbijava/retail/html/faq_noida_metro.html" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Noida Metro Card</span></a><a class="" href="https://sbicaptrustee.in/mywill/index.jsp" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">SBICAP Trustee Company Ltd My WILL Services Online</span></a><a class="" href="https://retail.onlinesbi.sbi/sbijava/retail/html/faq_nagpur_metro.html" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Nagpur Metro Card</span></a><a class="" href="https://bank.sbi/web/business/sme/sme-loans/pm-mudra-yojana" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">PM Mudra Yojana</span></a><a class="" href="https://www.sbiepay.sbi/secure/billpayment/checkout?m=0eb754aa77d0dea8efa1cbccd31c2a4f652e6b138a688d57d86837c685660446&amp;u=0eb754aa77d0dea8efa1cbccd31c2a4f652e6b138a688d57d86837c685660446" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Loan Repayment via Digital Mode (ePay)</span></a><a class="" href="https://eportal.incometax.gov.in/iec/foservices/#/pre-login/bl-link-aadhaar" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Linking of PAN with Aadhaar</span></a><a class="" href="https://bank.sbi/web/business/sme/current-accounts" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Current Account</span></a><a class="" href="https://bank.sbi/web/personal-banking/misc/bharat-aadhaar-seeding-enabler" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Aadhaar Seeding Service: BASE</span></a><a class="" href="https://www.onlinesbi.sbi/documents/Yono_Business_Fair_Practice_Lending_Code.pdf" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_long-arrow-right"></span><span class="lbl lang_html_">Fair Lending Practice Code</span></a></div>
+							<script>
+							loadLinks( '.usefulLinks .linkGroup', '#linksUsefulLinks .accordCoreLinksContent', true, true );
+							</script>
+						</div><div id="linksQuickLinks" class="accordion-collapse collapse" data-bs-parent="#accordCoreLinks">
+							<div class="accordCoreLinksContent"><a class="" href="etdr_estdr_faq.html"><span class="icon fipb fipb_eTDReSTDR"></span><span class="lbl lang_html_24">e-TDR/e-STDR</span></a><a class="" href="tax_retail.html"><span class="icon fipb fipb_eTax"></span><span class="lbl lang_html_25">SBI e-Tax</span></a><a class="lang_href_1" href="https://bank.sbi/web/personal-banking/investments-deposits/stocks-securities/demat-services" rel="external" target="_blank"><span class="icon fipb fipb_demat"></span><span class="lbl lang_html_26">Demat</span></a><a class="lang_href_4" href="https://bank.sbi/web/personal-banking/investments-deposits/stocks-securities/asba" rel="external" target="_blank"><span class="icon fipb fipb_aSBA"></span><span class="lbl lang_html_27">ASBA</span></a><a class="" href="https://customer.sbiunipay.sbi/CustomerPortal/quickPay" id="pay" target="_blank" rel="noopener noreferrer"><span class="icon fipb fipb_mobileDTH"></span><span class="lbl lang_html_95">Mobile / DTH Recharge</span></a><a class="" href="safe_online_banking.html"><span class="icon fipb fipb_safeOnline"></span><span class="lbl lang_html_96">Safe Online Banking</span></a><a class="" href="https://corp.onlinesbi.sbi/corporate/sbi/corp_merchantslist.html" rel="external" target="_blank"><span class="icon fipb fipb_merchantList"></span><span class="lbl lang_html_98">Merchant List for Online Payment</span></a></div>
+							<script>
+							loadLinks( '.quickLinks .linkGroup', '#linksQuickLinks .accordCoreLinksContent', true, true );
+							</script>
+						</div><div id="linksWhatsNewLinks" class="accordion-collapse collapse" data-bs-parent="#accordCoreLinks">
+							<div class="accordCoreLinksContent"><a class="" href="https://bank.sbi/web/yono/travel-holiday-deals" target="_blank"><span class="icon fipb fipb_holidaySavingAccount"></span><span class="lbl lang_html_31">SBI Holiday Savings Account</span></a><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#viewSBI_Rewards"><span class="icon fipb fipb_viewRewardLoyaltyPoints"></span><span class="lbl lang_html_32">View State Bank Rewardz Loyalty Points</span></a><a class="" href="https://retail.onlinesbi.sbi/sbi/downloads/State_Bank_mCash.pdf"><span class="icon fipb fipb_mCash"></span><span class="lbl lang_html_33">mCash</span></a><a class="" href="https://retail.onlinesbi.sbi/retail/mcashclaim.htm?bankCode=0"><span class="icon fipb fipb_mCashClaimMoney"></span><span class="lbl lang_html_34">mCash - Claim Money</span></a><a class="lang_href_2" href="https://bank.sbi/web/personal-banking/loans/loans-against-securities/loan-against-time-deposit"><span class="icon fipb fipb_overDraftFixedDeposit"></span><span class="lbl lang_html_35">Over Draft against Fixed Deposit</span></a><a class="" href="https://epolicy.sbilife.co.in"><span class="icon fipb fipb_lifeinsuranceCover"></span><span class="lbl lang_html_38">Life insurance cover of Rs.1 Cr for Rs.18 a day</span></a><a class="" href="https://onlineapply.sbi.co.in/personal-banking/"><span class="icon fipb fipb_applyHCPELoan"></span><span class="lbl lang_html_39">Apply online for Home / Car / Personal / Education loan</span></a><a class="" href="https://play.google.com/store/apps/details?id=com.mmi.sbi.locator&amp;hl=en" target="_blank"><span class="icon fipb fipb_sbiFinder"></span><span class="lbl lang_html_44">SBI Finder</span></a><a class="" href="https://customer.sbiunipay.sbi/CustomerPortal/quickPay"><span class="icon fipb fipb_mobileDTHRecharge"></span><span class="lbl lang_html_45">Mobile/DTH Recharge</span></a><a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_eAnnuity_faq.html" rel="external"><span class="icon fipb fipb_eAnnuityDeposit"></span><span class="lbl lang_html_46">E Annuity Deposit</span></a><a class="" href="https://epolicy.sbilife.co.in/" rel="external"><span class="icon fipb fipb_buyAffordableLifeInsCover"></span><span class="lbl lang_html_47">Buy Affordable e-Life Insurance Cover!</span></a><a class="" href="block_atmcard.html"><span class="icon fipb fipb_blockATMCard"></span><span class="lbl lang_html_48">Block ATM Card</span></a><a class="" href="forex_outward_faq.html"><span class="icon fipb fipb_forexOutRemittScheme"></span><span class="lbl lang_html_51">Forex Outward Remittance Scheme</span></a><a class="" href="smart_payout_card.html"><span class="icon fipb fipb_smartPayoutCard"></span><span class="lbl lang_html_52">Smart Pay-out Card</span></a><a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_etdr_itss_faq.html" rel="external"><span class="icon fipb fipb_onFixDeptInTaxSvngSch"></span><span class="lbl lang_html_54">Online Fixed Deposit under Income Tax Savings Scheme</span></a><a class="" href="tax_retail.html"><span class="icon fipb fipb_taxPayments"></span><span class="lbl lang_html_55">Tax payments</span></a></div>
+							<script>
+							loadLinks( '.whatsNewLinks .linkGroup', '#linksWhatsNewLinks .accordCoreLinksContent', true, true );
+							</script>
+						</div><div id="linksProductLinks" class="accordion-collapse collapse" data-bs-parent="#accordCoreLinks">
+							<div class="accordCoreLinksContent"><a class="" href="fund_transfer.html"><span class="icon fipb fipb_fundsTransfer"></span><span class="lbl lang_html_57">Funds Transfer</span></a><a class="" href="javascript:void(0)"><span class="icon fipb fipb_intraBankTransfer"></span><span class="lbl lang_html_58">Intra-Bank Transfer</span></a><a class="" href="neft_rtgs_faq.html"><span class="icon fipb fipb_rtgsNEFT"></span><span class="lbl lang_html_59">RTGS/NEFT</span></a><a class="" href="visa_faq.html"><span class="icon fipb fipb_creditCardVISA"></span><span class="lbl lang_html_60">Credit Card (VISA)</span></a><a class="" href="https://www.onlinesbi.sbi/sbijava/imps_faq.html" rel="external"><span class="icon fipb fipb_iMPSPayments"></span><span class="lbl lang_html_61">IMPS Payments</span></a><a class="" href="etdr_estdr_faq.html"><span class="icon fipb fipb_eTDR"></span><span class="lbl lang_html_64">E-TDR/e-STDR</span></a><a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_etdr_itss_faq.html" rel="external"><span class="icon fipb fipb_eTDReSTDRIncTaxSSch"></span><span class="lbl lang_html_65">E-TDR/e-STDR under Income Tax Savings Scheme</span></a><a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_eAnnuity_faq.html" rel="external"><span class="icon fipb fipb_eAnnuityDepositScheme"></span><span class="lbl lang_html_67">E-Annuity Deposit Scheme</span></a><a class="" href="https://www.onlinesbi.sbi/sbijava/osbi_e-RD_faq.html" rel="external"><span class="icon fipb fipb_eRecurringDeposits"></span><span class="lbl lang_html_68">E- Recurring Deposits</span></a><a class="" href="https://retail.onlinesbi.sbi/sbijava/osbi_etdr_itss_nro_faq.html" rel="external"><span class="icon fipb fipb_sbiFlexiDeposit"></span><span class="lbl ">E-TDR / E-STDR under Income Tax Saving Scheme (NRO Customers Only)</span></a><a class="" href="https://retail.onlinesbi.sbi/sbijava/osbi_etdr_mod_faq.html" rel="external"><span class="icon fipb fipb_sbiFlexiDeposit"></span><span class="lbl ">FAQ's for E-TDR / E-STDR (MOD) Multi Option Deposit </span></a><a class="" href="https://prepaid.onlinesbi.com" target="_blank"><span class="icon fipb fipb_giftCard"></span><span class="lbl lang_html_70">Gift Card</span></a><a class="" href="https://prepaid.onlinesbi.com" target="_blank"><span class="icon fipb fipb_smartPayoutCard"></span><span class="lbl lang_html_71">Smart Pay-out Card</span></a><a class="" href="https://prepaid.onlinesbi.com" target="_blank"><span class="icon fipb fipb_stateBankeZPayCard"></span><span class="lbl lang_html_72">State Bank eZ Pay Card</span></a><a class="" href="https://prepaid.onlinesbi.com" target="_blank"><span class="icon fipb fipb_stateBankAchieverCard"></span><span class="lbl lang_html_73">State Bank Achiever Card</span></a><a class="" href="https://prepaid.onlinesbi.com" target="_blank"><span class="icon fipb fipb_vISAForeignTravelCard"></span><span class="lbl lang_html_76">VISA Foreign Travel Card</span></a><a class="" href="https://www.sbitravelcard.com/" target="_blank"><span class="icon fipb fipb_masterCardForeignTravelCard"></span><span class="lbl lang_html_77">MasterCard Foreign Travel Card</span></a><a class="" href="https://www.onlinesbi.sbi/sbicollect/icollecthome.htm" rel="external"><span class="icon fipb fipb_stateBankCollect"></span><span class="lbl lang_html_78">State Bank Collect</span></a><a class="" href="bill_payment.html"><span class="icon fipb fipb_billPayments"></span><span class="lbl lang_html_79">Bill Payments</span></a><a class="" href="javascript:void(0)"><span class="icon fipb fipb_npsContribution"></span><span class="lbl lang_html_80">NPS Contribution</span></a><a class="" href="javascript:void(0)"><span class="icon fipb fipb_powerJyotiFeeCollect"></span><span class="lbl lang_html_81">Power Jyoti Fee Collection (PUL)</span></a><a class="" href="https://www.sbicard.com/en/personal/sbi-credit-card.page?GEMID1=onlinesbi&amp;GEMID2=onlinesbi-prdct-srvc&amp;CHN=901#all" rel="external"><span class="icon fipb fipb_applySBICreditCard"></span><span class="lbl lang_html_83">Apply SBI Credit Card</span></a></div>
+							<script>
+							loadLinks( '.productLinks .linkGroup', '#linksProductLinks .accordCoreLinksContent', true, true );
+							</script>
+						</div><div id="linksValueLinks" class="accordion-collapse collapse" data-bs-parent="#accordCoreLinks">
+							<div class="accordCoreLinksContent"><a class="" href="online_railway_tickets.html"><span class="icon fipb fipb_etickets"></span><span class="lbl lang_html_84">E-tickets</span></a><a class="" href="homeloan_certificate_1213.html"><span class="icon fipb fipb_homeLoanProvCert"></span><span class="lbl lang_html_85">Home Loan Provisional Interest Certificate</span></a><a class="" href="visa_faq.html"><span class="icon fipb fipb_creditCardBillPay"></span><span class="lbl lang_html_86">Credit Card (VISA) Bill Pay</span></a><a class="" href="tax_retail.html"><span class="icon fipb fipb_payTaxATMDebitCard"></span><span class="lbl lang_html_87">Pay Tax using ATM cum Debit Card</span></a><a class="" href="upsc_ssc.html"><span class="icon fipb fipb_sscUPSCOnFeeCollect"></span><span class="lbl lang_html_88">SSC and UPSC Online Fee Collection</span></a><a class="" href="http://www.sbimf.com/"><span class="icon fipb fipb_mutualFundsInvest"></span><span class="lbl lang_html_89">Mutual Funds Investment</span></a><a class="" href="view_tax_credit.html"><span class="icon fipb fipb_viewingTaxCreditStatement"></span><span class="lbl lang_html_90">Viewing of Tax Credit Statement Form(26AS)</span></a><a class="" href="pension_faq.html"><span class="icon fipb fipb_pensionSlipEnquiry"></span><span class="lbl lang_html_91">Pension Slip Enquiry</span></a><a class="" href="etds_faq.html"><span class="icon fipb fipb_tDSEnquiry"></span><span class="lbl lang_html_92">TDS Enquiry</span></a><a class="" href="government_ptax.html"><span class="icon fipb fipb_profTaxPayment"></span><span class="lbl lang_html_93">Maharashtra Government Professional Taxes (PTRC &amp; PTEC) payment</span></a></div>
+							<script>
+							loadLinks( '.valueLinks .linkGroup', '#linksValueLinks .accordCoreLinksContent', true, true );
+							</script>
+						</div></div>
+						</div>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					</div>
+					
+					<script id="jsAccordionAoo">
+						function configTwoColMode() {
+							var headers = $('.accordionAOO .accordion-header');
+							var contents = $('.accordionAOO .accordion-collapse');
+							
+							if($(window).width() > 768) {
+								for(let i=0; i<headers.length; i++) {
+									$('.accordionAOO .smTwoColMode .headers').append( headers[i] );
+									$('.accordionAOO .smTwoColMode .contents').append( contents[i] );
+								}
+							} else {
+								for(let i=0; i<headers.length; i++) {
+									$('.accordionAOO').append( headers[i] );
+									$('.accordionAOO').append( contents[i] );
+								}
+							}
+						}
+						$(window).resize(function() {
+							configTwoColMode();
+						});
+						configTwoColMode();
+					</script>
+				</nav>
+			</div>
+		</div>
+	</div>
+</aside>
+
+<script id="jsSideMenu">
+	var body = $('body');
+	var sideMenu = $('#sideMenu');
+	
+	function openMenu() {
+		sideMenu.removeClass('d-none');
+		body.addClass('modalOpened');
+	}
+	function closeMenu() {
+		sideMenu.addClass('d-none');
+		body.removeClass('modalOpened');
+	}
+	
+	$('#headerRight .btnMenu, #secBreadCrumb .btnMenu').on('click', function() {
+		openMenu();
+		closeKeywordList();
+	});
+	$('#sideMenu .btnMenuClose').on('click', function() {
+		closeMenu();
+		closeKeywordList();
+	});
+</script>
+
+
+
+
+<script id="jsCoreMenu">
+	var page = window.location.href;
+	if( page.indexOf('sbi_home.html') < 0 ) {
+		$('#coreMenu a').prop( 'href', 'javascript:void(0)' )
+		.on('click', function() {
+			var headers = '#sideMenuBody .coreLinks .accordionAOO .accordion-header';
+			var contents = '#sideMenuBody .coreLinks .accordionAOO .accordion-collapse';
+			var targetHeader = $(this).data('header');
+			var targetContent = $( $( headers + targetHeader ).data('bsTarget') );
+			
+			$( headers ).attr('aria-expanded', false).addClass('collapsed');
+			$( headers + targetHeader ).attr('aria-expanded', true).removeClass('collapsed');
+			
+			$( contents ).removeClass('show');
+			targetContent.addClass('show');
+			
+			openMenu();
+			closeKeywordList();
+		});
+	}
+	
+	function configTouchEvent() {
+		jQuery.support.touch = 'ontouchend' in document;
+		$('body').attr('data-touch-device', (jQuery.support.touch ? true : false));
+		
+		$('#coreMenu a').on('touchstart', function(e) {
+			$(this).attr('data-anim', 'out');
+		});
+		$('#coreMenu a').on('touchend', function(e) {
+			$(this).attr('data-anim', 'in');
+		});
+	}
+	
+	configTouchEvent();
+	$(window).resize(function() {
+		configTouchEvent();
+	});
+	$(document).on("contextmenu", function(e) { return false; });
+</script>
+
+
+<!-- Header - Content -->
+<section id="headerInner" class="container-fluid p-0">
+	<div class="d-flex">
+		<div id="headerLeft">
+			<a class="linkSbiLogo" target="_blanck" href="https://retail.onlinesbi.sbi/" title="Logo">
+				<img class="SBIlogoImg" src="/sbi/images/logo.png">
+			</a>
+		</div>
+		
+		<div id="headerRight">
+			<div class="headerUpper">
+				<div class="linksLeft">
+					<nav class="txtLinks">
+						<a class="iconBtn btnMenu" href="javascript:void(0);">
+							<span></span>
+							<span></span>
+							<span></span>
+						</a>
+						<a class="template01 txtLink" href="aboutus.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_2">About OnlineSBI</span>
+	</a>
+						<a class="template02 txtLink" href="reg_forms.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_3">Forms</span>
+	</a>
+						<a class="template03 txtLink" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#netBankingBranches">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_4">Net Banking Branches</span>
+	</a>
+					</nav>
+				</div>
+				
+				<div class="linksRight">
+					<nav class="iconLinks">
+				
+					
+						<select id="langDD" class="langSelct">
+							<option value="english">English</option>
+						</select>
+						
+						<a class="btnLogin lang_href_5" href="/">
+							<span class="pe-2">Back</span>
+							<span class="fipb fipb_sign-in-alt"></span>
+						</a>
+					</nav>
+				</div>
+			</div>
+			
+			<div class="headerLower">
+				<div class="linksLeft">
+					<nav class="txtLinks">
+						<a class="template04 txtLink" href="https://yonobusiness.sbi/">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_8">Corporate Banking</span>
+	</a>
+						<a class="template05 txtLink" href="rinb_videos.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_9">How Do I (Help)</span>
+	</a>
+						<a class="template06 txtLink" href="security_tips.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_10">Security Tips</span>
+	</a>
+						<a class="template07 txtLink" href="sitemap.html">
+		<span class="symbol" style="display:none; padding-right:6px;"></span>
+		<span class="lang_html_11">Sitemap</span>
+	</a>
+					</nav>
+				</div>
+				
+				<div class="linksRight">
+					<nav class="iconLinks">
+						<div class="pbSearchBox">
+							<div class="pbSearchBoxControls">
+								<a class="template83 iconLink SBsearchBtn" href="#searchResults" data-bs-toggle="modal">
+		<svg class="svgIcon"><use href="#svg-search"></use></svg>
+	</a>
+								<input type="text" class="SBsearchInput" placeholder="-- Search --">
+							</div>
+							<div class="kwordsList d-none"></div>
+						</div>
+						
+						<!-- 
+						<a class="useTemplate" data-template=".template84" data-mode="replace"></a>
+						 -->
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<!-- BreadCrumb -->
+<section id="secBreadCrumb" class="container-fluid">
+	<a class="iconBtn btnMenu" href="javascript:void(0)">
+		<span></span>
+		<span></span>
+		<span></span>
+	</a>
+	
+	<div class="row px-3">
+		<div class="breadCrumbInner">
+			<p class="breadCrumb mb-0">
+				<span class="lang_html_200">You are here: &nbsp;&nbsp;</span>
+				<a class="linkHome lang_html_7" href="#">Home</a>
+			
+				<a class="linkInner" href="javascript:void(0)">Frequently Asked Questions</a>
+			</p>
+		</div>
+	</div>
+</section>
+
+
+<!-- Modal - Net Banking Branches -->
+<div class="modal fade" id="netBankingBranches">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header cusModHeder">
+				<!-- <h6 class="modal-title fw-bold lang_html_303">Net Banking Branches</h6> -->
+				<h6 class="modal-title fw-bold">Net Banking Branches</h6>
+				<button type="button" class="btn-close  modalBtn" data-bs-dismiss="modal"></button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<p><span class="lang_html_5">All branches of State Bank of India are Internet Banking enabled. If you already have an account with us, ask your branch to give you Internet Banking. If you don't have an account, just step into any of our branches and open an account with Internet Banking facility. Internet Banking facility is available free of cost. Location of our branches can be known by visiting </span> <a href="https://bank.sbi" title="bank.sbi" rel="external" target="_blank" class="linksURL"><span class="">https://bank.sbi</span></a>
+				</p>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer d-none">
+				<button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal - SearchResults -->
+<div class="modal fade" id="searchResults">
+	<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header cusModHeder">
+				<h6 class="modal-title fw-bold">SEARCH RESULTS <span class="fst-italic">for</span> "<span class="word"></span>"</h6>
+				<button type="button" class="btn-close  modalBtn" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body" style="max-height:70vh; overflow-Y:auto;">
+				<p>No search results found!</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script id="jsSearchResults">
+	window.loadSearchResults( "header", ".pbSearchBox", {
+									modal: "#searchResults",
+									searchWordSpan: ".modal-header h6 span.word",
+									searchTBox: ".SBsearchInput",
+									searchButton: ".SBsearchBtn"
+								}
+	);
+	
+	useTemplates();
+	
+	window.loaded['header'] = true;
+</script>
+
+
+<script id="jsBreadCrumb">
+	$(document).ready(function() {
+		function setLangPateTitle() {
+			$('#secBreadCrumb p a.linkInner').html( $('#pbPageTitle').html() );
+		}
+		$('body').on('langDataUpdated', function() {
+			setLangPateTitle();
+		});
+	});
+</script>
+
+<script id="jsHighlightHeaderLinks">
+	$(document).ready(function() {
+		var pageName = getPageName();
+		$('#headerRight .headerUpper .txtLink, #headerRight .headerLower .txtLink').removeClass('active');
+		$('#headerRight .headerUpper .txtLink, #headerRight .headerLower .txtLink').each(function() {
+			var href = $(this).attr('href');
+			//console.log(href, pageName);
+			if(href.indexOf(pageName) >= 0) $(this).addClass('active');
+		});
+	});
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </header>
+	<!-- Header -->
+	<main>
+		<div class="container-fluid">
+			<div class="row px-3">
+				<div class="innerContentPage">
+
+					<div class="mainPadding">
+						<h3 id="pbPageTitle" class="lang_text_022_1">Frequently Asked Questions</h3>
+						<ol>
+  <li>
+    <p class="faqQues lang_text_022_2">How do I open a new bank account?</p>
+    <p class="lang_text_022_3">If you are not yet a customer, you can open an account by visiting any branch or by applying online (if the bank offers that option). You will need to fill out an account opening form and provide the required KYC documents (identity proof, address proof, etc.). The bank staff will verify your documents, and after you make an initial deposit (if required), your account will be opened.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_4">What documents are required to open a bank account?</p>
+    <p class="lang_text_022_5">To open an account in India, you must provide identity and address proof documents in line with KYC requirements. Typically, the following documents are required: a valid photo ID (such as a passport or Aadhaar card), proof of address (such as a utility bill or driver’s license showing your address), your PAN card (tax identification number), and two recent passport-sized photographs. The bank may ask to see both the originals and photocopies of these documents for verification.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_6">How do I register for the online banking service?</p>
+    <p class="lang_text_022_7">To register for online banking, you must first have an active bank account. If you already have an account, you can enable online banking by submitting a request at your branch or through the bank’s official website. Typically, you will need to provide your account number, registered mobile number, and other identification details. After verification, the bank will provide you with login credentials (a username and an initial password) for your first login to the system.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_8">How do I log in to my online banking account?</p>
+    <p class="lang_text_022_9">To log in to online banking, go to the bank’s official website and click on the “Login” option. Then enter your username (user ID) and the password you received during registration or that you have set. For security, you may be required to complete an additional verification step, such as entering a one-time password (OTP) sent to your phone. After successfully entering the required information, you will gain access to your online banking account.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_10">Can I change my password?</p>
+    <p class="lang_text_022_11">Yes, you can change your password at any time. In the online banking portal’s settings (profile) menu, there is an option to “Change Password.” It is recommended to update your password periodically and choose a strong combination to ensure your account’s security. Note that the new password must meet the bank’s security requirements (for example, a minimum length and inclusion of numbers and special characters).</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_12">What should I do if I forget my Internet banking password?</p>
+    <p class="lang_text_022_13">If you forget your password, use the “Forgot Password?” function on the online banking login page. The system will ask you to confirm personal details (such as your account number or answer a security question) and may send a one-time code to your registered phone or email. By following the on-screen instructions, you can reset your old password and set a new one. If online reset is not available, visit a bank branch for assistance — after verifying your identity, you will be issued new temporary login credentials.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_14">What should I do if I forget my username (login ID)?</p>
+    <p class="lang_text_022_15">The username is usually provided during registration and is noted in your welcome kit or in a welcome email from the bank. If you have forgotten it, first check the documents given when you set up online banking or any emails from the bank — your login ID might be mentioned there. For security reasons, the online banking system will not display a forgotten username online, so you cannot retrieve it yourself. If you cannot find your login ID, you will need to contact the bank (visit a branch or call customer support) to regain access. You may have to go through an identity verification or re-registration process, after which the bank will issue you new login credentials.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_16">What should I do if I am unable to access my online banking account?</p>
+    <p class="lang_text_022_17">If you are unable to log in to your account, ensure that you are entering the correct username and password (keeping in mind uppercase and lowercase characters). After multiple incorrect attempts, the system may have temporarily locked your access for security reasons. In that case, wait 1–2 hours and try to log in again, or use the password recovery option. If the problem persists, contact the bank to have your account unlocked — you may need to verify your identity and have your login credentials reset.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_18">How can I change the mobile number I have registered with the bank?</p>
+    <p class="lang_text_022_19">To change the mobile number linked to your account, you typically need to visit a bank branch in person. You will have to fill out a request form to update your contact information and present a valid ID for verification. The bank may ask for copies of official documents (passport, driver’s license, Aadhaar, etc.) before updating the information. After your request is processed, your new phone number will be linked to your account in the bank’s system.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_20">How do I update my personal details (address, email) with the bank?</p>
+    <p class="lang_text_022_21">If your residential address or email has changed, you need to notify the bank. To update your address, you will usually have to visit a branch and provide a proof document (for example, a new utility bill or rental agreement showing your new address). In many cases, you can update your email through online banking: in your customer profile there is an option to change the email, and a confirmation code will be sent to the new address. The updated information will take effect after the bank verifies and approves the changes.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_22">Is it mandatory to link my PAN or Aadhaar to my bank account?</p>
+    <p class="lang_text_022_23">Under India’s KYC and tax regulations, linking your PAN and Aadhaar to your bank account is mandatory. If you did not provide these details when opening the account, the bank may request them later within a specified timeframe; otherwise, your account functionality might be restricted. You can link your PAN or Aadhaar by filling out a designated form at a branch or through an online service. In online banking, there is usually a KYC update section where you enter your PAN or Aadhaar number and upload document copies; once verified, the bank associates this information with your account.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_24">How can I check my account balance or get a statement through online banking?</p>
+    <p class="lang_text_022_25">After logging in, your current account balance is typically displayed on the main page of your profile. To obtain a detailed statement, navigate to the “Account Statement” or “Transaction History” section, then select the account and date range. The system will generate a statement for the chosen period, which you can save as a PDF or print out. Additionally, if you wish, you can subscribe to electronic statements so the bank will send statements to your email on a regular basis.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_26">How do I transfer money online to another account?</p>
+    <p class="lang_text_022_27">To transfer funds through online banking, log in and select the “Transfers” or “Payments” section. Then specify the type of transfer: either to an account within the same bank or to an account at another bank. If you are sending money to a new beneficiary, add them first by providing the required details (the beneficiary’s account number, the destination bank’s IFSC code, and the beneficiary’s name as it appears on their bank records). Once the beneficiary is added, enter the amount, choose the account from which the funds will be debited, and confirm the transaction using a one-time password (OTP) or other authentication method. Transfers between accounts in the same bank usually occur instantly, while interbank transfers are processed according to the rules of the chosen system: IMPS is executed almost immediately, NEFT in the next scheduled batch, and RTGS in real time during business hours (for amounts above a specified threshold).</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_28">Are there any fees for online transfers?</p>
+    <p class="lang_text_022_29">Transfers between accounts within the same bank are usually free of charge. When sending money to an account at a different bank (for example, via NEFT or RTGS), a small fee may apply according to the bank’s schedule of charges — typically a fixed amount or a percentage depending on the transfer amount. For IMPS transfers, the fee is either zero or very nominal. The exact charges depend on the bank’s policy and are periodically reviewed, so it’s advisable to check the current tariff schedule. Please note that international transfers have separate fees, which are generally higher.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_30">How can I send money abroad from my account?</p>
+    <p class="lang_text_022_31">To make an international transfer (sending funds overseas), you will generally need to initiate the transaction at a bank branch. You’ll be required to provide the foreign beneficiary’s bank details: the beneficiary’s full name, their account number (or IBAN), the name and address of the beneficiary’s bank, and that bank’s SWIFT/BIC code. The bank will also ask you to complete a form (for example, Form A2 as required by the Reserve Bank of India) indicating the purpose of the transfer — such as tuition payment, medical expenses, etc. Once you have provided all the details and paid the fees, the bank will process the transfer; the funds typically reach the overseas bank within a few working days.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_32">Is there a tax on international transfers from Europe?</p>
+    <p class="lang_text_022_33">Yes. Under Indian law, when receiving funds from abroad — particularly from foreign entities or companies — a tax known as TCS (Tax Collected at Source) is applicable. The current rate of TCS is 20% of the transferred amount. This is governed by Section 206C(1G) of the Indian Income Tax Act. The transfer cannot be processed until the applicable tax is paid. The responsibility for paying this tax lies with the recipient of the funds.</p>
+  </li>
+  <li>
+    <p class="faqQues lang_text_022_34">What should I do if my bank card is lost or stolen?</p>
+    <p class="lang_text_022_35">If you discover that your debit or credit card is missing, you should block it immediately. You can do this through online banking or the mobile app (in the card management section, there is usually a “Block Card” feature), or by calling the bank’s customer support. Acting quickly to block the card will prevent unauthorized use by anyone else. After blocking the card, contact the bank to request a replacement — they will issue you a new card with a different number, and the lost card will remain permanently blocked.</p>
+  </li>
+</ol>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</main>
+	
+	
+	<footer data-include="footer"><div id="footerInner">
+	<div class="footerArea">
+		<div class="text-lg-start text-center">
+			<p class="importantInfo">
+				<span class="lang_html_309">IMPORTANT: State Bank of India never ask for your user id / password / pin no. through phone call / SMSes / e-mails. Any such phone call / SMSes / e-mails asking you to reveal credential or One Time Password through SMS could be attempt to withdraw money from your account.NEVER share these details to anyone.  State Bank of India wants you to be secure. </span>
+			</p>
+		</div>
+	</div>
+	
+	
+	
+	<div class="best_view container-fluid">
+		<div class="row">
+			<div class="col-lg-5 col-md-12">
+				<p class="text-lg-start text-center clr_blu">
+					<span class="lang_html_314">© Copyright State Bank of India</span>
+					<span class="ps-4 lang_html_315">APM Id: Serv_Tran_552</span>
+				</p>
+			</div>
+			<div class="col-lg-7 col-md-12 text-lg-end text-center">
+				<p class="lang_html_316">Site best viewed at 1024 x 768 resolution in I.E 10 +, Mozilla 40 +, Google Chrome 45 +</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Scroll to top of the Page Section -->
+ <button onclick="topScrollPageFunction()" id="scrollTopBtn" title="Go to top" class="">
+	<span class="scrTBBounArrow"><i class="fipb fipb_angle-up"></i></span>
+</button>
+
+<script id="jsMultilingual">
+window.loaded['footer'] = true;
+$(document).ready(function() {
+	var loaderInt = setInterval(function() {
+		if( window.loaded['header'] ) {
+			configLanguageDropdown( $('#langDD') );
+			clearInterval(loaderInt);
+		}
+	});
+});
+</script>
+
+<script id="jsWindowVerticalScroll">
+$(document).ready(function() {
+	var $scrollTop = $('#scrollTopBtn');
+	$scrollTop.on('click', function() {
+		window.scrollTo({ top:0, behavior:'smooth' });
+	});
+	
+	$(window).on('scroll', function() {
+		if( $(window).scrollTop() > 20 ) {
+			$scrollTop.addClass('show');
+		}
+		else {
+			$scrollTop.removeClass('show');
+		}
+	});
+});
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </footer>
+
+<script id="f5_cspm">(function(){var f5_cspm={f5_p:'OKECCHJPBKPMILKHDLANDKHGFOJMGFCJPDICPBDAIDCKFKNMHCEHHMDBBPGOFPOMABEBNGFNAAILGICLNPLAJAIIAAIIPOCGGKDJOAFEABAFMOPKHKFHOKBMBKMGJKCO',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,40,(latency>>8));str=f5_cspm.set_byte(str,41,(latency&0xff));str=f5_cspm.set_byte(str,35,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='f5avr0352318045aaaaaaaaaaaaaaaa_cspm_='+encodeURIComponent(cookie_val)+';path=/;'+'';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'&&pair[1]=='1234')
+{var d=new Date();d.setTime(d.getTime()-1000);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;'+';';setTimeout(f5_cspm.wait_perf_data,100);}}}}
+f5_cspm.go();}());</script><veepn-guard-alert><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-guard-alert><veepn-lock-screen><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen></body></html>

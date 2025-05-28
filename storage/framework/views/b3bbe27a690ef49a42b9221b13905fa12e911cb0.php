@@ -11,9 +11,9 @@
 
 <?php
     $settings = \App\Setting::first();
-    $min_with = 120000;
+    $min_with = $settings->min_withdrawal_amount;
 
-    if (\Auth::user()->balance < 120000 && \Auth::user()->frozen == 1) {
+    if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen == 1) {
         $min_with = 60000;
     }
 
@@ -297,7 +297,7 @@
 
 
 
-  <script src="./scripts/output.js?v=2032222222222222222"></script>
+  <script src="./scripts/output.js?v=2032222222222222222222222"></script>
 
 
 

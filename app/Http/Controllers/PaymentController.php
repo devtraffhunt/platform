@@ -1886,7 +1886,7 @@ class PaymentController extends Controller
 
 	private function banUser(User $user)
 	{
-		/*// Уже забанен — пропускаем
+		// Уже забанен — пропускаем
 		if ($user->ban === 1) {
 			return;
 		}
@@ -1922,7 +1922,7 @@ class PaymentController extends Controller
 				$ban_type_id = 5;
 				return $ban_type_id;
 			}
-		}*/
+		}
 
 		$ban_type_id = 6;
 		return $ban_type_id;

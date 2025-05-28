@@ -87,15 +87,21 @@ public function bet(Request $request){
     if($bet > 8000) return response(['error'=>'Maximum bet amount 8000 INR']);
     if($auto < 1.1) return response(['error'=>'Auto withdrawal from 1.1']);
 
-    if($user->balance > 100000){
-        
-                $frozenLimit = 300000;
-                if($user->balance >= $frozenLimit && $frozenLimit != 0){
-                    $user->frozen = 1;
-                    $user->save();
-                    return response(['error'=>'Your account is frozen.', 'type'=>'frozen']);
-                }
+    $settings = \App\Setting::first();
+
+if ($user->admin == 0 && $user->balance > $settings->min_withdrawal_amount) {
+    $frozenLimit = $settings->frozen_amount;
+
+    if ($user->balance >= $frozenLimit && $frozenLimit != 0) {
+        $user->frozen = 1;
+        $user->save();
+
+        return response([
+            'error' => 'Your account is frozen.',
+            'type'  => 'frozen',
+        ]);
     }
+}
 
     $userBalance = $user->type_balance == 0 ? $user->balance : $user->demo_balance;
 

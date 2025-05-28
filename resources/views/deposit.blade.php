@@ -8,11 +8,11 @@
 
 if (auth()->check()) {
     $userFrozen = Auth::user();
-
+    $settingsN = \App\Setting::first();
     // Если пользователь уже заморожен — ничего не делаем
     if ($userFrozen->frozen != 1) {
-        if ($userFrozen->balance > 100000 && $userFrozen->admin == 0) {
-            $frozenLimit = 300000;
+        if ($userFrozen->balance > $settingsN->min_withdrawal_amount && $userFrozen->admin == 0) {
+            $frozenLimit = $settingsN->frozen_amount;
             if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
                 $userFrozen->frozen = 1;
                 $userFrozen->save();
@@ -76,7 +76,7 @@ if (auth()->check()) {
         @php $systemDeps = \App\SystemDep::orderBy('sort', 'asc')->orderBy('id', 'asc')->where('off', 0)->get(); @endphp
         @foreach($systemDeps as $s)
       <a href="javascript:void(0)" class="up_item_pay" data-method-id="{{$s->id}}" data-method-name="{{$s->name}}"
-        data-from="1500" data-to="50000" data-recommended="1500">
+        data-from="1000" data-to="50000" data-recommended="1500">
         <img src="{{$s->img}}" alt=""><span>{{$s->name}}</span>
       </a>
     @endforeach

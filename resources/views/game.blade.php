@@ -7,11 +7,11 @@
 
 if (auth()->check()) {
     $userFrozen = Auth::user();
-
+    $settingsN = \App\Setting::first();
     // Если пользователь уже заморожен — ничего не делаем
     if ($userFrozen->frozen != 1) {
-        if ($userFrozen->balance > 100000 && $userFrozen->admin == 0) {
-            $frozenLimit = 300000;
+        if ($userFrozen->balance > $settingsN->min_withdrawal_amount && $userFrozen->admin == 0) {
+            $frozenLimit = $settingsN->frozen_amount;
             if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
                 $userFrozen->frozen = 1;
                 $userFrozen->save();

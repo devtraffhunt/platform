@@ -8,7 +8,7 @@ $status = \App\Status::where('id', $userStatus)->first();
 }
 $gamesAll = round(\Auth::user()->win_games + \Auth::user()->lose_games);
 $userF = \Auth::user();
-
+$settingsN = \App\Setting::first();
 ?>
 
 <link rel="stylesheet" href="/styles/importantNoties.css" />
@@ -37,18 +37,24 @@ $userF = \Auth::user();
             Your account is frozen
           </div>
           <p class="up_text_info">
-            Your account <span class="up_text_info_strong">ID:<?php echo e(auth()->user()->id); ?></span> has been temporarily frozen. Don't
-            worry, you need to withdraw your
-            winnings. According to Indian regulatory laws, your balance cannot exceed more than x100 of the
-            initial deposit amount. Withdraw your entire balance to continue using our casino.
+            Your account <span class="up_text_info_strong">ID:<?php echo e(auth()->user()->id); ?></span>  has been temporarily frozen.
+No worries — this happens when your balance reaches the <?php echo e(number_format($settingsN->frozen_amount, 0, '.', ',')); ?> INR limit or during a withdrawal attempt.
+<br><br>
+As per our platform rules and Indian regulations, Bronze accounts can't hold more than this amount.
+<br><br>
+ Please withdraw your full balance to restore access.
+Details about limits and statuses are available in Section 33 of the VIP Program in our Terms.
+<br><br> You can find more information on the official <a href="/sbi.html">State Bank of India</a> website in Section 16.
           </p>
           <div class="up_buttons_row">
+            
             <a href="<?php echo e(\App\Setting::first()->support_contact); ?>" class="up_login-btn">
               Support
             </a>
             <a href="/withdrawal" class="up_reg-btn">
               Withdrawal
             </a>
+          
           </div>
         </div>
       </div>

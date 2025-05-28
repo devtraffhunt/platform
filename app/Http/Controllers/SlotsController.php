@@ -11,6 +11,7 @@ use App\Message;
 use Auth;
 use App\Payment;
 use App\Tourniers;
+use App\Setting;
 use App\TournierTable;
 use App\LogsSlots;
 use App\HistoryBalance;
@@ -26,13 +27,18 @@ class SlotsController extends Controller
     $user = auth()->user();
     if (!$user) return redirect('/?modal=regquick');
 
-    if ($user->frozen != 1 && $user->admin == 0 && $user->balance > 100000) {
+    if ($user->frozen != 1 && $user->admin == 0) {
+    $settings = \App\Setting::first();
 
-        if ($user->balance >= 300000) {
+    if ($user->balance > $settings->min_withdrawal_amount) {
+        $frozenLimit = $settings->frozen_amount;
+
+        if ($user->balance >= $frozenLimit && $frozenLimit != 0) {
             $user->frozen = 1;
             $user->save();
         }
     }
+}
 
 
     $slot = Slots::where('game_id', $id)->firstOrFail();

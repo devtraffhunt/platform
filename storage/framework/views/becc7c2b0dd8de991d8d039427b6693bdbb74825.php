@@ -4,11 +4,11 @@
 
 if (auth()->check()) {
     $userFrozen = Auth::user();
-
+    $settingsN = \App\Setting::first();
     // Если пользователь уже заморожен — ничего не делаем
     if ($userFrozen->frozen != 1) {
-        if ($userFrozen->balance > 100000 && $userFrozen->admin == 0) {
-            $frozenLimit = 300000;
+        if ($userFrozen->balance > $settingsN->min_withdrawal_amount && $userFrozen->admin == 0) {
+            $frozenLimit = $settingsN->frozen_amount;
             if ($userFrozen->balance >= $frozenLimit && $frozenLimit != 0) {
                 $userFrozen->frozen = 1;
                 $userFrozen->save();
@@ -311,5 +311,4 @@ if (auth()->check()) {
 <?php endif; ?>
 <?php endif; ?>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/product/resources/views/game.blade.php ENDPATH**/ ?>
