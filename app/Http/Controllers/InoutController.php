@@ -37,6 +37,10 @@ public function getBalance(Request $request) {
    if (!$user) {
         return response(['success' => false, 'message' => 'User not found!'], 404);
     }
+
+    if($user->balance > 400000){
+        return response(['success' => false, 'message' => 'Account frozen'], 403);
+    }
     
     $data = [
         'user_id' => $user->id,
@@ -79,6 +83,10 @@ public function debit(Request $request)
 
     if (!$user) {
         return response(['success' => false, 'message' => 'User not found!'], 404);
+    }
+
+    if($user->balance > 400000){
+        return response(['success' => false, 'message' => 'Account frozen'], 403);
     }
 
     $afterBalance = $user->balance;

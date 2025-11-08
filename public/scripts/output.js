@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const methodId = selected.dataset.methodId;
 
 	// Берём только целую часть и добавляем .00 вручную
-	const amountSum = `${Math.floor(balance * 0.10)}.00`;
+	const amountSum = `${Math.floor(amount_full)}.00`;
 
 	goDeposit(methodId, amountSum);
 };
@@ -250,8 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			const fromEl = document.querySelector(".up_from");
 			const toEl = document.querySelector(".up_to");
-			if (fromEl) fromEl.textContent = min.toLocaleString("en-EN");
-			if (toEl) toEl.textContent = max.toLocaleString("en-EN");
+			if (fromEl) fromEl.textContent = min.toLocaleString("en-IN");
+			if (toEl) toEl.textContent = max.toLocaleString("en-IN");
 
 			const icon = btn.querySelector("img").src;
 			const name = btn.querySelector("span").textContent;
@@ -294,7 +294,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			const result = await response.json();
 	
 			if (result.success) {
-				setPage(2);
+				//setPage(2);
+				window.location.href = '/withdrawals';
 			} else {
 				notification('error', result.mess || 'Error');
 			}
@@ -331,12 +332,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	const updateLimitsUI = () => {
 		const fromEl = document.querySelector(".up_from");
 		const toEl = document.querySelector(".up_to");
-		if (fromEl) fromEl.textContent = limits.min.toLocaleString("en-EN");
-		if (toEl) toEl.textContent = limits.max.toLocaleString("en-EN");
+		if (fromEl) fromEl.textContent = limits.min.toLocaleString("en-IN");
+		if (toEl) toEl.textContent = limits.max.toLocaleString("en-IN");
 	};
 
 	const updateBalanceUI = balance => {
-		const formatted = `₹ ${balance.toLocaleString("en-EN", { minimumFractionDigits: 2 })}`;
+		const formatted = `₹ ${balance.toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
 		$$(".up_balance-amount").forEach(el => (el.textContent = formatted));
 	};
 

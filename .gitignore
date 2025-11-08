@@ -1,6 +1,8 @@
 # Composer dependencies
 /vendor
 /server/vendor
+/public/storage
+/storage/*.key
 
 # Node dependencies
 /node_modules

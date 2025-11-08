@@ -1,0 +1,374 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+	--color-primary: #397ce6;
+	--color-bg: #ffffff;
+	--color-light: #f1f3f8;
+	--color-gray: #77829b;
+	--color-text: #1c252e;
+	--color-green: #29b663;
+
+	/* новая переменная для высоты полей */
+	--input-height: 48px;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+body {
+	font-family: "Inter", sans-serif;
+}
+
+.globalContainer {
+	background-color: #090f1e;
+	/* overflow-x: hidden;
+  overflow-y: auto; */
+
+	* {
+		box-sizing: border-box;
+		font-family: "Inter", sans-serif;
+	}
+}
+
+.icon_15 {
+	width: 15px;
+}
+.icon_20 {
+	width: 20px;
+}
+
+.h1 {
+	color: #fff;
+	font-family: Inter, sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.h3 {
+	color: #090f1e;
+	font-family: Inter;
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+
+/* === Зміна метода === */
+.pay_change_container {
+	/* width: 100%; */
+	border-radius: 10px;
+	background: #edf0f7;
+	padding: 10px 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.pay_change_method {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.pay_change_method img {
+	height: 30px;
+}
+.pay_change_method span {
+	color: #090f1e;
+	font-family: Inter;
+	font-size: 16px;
+	font-weight: 700;
+}
+.pay_change_button {
+	color: #397ce6;
+	font-family: Inter;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+/* === Форма === */
+.form {
+	width: 100%;
+	margin-top: 12px;
+}
+
+.input-group,
+.password-group {
+	height: var(--input-height);
+	display: flex;
+	align-items: center;
+	background: var(--color-light);
+	border-radius: 10px;
+	overflow-y: hidden;
+	overflow-x: visible;
+	margin-bottom: 8px;
+
+	.icon-wrapper {
+		width: var(--input-height);
+		height: var(--input-height);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(119, 130, 155, 0.05);
+		flex-shrink: 0;
+	}
+
+	.input-bold {
+		color: #77829b;
+		font-family: Inter;
+		font-size: 16px;
+		font-weight: 700;
+
+		&::placeholder {
+			font-weight: 400;
+		}
+	}
+}
+
+.input-group input,
+.password-group input {
+	flex: 1;
+	height: var(--input-height);
+	padding: 0 12px;
+	line-height: var(--input-height);
+	border: none;
+	background: transparent;
+	font-size: 16px;
+	color: var(--color-text);
+	outline: none;
+	position: relative;
+	z-index: 10;
+}
+
+.text_input_small {
+	display: flex;
+	justify-content: space-between;
+
+	.h4 {
+		color: #77829b;
+		font-family: Inter;
+		font-size: 12px;
+		font-weight: 500;
+	}
+}
+
+/* === Buttons === */
+
+/* Кнопка Login */
+.login-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	padding: 12px;
+	background: var(--color-primary);
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+.login-btn:disabled {
+	opacity: 0.6;
+	cursor: default;
+}
+
+.logout-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	padding: 12px;
+	background: #ff7272;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+.logout-btn:disabled {
+	opacity: 0.6;
+	cursor: default;
+}
+
+/* Кнопка Login */
+.reg-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	padding: 12px;
+	background: var(--color-green);
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+.reg-btn:disabled {
+	opacity: 0.6;
+	cursor: default;
+}
+
+/* Сіра кнопка */
+.pay_button_learn {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 12px;
+	border-radius: 10px;
+	background: #f3f6fb;
+	color: #77829b;
+	font-family: Inter;
+	font-size: 16px;
+	font-weight: 600;
+  border: none;
+
+	img {
+		margin-right: 10px;
+	}
+}
+
+/* === Кнопки з сумами === */
+
+.amounts_select_container {
+	display: flex;
+	justify-content: space-around;
+	width: 90%;
+	margin: 10px auto;
+}
+.amounts_select_item {
+	border-radius: 10px;
+	background: #edf0f7;
+	padding: 7px;
+	color: #77829b;
+	font-family: Inter;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+/* === Кнопки методів оплати === */
+
+.methods_pay {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 7px;
+	width: 100%;
+	margin-top: 10px;
+}
+
+.item_pay,
+.item_pay_other {
+	box-sizing: border-box;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	border-radius: 15px;
+	background: #edf0f7;
+	text-decoration: none;
+	white-space: nowrap;
+
+	span {
+		color: #090f1e;
+		font-family: Inter;
+		font-size: 14px;
+		font-weight: 700;
+		margin-top: 5px;
+	}
+
+	img {
+		height: 30px;
+		width: auto;
+		max-width: 100%;
+	}
+}
+
+.item_pay_active {
+	position: relative;
+	box-shadow: 0 0 0 2px inset #0075ff;
+
+	&::after {
+		content: "";
+		background-color: #ffffff;
+		background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDIwIDIwIj48ZyBpZD0iR3JvdXAiPjxwYXRoIGlkPSJWZWN0b3IiIGZpbGw9IiMwMDc1RkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEwIDBDNy4zNDc4NCAwIDQuODA0MyAxLjA1MzU3IDIuOTI4OTMgMi45Mjg5M0MxLjA1MzU3IDQuODA0MyAwIDcuMzQ3ODQgMCAxMEMwIDEyLjY1MjIgMS4wNTM1NyAxNS4xOTU3IDIuOTI4OTMgMTcuMDcxMUM0LjgwNDMgMTguOTQ2NCA3LjM0Nzg0IDIwIDEwIDIwQzEyLjY1MjIgMjAgMTUuMTk1NyAxOC45NDY0IDE3LjA3MTEgMTcuMDcxMUMxOC45NDY0IDE1LjE5NTcgMjAgMTIuNjUyMiAyMCAxMEMyMCA3LjM0Nzg0IDE4Ljk0NjQgNC44MDQzIDE3LjA3MTEgMi45Mjg5M0MxNS4xOTU3IDEuMDUzNTcgMTIuNjUyMiAwIDEwIDBaTTE0LjI4IDcuNzVDMTQuMzczOSA3LjY1OTA4IDE0LjQ0NzggNy41NDk1OCAxNC40OTcgNy40Mjg0OUMxNC41NDYxIDcuMzA3NCAxNC41Njk1IDcuMTc3MzkgMTQuNTY1NiA3LjA0Njc1QzE0LjU2MTcgNi45MTYxMSAxNC41MzA3IDYuNzg3NzIgMTQuNDc0MyA2LjY2OTc4QzE0LjQxOCA2LjU1MTg0IDE0LjMzNzggNi40NDY5MyAxNC4yMzg2IDYuMzYxNzZDMTQuMTM5NSA2LjI3NjU5IDE0LjAyMzcgNi4yMTMwMyAxMy44OTg2IDYuMTc1MTNDMTMuNzczNSA2LjEzNzI0IDEzLjY0MTkgNi4xMjU4NCAxMy41MTIyIDYuMTQxNjdDMTMuMzgyNSA2LjE1NzUgMTMuMjU3NSA2LjIwMDIyIDEzLjE0NTIgNi4yNjcwOEMxMy4wMzI5IDYuMzMzOTQgMTIuOTM1NyA2LjQyMzQ5IDEyLjg2IDYuNTNMOC42NiAxMS40Mkw3LjE0IDkuNjVDNi45NzE2MSA5LjQ4NjkyIDYuNzQ4MzcgOS4zOTI2NSA2LjUxNDA2IDkuMzg1NjdDNi4yNzk3NSA5LjM3ODY4IDYuMDUxMjkgOS40NTk1IDUuODczNDkgOS42MTIyNkM1LjY5NTY5IDkuNzY1MDIgNS41ODEzOCA5Ljk3ODcgNS41NTI5OCAxMC4yMTE0QzUuNTI0NTkgMTAuNDQ0MSA1LjU4NDE1IDEwLjY3OSA1LjcyIDEwLjg3TDcuOTUgMTMuNDdDOC4wMzgyNCAxMy41NzE3IDguMTQ3MyAxMy42NTMzIDguMjY5NzkgMTMuNzA5MUM4LjM5MjI4IDEzLjc2NSA4LjUyNTM2IDEzLjc5NCA4LjY2IDEzLjc5NEM4Ljc5NDY0IDEzLjc5NCA4LjkyNzcxIDEzLjc2NSA5LjA1MDIxIDEzLjcwOTFDOS4xNzI3IDEzLjY1MzMgOS4yODE3NiAxMy41NzE3IDkuMzcgMTMuNDdMMTQuMjggNy43NVoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		top: -5px;
+		right: -5px;
+		border-radius: 9999px;
+		overflow: hidden;
+		z-index: 100;
+	}
+}
+
+/* === Доступний баланс === */
+
+.balance-box {
+	padding: 10px 80px 10px 14px;
+	border-radius: 10px;
+	background: var(--color-bg);
+	box-shadow: 0px 2px 10px 3px rgba(57, 124, 230, 0.11);
+	margin-bottom: 20px;
+}
+
+.balance-label {
+	font-size: 14px;
+	font-weight: 400;
+	color: var(--color-gray);
+	margin: 0;
+}
+
+.balance-amount {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--color-text);
+	margin: 4px 0 0;
+}
+
+/* === Стиль для помилок === */
+.error {
+	border: 1px solid red;
+}
+
+#loader {
+	position: fixed;
+	width: 100%;
+	height: 100dvh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+	background-color: #fff;
+
+	.circle {
+		width: 48px;
+		height: 48px;
+		border: 5px solid #397ce6;
+		border-bottom-color: transparent;
+		border-radius: 50%;
+		display: inline-block;
+		box-sizing: border-box;
+		animation: rotation 1s linear infinite;
+	}
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

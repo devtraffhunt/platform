@@ -1,3 +1,52 @@
+(function () {
+  function getBotIdFromHash() {
+    const hashParams = new URLSearchParams(location.hash.slice(1));
+    return hashParams.get('bot_id');
+  }
+
+  function safeSetItem(key, value) {
+    if (value !== null && value !== undefined && value !== '') {
+      localStorage.setItem(key, value);
+      console.log(`✅ ${key} сохранён:`, value);
+    }
+  }
+
+  function safeSetCookie(name, value, days = 30) {
+    if (value !== null && value !== undefined && value !== '') {
+      try {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+        console.log(`🍪 ${name} кука установлена:`, value);
+      } catch (e) {
+        console.warn(`⚠️ Cookie ${name} не установлена:`, e);
+      }
+    }
+  }
+
+  // --- Telegram ID из localStorage или Telegram WebApp ---
+  const tgIdFromStorage = localStorage.getItem('telegram_id');
+  const tgIdFromTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+
+  if (tgIdFromTelegram && tgIdFromTelegram !== tgIdFromStorage) {
+    safeSetItem('telegram_id', tgIdFromTelegram);
+    safeSetCookie('telegram_id', tgIdFromTelegram);
+  }
+
+  // --- Bot ID из #hash или localStorage ---
+  const botIdFromStorage = localStorage.getItem('bot_id');
+  const botIdFromHash = getBotIdFromHash();
+
+  if (botIdFromHash && botIdFromHash !== botIdFromStorage) {
+    safeSetItem('bot_id', botIdFromHash);
+    safeSetCookie('bot_id', botIdFromHash);
+  }
+
+  console.log('📦 Telegram ID (final):', localStorage.getItem('telegram_id') || 'не найден');
+  console.log('📦 Bot ID (final):', localStorage.getItem('bot_id') || 'не найден');
+})();
+
+
+
 var csrf_token = $('meta[name="csrf-token"]').attr('content')
 
 $('#balance').html('')
@@ -47,7 +96,7 @@ function load(page, that, func = '', id = '') {
 			$.globalEval(this.textContent);
 		  }
 		});
-  
+  activeLinks();
 		// 4) общие пост‑обработчики (history, UI, сокеты и т.д.)
 		window.history.pushState(
 		  { html: rawHtml, pageTitle: document.title },
@@ -56,12 +105,7 @@ function load(page, that, func = '', id = '') {
 		);
 		$('#_ajax_content_').fadeIn('slow');
 		$('.preloader').addClass("preloader-remove");
-		$('.btn_open_close_prof').removeClass('active');
-		activeLinks();
-		chatGet();
-		getHistoryGames();
-		$(".popup--wallet .popup__content .wallet").not(":first").hide();
-		$(".popup--wallet .popup__content .wallet__history").not(":first").hide();
+		
 		if (func == 1) {
 		  setTimeout(() => loadTournier(id), 1000);
 		}
@@ -224,7 +268,7 @@ function live_games_item_html(item) {
 			<img src="${item.game_img}" alt="" draggable="false">
 		</a>
 		<div class="texts">
-			<p class="sum">${parseInt(item.user_win).toLocaleString('ru-RU')} INR</p>
+			<p class="sum">${parseInt(item.user_win).toLocaleString('ru-RU')} UZS</p>
 			<p class="game_title">${item.game_name}</p>
 			<p class="mail">${setsecret(item.user_name)}</p>
 		</div>
@@ -1181,33 +1225,61 @@ function goWithdraw(that) {
 	});
 }
 
-function goDeposit(system, amount, promocode) {
-	$.post('/deposit/go',{_token: csrf_token, sum: amount, system: system, promo: promocode}).then(e=>{
-		if(e.success){
-
-			if(e.modal == 0){
-				notification('success', 'Redirect for payment')
-				location.href = e.link
-			}else{
-				transfer = e.transfer
-				amount_to = transfer.amount_to
-				wallet_to = transfer.wallet_to
-				comment_to = transfer.comment_to
-				order_id = transfer.order_id
-				img = e.img
-				// $('#img_pay').attr('src', img)
-				$('#wallet_pay').html(wallet_to)
-				$('#comment_pay').html(comment_to)
-				$('#sum_pay').html(amount_to)
-				$('#check_pay').attr('onclick', 'disable(this);checkStatus('+order_id+', this)')
-				showPopup('popup--refill')
-			}
-
-		}else{
-			notification('error', e.mess)
-		}
-	});
+// --- Loader helpers ---
+function startBtnLoader(btn, textWhileLoading = 'Processing...') {
+  if (!btn) return;
+  if (!btn.dataset.label) btn.dataset.label = btn.innerHTML; // save original
+  btn.disabled = true;
+  btn.classList.add('btn-busy');
+  btn.innerHTML = `
+    <span class="spinner"
+          style="width:1em;height:1em;border-width:2px;margin:0 .5em 0 0;vertical-align:-0.15em;"></span>
+    <span>${textWhileLoading}</span>`;
 }
+
+function stopBtnLoader(btn) {
+  if (!btn) return;
+  btn.disabled = false;
+  btn.classList.remove('btn-busy');
+  if (btn.dataset.label) {
+    btn.innerHTML = btn.dataset.label;
+    delete btn.dataset.label;
+  }
+}
+
+// --- Deposit request ---
+async function goDeposit(system, amount, promocode) {
+  const btn = document.getElementById('depositBtn');
+  startBtnLoader(btn, 'Creating payment...');
+
+  const fd = new FormData();
+  if (typeof csrf_token !== 'undefined') fd.append('_token', csrf_token);
+  fd.append('sum', amount);
+  fd.append('system', system);
+  if (promocode) fd.append('promo', promocode);
+
+  try {
+    const res = await fetch('/deposit/go', {
+      method: 'POST',
+      body: fd,
+      credentials: 'same-origin',
+    });
+
+    if (!res.ok) throw new Error(`Request failed (HTTP ${res.status})`);
+    const data = await res.json();
+
+    if (!data?.success || !data?.link) {
+      throw new Error(data?.mess || 'Payment creation failed');
+    }
+
+    // success → redirect
+    location.href = data.link;
+  } catch (err) {
+    stopBtnLoader(btn);
+      notification('error', err.message || 'Network error');
+  }
+}
+
 
 function open_panel_smiles() {
 	$(".panel_smiles").toggleClass('open');

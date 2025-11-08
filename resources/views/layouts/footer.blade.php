@@ -185,25 +185,26 @@
     <div class="wrapper footer_wrapper">
         <div class="block_footer">
             <div class="support_item">
-                <div class="support_title">Support 24/7</div>
+                <div class="support_title">{{ __('common.support') }} 24/7</div>
                 <a target="_blank" href="{{$setting->support_contact}}" class="support_chat_button">
-                    <img src="/img/icons/telegram.svg">Open Chat
+                   <img src="/img/icons/telegram.svg">{{ __('common.button.open_chat') }}
+
                 </a>
             </div>
 
             <div class="footer_item">
-                <a href="/"><img class="footer_logo" src="/img/logo2.svg"></a>
-                <div class="footer_desc">The Best Online Casino Site</div>
+                <a href="/"><img class="footer_logo" src="/logo.svg"></a>
+                <div class="footer_desc">{{ __('common.slogan') }}</div>
             </div>
 
             <div class="footer_item">
                 <ul class="footer_menu">
-                    <a class="footer_link" href="/terms">Terms</a>
-                    <a class="footer_link" href="/policy">User Agreement</a>
+                    <a class="footer_link" href="/terms">{{ __('common.terms') }}</a>
+                    <a class="footer_link" href="/policy">{{ __('common.user-agreement') }}</a>
                 </ul>
                 <div class="gx-con red">
                     <div class="icon"><span>18+</span></div>
-                    <div class="title">Play responsibly</div>
+                    <div class="title">{{ __('common.play-responsibly') }}</div>
                 </div>
             </div>
         </div>
@@ -226,7 +227,7 @@
 
             <div class="footer_line"></div>
 
-            <div class="footer_title">Licenses</div>
+            <div class="footer_title">{{ __('common.licenses') }}</div>
             <div class="footer_licenses">
                 <a href="/gcb.html">
                     <img src="/img/licenses/gcb-green.svg" />
@@ -239,7 +240,7 @@
             </div>
             <div class="footer_line"></div>
 
-            <div class="footer_copy_text"><span>Copyright © 2025 UPWin</span> is owned and operated by UPWin LTD that is incorporated under the laws of Curacao with company registration number 172129 and having its registered address at Scharlooweg 39, Willemstad, Curaçao. UPWin LTD is operating under E-gaming license No. OGL/2020/101/0091 issued by Curaçao Gaming Control Board. </div>
+            <div class="footer_copy_text">{{ __('common.copyright') }}</div>
         
     </div>
         </footer>

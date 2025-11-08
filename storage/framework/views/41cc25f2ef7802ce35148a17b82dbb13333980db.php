@@ -3,13 +3,13 @@
   <div class="modal-overlay" id="loginModal">
     <div class="up_modal">
       <div class="up_modal-header">
-        <h2>Login</h2>
+        <h2><?php echo e(__('common.login')); ?></h2>
         <button id="closeLoginModal" class="up_close-btn">
           <img class="up_icon_15" src="./img/close.svg" alt="Close">
         </button>
       </div>
 
-      <div class="up_subtitle">Choose a method:</div>
+      <div class="up_subtitle"><?php echo e(__('common.choose-method')); ?>:</div>
       <div class="up_methods">
         <!--<button onclick="location.href='/google_auth'" id="up_google" class="up_method-btn">
           <img class="up_icon_20" src="./img/google.svg" alt="Google"> Google
@@ -31,7 +31,8 @@
               </clipPath>
             </defs>
           </svg>
-          Phone
+          <?php echo e(__('common.phone')); ?>
+
         </button>
         <button id="up_email" class="up_method-btn">
           <svg class="up_icon_15" xmlns="http://www.w3.org/2000/svg" width="15" height="13" viewBox="0 0 15 13"
@@ -48,30 +49,32 @@
               </clipPath>
             </defs>
           </svg>
-          Email
+          <?php echo e(__('common.email')); ?>
+
         </button>
       </div>
 
-      <div class="up_subtitle">Please fill in all fields:</div>
+      <div class="up_subtitle"><?php echo e(__('common.fill-all-fields')); ?>:</div>
       <form id="phone_form" class="up_form">
 
         <div class="up_input-group up_input" data-type="phone">
           <div class="up_icon-wrapper">
-            <img class="up_icon_20 " src="./img/in-flag.svg" alt="IN">
+            <img class="up_icon_20 " src="./img/uz-flag.svg" alt="IN">
           </div>
-          <span>+91</span>
-          <input id="up_phone_input" type="tel" placeholder="00000 00000" inputmode="numeric" pattern="\d{5} \d{5}"
+          <span>+998</span>
+          <input id="up_phone_input" type="tel" placeholder="00 000 0000" inputmode="numeric" pattern="\d{2} \d{3} \d{4}"
             maxlength="11" required>
         </div>
         <div class="up_password-group up_input">
           <div class="up_icon-wrapper">
             <img class="up_icon_20" src="./img/password.svg" alt="Lock">
           </div>
-          <input id="up_phone_password" type="password" placeholder="Password" required>
+          <input id="up_phone_password" type="password" placeholder="<?php echo e(__('common.password')); ?>" required>
           <div class="eye"><img src="./img/eye-close.svg" alt="Toggle"></div>
         </div>
         <button type="button" id="up_login_phone" class="up_login-btn" disabled>
-          <img class="up_icon_15" src="./img/login.svg" alt="Login"> Login
+          <img class="up_icon_15" src="./img/login.svg" alt="Login"> <?php echo e(__('common.login')); ?>
+
         </button>
       </form>
 
@@ -80,22 +83,23 @@
           <div class="up_icon-wrapper">
             <img class="up_icon_20" src="./img/mail.svg" alt="Email">
           </div>
-          <input id="up_email_input" type="email" placeholder="Email" required>
+          <input id="up_email_input" type="email" placeholder="<?php echo e(__('common.email')); ?>" required>
         </div>
         <div class="up_input up_password-group">
           <div class="up_icon-wrapper">
             <img class="up_icon_20" src="./img/password.svg" alt="Lock">
           </div>
-          <input id="up_email_password" type="password" placeholder="Password" required>
+          <input id="up_email_password" type="password" placeholder="<?php echo e(__('common.password')); ?>" required>
           <div class="eye"><img src="./img/eye-close.svg" alt="Toggle"></div>
         </div>
 
         <button type="button" id="up_login_email" class="up_login-btn" disabled>
-          <img class="up_icon_15" src="./img/login.svg" alt="Login"> Login
+          <img class="up_icon_15" src="./img/login.svg" alt="Login"> <?php echo e(__('common.login')); ?>
+
         </button>
       </form>
       <div class="up_register">
-        Still no account? <a href="#" data-switch="regquick">Register</a>
+        <?php echo e(__('common.still-no-account')); ?> <a href="#" data-switch="regquick"><?php echo e(__('common.register')); ?></a>
       </div>
     </div>
   </div>
@@ -106,12 +110,12 @@
   <div class="modal-overlay" id="regModal">
     <div class="up_modal">
       <div class="up_modal-header">
-        <h2>Registration</h2>
+        <h2><?php echo e(__('common.registration')); ?></h2>
         <button id="closeRegModal" class="up_close-btn">
           <img class="up_icon_15" src="./img/close.svg" alt="Close">
         </button>
       </div>
-      <div class="up_subtitle">Choose a method:</div>
+      <div class="up_subtitle"><?php echo e(__('common.choose-method')); ?>:</div>
       <div class="up_methods">
         <button id="up_quick" class="up_method-btn up_selected">
           <svg class="up_icon_15" xmlns="http://www.w3.org/2000/svg" width="15" height="13" viewBox="0 0 15 13"
@@ -128,7 +132,8 @@
               </clipPath>
             </defs>
           </svg>
-          Quick
+          <?php echo e(__('common.quick')); ?>
+
         </button>
         <button id="up_socials" class="up_method-btn">
           <svg class="up_icon_15" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"
@@ -144,7 +149,8 @@
               </clipPath>
             </defs>
           </svg>
-          Socials
+         <?php echo e(__('common.socials')); ?>
+
         </button>
       </div>
 
@@ -157,39 +163,40 @@
           id="up_telegram" class="up_method-btn">
           <img class="up_icon_20" src="./img/telegram.svg" alt="Telegram"> Telegram
         </button>!-->
-        <div style="margin-bottom: 10px;" class="up_subtitle">Registration via socials is temporarily unavailable!</div>
+        <div style="margin-bottom: 10px;" class="up_subtitle"><?php echo e(__('common.socials-not-work-tempory')); ?></div>
       </div>
 
       <form id="reg_form" class="up_form">
-        <div style="margin-bottom: 10px;" class="up_subtitle">Please fill in all fields:</div>
+        <div style="margin-bottom: 10px;" class="up_subtitle"><?php echo e(__('common.fill-all-fields')); ?>:</div>
         <div class="up_input-group up_input" data-type="phone">
           <div class="up_icon-wrapper">
-            <img class="up_icon_20 " src="./img/in-flag.svg" alt="IN">
+            <img class="up_icon_20 " src="./img/uz-flag.svg" alt="IN">
           </div>
-          <span>+91</span>
-          <input id="up_phone_input_reg" type="tel" placeholder="00000 00000" inputmode="numeric" pattern="\d{5} \d{5}"
+          <span>+998</span>
+          <input id="up_phone_input_reg" type="tel" placeholder="00 000 0000" inputmode="numeric" pattern="\d{2} \d{3} \d{4}"
             maxlength="11" required>
         </div>
         <div class="up_input up_input-group" data-type="email">
           <div class="up_icon-wrapper">
             <img class="up_icon_20" src="./img/mail.svg" alt="Email">
           </div>
-          <input id="up_email_input_reg" type="email" placeholder="Email" required>
+          <input id="up_email_input_reg" type="email" placeholder="<?php echo e(__('common.email')); ?>" required>
         </div>
         <div class="up_password-group up_input">
           <div class="up_icon-wrapper">
             <img class="up_icon_20" src="./img/password.svg" alt="Lock">
           </div>
-          <input id="up_phone_password_reg" type="password" placeholder="Password" required>
+          <input id="up_phone_password_reg" type="password" placeholder="<?php echo e(__('common.password')); ?>" required>
           <div class="eye"><img src="./img/eye-close.svg" alt="Toggle"></div>
         </div>
         <button type="button" id="up_reg_phone" class="up_reg-btn" disabled>
-          <img class="up_icon_15" src="./img/reg.svg" alt="Login"> Register
+          <img class="up_icon_15" src="./img/reg.svg" alt="Login"> <?php echo e(__('common.register')); ?>
+
         </button>
       </form>
 
       <div class="up_register">
-        Already have an account? <a href="#" data-switch="loginemail">Login</a>
+        <?php echo e(__('common.already-have-account')); ?> <a href="#" data-switch="loginemail"><?php echo e(__('common.login')); ?></a>
       </div>
     </div>
   </div>

@@ -730,9 +730,7 @@ input, button, textarea {
   .header__links {
     display: none !important;
   }
-  .header__right .sidebar__logotype {
-    display: block !important;
-  }
+
   .header__right {
     width: 100% !important;
     -webkit-box-pack: justify;
@@ -988,10 +986,7 @@ a.ticket-row {
 .header__right.d-flex.align-center {
   gap: 15px;
 }
-  .header__right .sidebar__logotype {
-    width: 150px !important;
-    height: 24px !important;
-  }
+  
 
   .header__user-profile {
     margin-left: 0 !important;
@@ -1077,8 +1072,7 @@ a.ticket-row {
 
 .sidebar__logotype {
   position: relative;
-  width: 150px;
-  height: 24px;
+  width: 90px;
   margin-right: 36px;
   margin-bottom: 40px;
 }
@@ -1957,6 +1951,7 @@ a.ticket-row {
 
 .header__right .sidebar__logotype {
   display: none;
+  width: 100%;
   margin: 0;
 }
 
@@ -10053,6 +10048,7 @@ input#sumBetX100 {
   }
   .header__right .sidebar__logotype {
     display: block !important;
+    width: 90px !important;
   }
   .header__right {
     width: 100% !important;
@@ -17302,8 +17298,8 @@ a.shoot__bet-btn-settings.d-flex.align-center.lft:hover {
     margin-bottom: 20px;
 }
   .header__right .sidebar__logotype {
-    width: 150px !important;
-    height: 24px !important;
+    width: 90px !important;
+
   }
  
   .games {

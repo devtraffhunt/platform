@@ -673,6 +673,111 @@ class AdminController extends Controller
         }
     }
 
+   public function paymentStats(Request $request)
+{
+    $id = (int) $request->id;
+
+    switch ($id) {
+        case 1:
+            $periods = $this->generateHourlyPeriods();
+            break;
+        case 2:
+            $periods = $this->generateDailyPeriods(7);
+            break;
+        case 3:
+            $periods = $this->generateMonthDaysPeriods();
+            break;
+        case 4:
+            $periods = $this->generateMonthlyPeriods();
+            break;
+        default:
+            $periods = [];
+    }
+
+    if (!empty($periods)) {
+        $start = $periods[0][0];
+        $end = $periods[count($periods) - 1][1];
+    } else {
+        $start = now()->startOfDay()->toDateTimeString();
+        $end = now()->endOfDay()->toDateTimeString();
+    }
+
+    $names = [
+        12 => 'Rizon',
+        8 => 'Kassify',
+        13 => 'PayOk',
+        11 => 'PayHub24',
+    ];
+
+    // Получаем все уникальные ps из system_dep
+    $systems = \DB::table('system_dep')
+        ->select('ps')
+        ->distinct()
+        ->pluck('ps')
+        ->toArray();
+
+    $data = [];
+
+    foreach ($systems as $psSystemId) {
+        $stat = Payment::selectRaw('
+    COUNT(*) as total_transactions,
+    SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) as successful_transactions,
+    SUM(CASE WHEN status = 1 THEN `sum` ELSE 0 END) as total_amount
+')
+->where('ps_system_id', $psSystemId)
+->whereBetween('created_at', [$start, $end])
+->first();
+
+
+if (!$stat) {
+    $totalTransactions = 0;
+    $successfulTransactions = 0;
+    $totalAmount = 0;
+  
+} else {
+    $totalTransactions = $stat->total_transactions ?: 0;
+    $successfulTransactions = $stat->successful_transactions ?: 0;
+    $totalAmount = $stat->total_amount ?: 0;
+ 
+}
+
+
+        $totalTransactions = $stat->total_transactions ?: 0;
+        $successfulTransactions = $stat->successful_transactions ?: 0;
+        $totalAmount = $stat->total_amount ?: 0;
+       
+
+        $cr = $totalTransactions > 0
+            ? round($successfulTransactions / $totalTransactions * 100, 2)
+            : 0;
+
+
+        $activeMethodsCount = \DB::table('system_dep')
+            ->where('ps', $psSystemId)
+            ->where('off', 0)
+            ->count();
+
+        $status = $activeMethodsCount > 0 ? 1 : 0;
+
+        $name = isset($names[$psSystemId]) ? $names[$psSystemId] : 'Неизвестно';
+
+        $data[] = [
+            'ps_system_id' => $psSystemId,
+            'name' => $name,
+            'total_amount' => $totalAmount,
+            'cr' => $cr,
+            'successful_transactions' => $successfulTransactions,
+            'total_transactions' => $totalTransactions,
+            'status' => $status,
+            'active_methods' => $activeMethodsCount
+        ];
+    }
+
+    return response()->json(['data' => $data]);
+}
+
+
+
 public function chart(Request $request)
 {
     $id = (int) $request->id;
@@ -726,6 +831,8 @@ public function chart(Request $request)
         'dep_counts' => $dep_counts,
         'dep_unique_counts' => $dep_unique_counts,
         'labels' => $labels,
+        'regs_count_n' => array_sum($regs),
+        'deps_count_n' => array_sum($dep_counts),
         'deps_n' => array_sum($deps),
         'withdraws_n' => array_sum($withdraws),
         'profit_n' => array_sum($profit)

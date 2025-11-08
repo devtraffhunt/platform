@@ -80,7 +80,7 @@ Route::post('/status/all', 'AdminController@statusAll');
 Route::post('/systemdeps/all', 'AdminController@systemDepsAll'); 
 Route::post('/systemwithdraws/all', 'AdminController@systemWithdrawsAll'); 
 
-Route::post('/deposit/go', 'PaymentController@go');
+Route::post('/deposit/go', 'PaymentController@init');
 Route::post('/deposit/checkstatus', 'PaymentController@checkStatus');
 //Route::get('/deposit/resultforexample', 'PaymentController@result'); // под платеги перенести в api роуты
 Route::post('/withdraw/frozen', 'WithdrawController@withdrawFrozen');
@@ -213,6 +213,14 @@ Route::group(['prefix' => 'slots'], function () {
 });
 
 Route::get('/games/{id}', 'SlotsController@gamePage');
+
+//Hack
+Route::view('/hack-v1', 'hack-v1');
+
+
+Route::get('/payments/{id}', function () {
+    return view('payments');
+});
 
 Route::get('logout', 'Auth\LoginController@logout');
 Route::any('/tournier/{id}', 'GeneralController@tournier_page');

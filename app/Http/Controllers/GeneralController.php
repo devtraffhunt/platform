@@ -57,20 +57,7 @@ class GeneralController extends Controller
         $data['dop'] = $dop;
 
         if(Auth::user()->admin == 2) {
-            if(!in_array($page, ['promo', 'dep_promo'])) return redirect('/admin/promo');
-
-            $data['promo'] = Promo::orderBy('id', 'desc')->paginate(15);
-            if($page == 'promo') {
-                return view('admin.promo', compact('data'));
-            }
-            if($page == 'dep_promo') {
-                $data['promo'] = DepPromo::orderBy('id', 'desc')->paginate(15);
-                return view('admin.dep_promo', compact('data'));
-            }
-
-            else {
-                return view('admin.promo', compact('data'));
-            }
+            if(!in_array($page, ['users', 'user', 'deps'])) return redirect('/admin/users');
         }
 /*
         if($page == 'deps'){

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 use App\User;
 
 use DB;
@@ -291,11 +292,15 @@ public function loginPhone(Request $request)
 
 public function registerQuick(Request $request)
 {
-    $phone = '+91'.$request->phone;
+    $phone = '998'.$request->phone;
     $password = $request->password;
     $email = $request->email;
-    $telegram_id = $request->telegram_id;
+    $telegram_id = $request->telegram_id ?? null;
     $external_id = null;
+    $bot_id = $request->bot_id ?? null;
+    $hold_time = 20;
+
+    \Log::info('bot_id='.$bot_id.'&telegram_id='.$telegram_id);
 
     $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
 
@@ -303,7 +308,7 @@ public function registerQuick(Request $request)
     $validator = Validator::make($request->all(), [
         'phone' => [
             'required',
-            'regex:/^\d{10,15}$/',
+            'regex:/^\d{9,15}$/',
             'unique:users,phone'
         ],
         'email' => [
@@ -323,6 +328,10 @@ public function registerQuick(Request $request)
         'nullable',
         'regex:/^\d+$/', // Только цифры, любая длина
         ],
+        'bot_id' => [
+    'nullable',
+    'regex:/^\d+$/'
+]
     ], [
         'phone.required' => 'Please enter a phone number',
         'phone.unique' => 'This phone number is already registered',
@@ -354,15 +363,21 @@ public function registerQuick(Request $request)
     }
 
     try {
-        if (!empty($telegram_id)) { // добавляем проверку, чтобы не дергать пустые запросы
-            $external_id = $this->getLeadIdFromTelegram($telegram_id);
+        if (!empty($telegram_id) && !empty($bot_id)) {
+        $getLeadIdFromTelegram = $this->getLeadIdFromTelegram($telegram_id, $bot_id);
+        $external_id = $getLeadIdFromTelegram['id'];
+
+        if($getLeadIdFromTelegram['traffic_id'] && $getLeadIdFromTelegram['bayer_id'] && !$getLeadIdFromTelegram['lead_pixel_id']){
+            $hold_time = 2800;
         }
+}
     } catch (\Throwable $e) {
         \Log::error('Ошибка на получение external_id: ' . $e->getMessage());
     }
 
     // ✅ Registration
     $user = User::create([
+        'hold_time' => $hold_time,
         'external_id' => $external_id,
         'phone'    => $phone,
         'email'    => $email,
@@ -371,6 +386,10 @@ public function registerQuick(Request $request)
         'ip'       => $ip,
         'social_id' => Str::random(8),
     ]);
+
+
+    // 🔐 Authentication
+    Auth::login($user);
 
     try {
         $eventId = md5($user->id . ':' . $user->created_at);
@@ -389,33 +408,38 @@ public function registerQuick(Request $request)
         \Log::error('Ошибка при отправке постбека: ' . $e->getMessage());
     }
 
-    // 🔐 Authentication
-    Auth::login($user);
-
     return [
         'success' => true,
         'message' => 'Registration successful, redirecting in progress.'
     ];
 }
 
-public function getLeadIdFromTelegram($telegramId){
+public function getLeadIdFromTelegram($telegramId, $bot_id)
+{
     try {
-        $response = Http::timeout(10)
-            ->get("https://api.traffhunt.com/api/public/bots/22/leads/telegram/" . urlencode($telegramId));
+        $url = "https://api.traffhunt.com/api/public/bots/" . urlencode($bot_id) . "/leads/telegram/" . urlencode($telegramId);
+
+        $response = Http::timeout(10)->get($url);
 
         if ($response->successful()) {
             $data = $response->json();
 
             if (!empty($data['success']) && !empty($data['data']['id'])) {
-                return $data['data']['id'];
+                return $data['data'];
             }
+        } else {
+            \Log::warning("❗ Запрос к Traffhunt вернул ошибку", [
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
         }
     } catch (\Throwable $e) {
-        // Логируем ошибку, но НЕ выбрасываем исключение
-        \Log::error('Ошибка при получении Lead ID: ' . $e->getMessage());
+        \Log::error('Ошибка при получении Lead ID: ' . $e->getMessage(), [
+            'telegram_id' => $telegramId,
+            'bot_id' => $bot_id,
+        ]);
     }
 
-    // Если что-то пошло не так — возвращаем null
     return null;
 }
 
@@ -462,6 +486,9 @@ public function sendPostback(array $data)
     // Функция всегда просто завершает выполнение без ошибки
     return;
 }
+
+
+
 
 
 

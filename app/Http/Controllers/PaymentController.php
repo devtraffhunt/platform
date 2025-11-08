@@ -24,688 +24,7 @@ class PaymentController extends Controller
 		$this->redis = Redis::connection();
 	}
 
-	public function resultLinePay(Request $r)
-	{
-		$setting = Setting::first();
-
-		$linepay_id = $setting->linepay_id;
-		$linepay_secret_2 = $setting->linepay_secret_2;
-
-		$m_id = $linepay_id; //ID вашего мерчанта
-		$m_secret_2 = $linepay_secret_2; //Секретное слово №2 вашего мерчанта
-
-		$order_id = $r->order_id; // Уникальный идентификатор заказа в вашей системе
-		$amount = $r->amount; // Сумма заказа
-		$sign = $r->sign; // Подпись
-		$pay_id = $r->pay_id; // Уникальный идентификатор заказа в нашей системе
-		$us_key = $r->us_key; // Дополнительный параметр
-
-		$_sign = md5($m_id . '|' . $m_secret_2 . '|' . $amount . '|' . $order_id);
-
-		//проверка IP адреса
-		function getIP()
-		{
-			if (isset($_SERVER['HTTP_X_REAL_IP']))
-				return $_SERVER['HTTP_X_REAL_IP'];
-			return $_SERVER['REMOTE_ADDR'];
-		}
-		if (getIP() != '45.142.122.86') {
-			echo "ip is " . getIP();
-		}
-
-		if ($sign != $_sign) {
-			die("wrong sign");
-		}
-
-		$unique_id = $order_id;
-		$amount = $amount;
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$pay->status = 1;
-
-
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$user->save();
-
-
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-			$user_ref->save();
-		}
-	}
-	public function resultPaypalych()
-	{
-		$setting = Setting::first();
-
-		$paypaylych_id = $setting->paypaylych_id;
-		$paypaylych_token = $setting->paypaylych_token;
-
-		$OutSum = $_GET['OutSum'];
-		$InvId = $_GET['InvId'];
-		$SignatureValue = $_GET['SignatureValue'];
-
-		$apiToken = $paypaylych_token;
-
-		$sign = strtoupper(md5($OutSum . ":" . $InvId . ":" . $apiToken));
-
-		if ($sign != $SignatureValue) {
-			die();
-		}
-
-
-		$unique_id = $InvId;
-		$amount = $OutSum;
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$pay->status = 1;
-
-
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$user->save();
-
-
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-			$user_ref->save();
-		}
-	}
-
-	public function resultFK(Request $r)
-	{
-		$setting = Setting::first();
-
-		$merchant_id = $setting->fk_id;
-		$secret_word = $setting->fk_secret_2;
-
-		$sign = md5($merchant_id . ':' . $r->AMOUNT . ':' . $secret_word . ':' . $r->MERCHANT_ORDER_ID);
-
-		if ($sign != $r->SIGN)
-			die('wrong sign');
-
-		$unique_id = $r->MERCHANT_ORDER_ID;
-		$amount = $r->AMOUNT;
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$pay->status = 1;
-
-
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$statuses2 = Status::all()->toArray();
-		$status2 = $user->status;
-		$user->cashback += $amountref2 / 100 * ($status2 == 0 ? 1 : $statuses2[$status2 - 1]["cashbb"]);
-		$user->save();
-
-
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-			$user_ref->save();
-		}
-	}
-
-	public function resultRukassa(Request $r)
-	{
-		$unique_id = $r->order_id;
-		$amount = $r->amount;
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$pay->status = 1;
-
-
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$statuses2 = Status::all()->toArray();
-		$status2 = $user->status;
-		$user->cashback += $amountref2 / 100 * ($status2 == 0 ? 1 : $statuses2[$status2 - 1]["cashbb"]);
-		$user->save();
-
-
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-			$user_ref->save();
-		}
-
-		return 'OK';
-	}
-
-	public function resultExwave()
-	{
-		$entity_body = file_get_contents('php://input');
-		$r = json_decode($entity_body, 1);
-
-		$unique_id = $r['pay_id'];
-		$amount = $r['amount'];
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$pay->status = 1;
-
-
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$statuses2 = Status::all()->toArray();
-		$status2 = $user->status;
-		$user->cashback += $amountref2 / 100 * ($status2 == 0 ? 1 : $statuses2[$status2 - 1]["cashbb"]);
-		$user->save();
-
-
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-			$user_ref->save();
-		}
-
-		return 'OK';
-	}
-
-	public function resultRubpay(Request $r)
-	{
-		$unique_id = $r->order_id;
-		$amount = $r->amount;
-
-		$hash = md5("1127" . $r->order_id . $r->payment_id . $r->amount . $r->currency . $r->status . "7a7673d6ac1954015da6d344beeeff7e");
-		if ($hash != $_POST['hash'])
-			die("wrong sign");
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$pay->status = 1;
-
-
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$statuses2 = Status::all()->toArray();
-		$status2 = $user->status;
-		$user->cashback += $amountref2 / 100 * ($status2 == 0 ? 1 : $statuses2[$status2 - 1]["cashbb"]);
-		$user->save();
-
-
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-			$user_ref->save();
-		}
-
-		return 'OK';
-	}
-
-	public function resultQpay(Request $r)
-	{
-		$unique_id = $r->order;
-		$amount = $r->sum;
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$pay->status = 1;
-
-
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$user->save();
-
-
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-			$user_ref->save();
-		}
-
-		return 'OK';
-	}
-
-	public function resultPiastrix(Request $r)
-	{
-		function getIP()
-		{
-			$ip = (isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER['REMOTE_ADDR']);
-			return $ip;
-		}
-		if (!in_array(getIP(), array('51.68.53.104', '51.68.53.105', '51.68.53.106', '51.68.53.107', '37.48.108.180', '37.48.108.181'))) {
-
-
-			die("hacking attempt!" . getIP());
-		}
-		$unique_id = $r->shop_order_id;
-
-
-		$payment_count = Payment::where('transaction', $unique_id)->count();
-		if ($payment_count == 0) {
-			die('Ошибка');
-		}
-		$pay = Payment::where('transaction', $unique_id)->first();
-		if ($pay->status == 1) {
-			die('Ошибка');
-		}
-
-		$pay->status = 1;
-		$amount = $pay->sum;
-
-		$percent = $pay->percent;
-		$amount = $amount + ($amount * $percent / 100);
-		$user_id = $pay->user_id;
-
-		$user = User::where('id', $user_id)->first();
-		$ref_id = $user->ref_id;
-
-		$pay->afterpay = $user->balance + $amount;
-		$pay->save();
-
-		$user_status = $user->status;
-		$user_deps = $user->deps + $amount;
-
-		// $now_status = Status::where('deposit', '>=', $amount)->where('deposit', '<', $amount)->orderBy('id', 'desc')->first();
-		$now_st = $user_status;
-		$max_id = Status::max('id');
-		if ($max_id != $user_status) {
-			$statuses = Status::where('id', '>', $user_status)->orderBy('id', 'asc')->get();
-			foreach ($statuses as $st) {
-				if ($user_deps >= $st->deposit) {
-					$now_st = $st->id;
-				}
-			}
-		}
-
-		$update_status = $now_st - $user_status;
-		if ($update_status > 0) {
-			self::statusBonus($user_status, $now_st, $user_id);
-		}
-
-		$user = User::where('id', $user_id)->first();
-		if ($user->deps == 0 and $user->balance > 5) {
-			$user->bonus_up = 1;
-		} else {
-			$user->bonus_up = 0;
-		}
-		$user->balance += $amount;
-		$user->deps += $amount;
-		$user->sum_to_withdraw += ($amount * 3 - $amount);
-		$statuses2 = Status::all()->toArray();
-		$status2 = $user->status;
-		$user->cashback += $amountref2 / 100 * ($status2 == 0 ? 1 : $statuses2[$status2 - 1]["cashbb"]);
-		$user->save();
-
-		if ($ref_id > 0) {
-			$user_ref = User::where('id', $ref_id)->first();
-			$percent_ref = $user_ref->ref_coeff;
-
-			$balance_ref = $user_ref->balance + ($amount * $percent_ref / 100);
-			$user_ref->profit += ($amount * $percent_ref / 100);
-			$user_ref->balance_ref += ($amount * $percent_ref / 100);
-			// $user_ref->balance = $balance_ref;
-
-			$user_ref->save();
-		}
-
-		die('OK');
-	}
-
+	
 	public function statusBonus($now, $need_plus, $user_id)
 	{
 		$now = $now;
@@ -987,6 +306,33 @@ class PaymentController extends Controller
 		
 			$link = $this->generatePayHub24Link($order_amount, $user, $order_id, $apiKey, $privateKey, $currency, $user_code, $user_email);
 		}
+
+			if ($psDep == 12) {
+			$apiKey = $setting->rizon_private;
+			$privateKey = $setting->rizon_token;
+			$order_id = $unique_id;
+			$order_amount = $sum;
+			$currency = 'INR';
+			$user_code = $user->id;
+			$user_email = $user->email;
+
+			$link = $this->generateRizonLink($order_amount, $user, $order_id, $apiKey, $currency, $user_code, $user_email);
+		}
+
+		if ($psDep == 13) {
+	
+			$order_id = $unique_id;
+			$order_amount = $sum;
+			$currency = 'INR';
+			$user_code = $user->id;
+			$user_email = $user->email;
+
+			$link = $this->generatePayokLinkH5(
+				$order_amount,
+				$user,
+				$order_id
+			);
+		}
 		
 
 		Payment::create(array(
@@ -1005,6 +351,490 @@ class PaymentController extends Controller
 
 		return response(['success' => true, 'link' => $link, 'modal' => $modal, 'transfer' => $transfer, 'img' => $img]);
 	}
+
+private function generateRizonLink($orderAmount, $user, $orderId, $bearerToken, $currency, $userCode, $userEmail)
+	{
+		$callbackUrl = 'https://upwin-in.com/api/deposit/rizon/callback';
+		$successUrl = 'https://upwin-in.com';
+		$failUrl = 'https://upwin-in.com';
+		$pendingUrl = 'https://upwin-in.com';
+		$baseUrl = 'https://business.agbadvans.com/api/v1/payments';
+
+		// Сумма в копейках (например: 3500.98 → 350098)
+		$amountInMinorUnits = (int) round($orderAmount * 100);
+
+		$payload = [
+			"product" => (string) $userCode,
+			"amount" => $amountInMinorUnits,
+			"currency" => strtoupper(trim($currency)), // важно: убрать лишние пробелы
+			"orderNumber" => (string) $orderId,
+			"locale" => "en",
+			"redirectSuccessUrl" => $successUrl,
+			"redirectFailUrl" => $failUrl,
+			"pendingUrl" => $pendingUrl,
+			"callbackUrl" => $callbackUrl,
+			"bank_account" => [
+				"requisite_type" => "account",
+			],
+			"customer" => [
+				"email" => (string) ($userEmail ?: 'no-reply@upwin.co'), // email обязательно строкой
+			]
+		];
+
+		try {
+			$response = Http::withToken($bearerToken)
+				->withHeaders([
+					'Content-Type' => 'application/json',
+				])
+				->post($baseUrl, $payload);
+
+			if ($response->successful()) {
+				$data = $response->json();
+				return $data['selectorUrl'] ?? null;
+			} else {
+				\Log::error('AGBAdvans Bad Response', [
+					'status' => $response->status(),
+					'body' => $response->body()
+				]);
+				return null;
+			}
+		} catch (\Exception $e) {
+			\Log::error('AGBAdvans Exception', [
+				'message' => $e->getMessage()
+			]);
+			return null;
+		}
+	}
+
+public function resulRizon(Request $request)
+	{
+
+		//Определяем платежные данные
+		$setting = Setting::first();
+		$secret_word = $setting->rizon_token;
+		$unique_id = $request->orderNumber;
+		$timestamp = $request->header('timestamp');
+		$payload = $request->payload ?? [];
+		$amount = (float) bcdiv((string) $request->amount, '100', 2);
+		$intid = $request->token;
+		$status = $request->status;
+
+		$external_sign = $request->header('signature');
+
+		/*
+    // Проверка подписи
+    if (!hash_equals($sign, $external_sign)) {
+        Log::error('PayHub24 Error Sign Verify');
+        return response(['success' => false, 'message' => "Error Sign Verify"], 400);
+    }*/
+
+		//Ищем необработанный платёж
+		$payment = Payment::where('transaction', $unique_id)
+			->whereIn('status', [0, 2])
+			->first();
+
+		if (!$payment) {
+			Log::info('Rizon Payment not found or already processed', $request->all());
+			return response([
+				'success' => false,
+				'message' => 'Payment not found or already processed'
+			]);
+		}
+
+		//Начинаем транзакцию и сохраняем данные
+		DB::beginTransaction();
+
+		try {
+
+			//Получаем user
+			$user = User::find($payment->user_id);
+			if (! $user) {
+				DB::rollBack();
+				return response([
+					'success' => false,
+					'message' => 'User not found'
+				], 500);
+			}
+
+			//Сохраняем внешний ID
+			$payment->update([
+				'external_id' => $intid
+			]);
+
+
+			//Если провайдер вернул неуспешный статус
+			if ($status == 'declined') {  // <= исправил тут
+				$payment->update([
+					'status' => 2   // 2 = неуспешный
+				]);
+				DB::commit();
+
+				return response([
+					'success' => false,
+					'message' => 'Payment not successful'
+				]);
+			}
+			
+
+			if($status !== 'approved'){
+					$payment->update([
+					'status' => 0   // 2 = неуспешный
+				]);
+				DB::commit();
+
+				return response([
+					'success' => false,
+					'message' => 'Payment not successful'
+				]);
+			}
+
+			//Считаем сумму с добавлением процента бонуса игроку
+			$amount_bonus = $amount * ($payment->percent / 100);
+			$amount_with_bonus = $amount + $amount_bonus;
+
+			//Обновляем запись платежа
+			$payment->update([
+				'status'      => 1,
+				'afterpay'    => $user->balance + $amount_with_bonus,
+				'external_id' => $intid,
+			]);
+
+			//Флаг первого депозита
+			$user->bonus_up = ($user->deps === 0 && $amount_with_bonus > 5);
+			//Обновляем баланс пользователя
+			$user->balance += $amount_with_bonus;
+			//Обновляем сумму депов пользователя
+			$user->deps += $amount_with_bonus;
+			//Обновляем минимальную сумму вывода
+			$user->sum_to_withdraw += ($amount * 40);
+
+			//Начисляем кешбэк
+			$rates = Status::pluck('cashbb', 'id');
+			$rate  = $user->status === 0
+				? 1
+				: ($rates->get($user->status, 1));
+			$user->cashback += $amount_with_bonus * $rate / 100;
+
+			//Пересчитываем уровень пользователя
+			$new_status_id = Status::where('deposit', '<=', $user->deps)
+				->orderBy('deposit', 'desc')
+				->value('id');
+			if ($new_status_id > $user->status) {
+				$user->status = $new_status_id;
+			}
+			$user->save();
+
+			if ($user->frozen) {
+				try {
+					$banTypeId = $this->banUser($user);
+					if ($banTypeId !== null) {
+						$user->update([
+							'ban' => 1,
+							'ban_type_id' => $banTypeId,
+						]);
+					}
+				} catch (\Throwable $e) {
+					Log::error('Ошибка при попытке забанить юзера: ' . $e->getMessage());
+				}
+			}
+
+
+			//Начисляем реферальный бонус
+			if ($refId = $user->ref_id) {
+				$refUser  = \App\Models\User::find($refId);
+				$refBonus = $amount_with_bonus * ($refUser->ref_coeff / 100);
+				$refUser->increment('profit',      $refBonus);
+				$refUser->increment('balance_ref', $refBonus);
+			}
+
+			try {
+				$eventId = md5($user->id . ':' . now());
+
+				$this->sendPostback([
+					'type_payout' => 'rs',
+					'external_id' => $user->external_id,
+					'id' => $user->id,
+					'event_id' => $eventId,
+					'deposit_amount' => round($payment->sum / 97, 2),
+					'deposit_currency' => 'USD',
+					'revenue_amount' => round(($payment->sum * 0.83) / 93, 2),
+					'revenue_currency' => 'USD',
+					'email' => $user->email,
+					'phone' => $user->phone,
+					'country_apha2code' => 'IN',
+					'offer_id' => 154
+				]);
+			} catch (\Throwable $e) {
+				\Log::error('Ошибка при отправке депозита: ' . $e->getMessage());
+			}
+
+			DB::commit();
+		} catch (\Throwable $e) {
+			DB::rollBack();
+			Log::error('resultPear2pay failed', [
+				'order'     => $unique_id,
+				'exception' => $e,
+			]);
+
+			return response([
+				'success' => false,
+				'message' => 'Server error'
+			], 500);
+		}
+
+		// 5) Возвращаем успешный ответ
+		return response([
+			'success' => true,
+			'message' => 'Deposit success!'
+		]);
+	}
+
+
+public function resultPayok(Request $request)
+	{
+
+		\Log::info('PAYOK CALLBACK RECEIVED', [
+        'payload' => $request->all()
+    ]);
+	$payload = $request->all();
+		//Определяем платежные данные
+		$setting = Setting::first();
+		$merchant_id = $request->input('merchantOrderId');
+		$unique_id = $payload['merchantOrderId'] ?? null;
+		$amount = $payload['amount'] ?? null;
+		$intid = $payload['platformOrderId'];
+		$status = $payload['code'] ?? null;
+
+	
+		//Ищем необработанный платёж
+		$payment = Payment::where('transaction', $unique_id)
+			->whereIn('status', [0, 2])
+			->first();
+
+		if (!$payment) {
+			return response([
+				'success' => false,
+				'message' => 'Payment not found or already processed'
+			]);
+		}
+
+		//Начинаем транзакцию и сохраняем данные
+		DB::beginTransaction();
+
+		try {
+
+			//Получаем user
+			$user = User::find($payment->user_id);
+			if (! $user) {
+				DB::rollBack();
+				return response([
+					'success' => false,
+					'message' => 'User not found'
+				], 500);
+			}
+
+			//Сохраняем внешний ID
+			$payment->update([
+				'external_id' => $intid
+			]);
+
+			//Если провайдер вернул неуспешный статус
+			if ($status !== 'SUCCESS') {
+				$payment->update([
+					'status' => 2   // 2 = неуспешный
+				]);
+				DB::commit();
+
+				return response([
+					'success' => false,
+					'message' => 'Payment not successful'
+				]);
+			}
+
+			//Считаем сумму с добавлением процента бонуса игроку
+			$amount_bonus = $amount * ($payment->percent / 100);
+			$amount_with_bonus = $amount + $amount_bonus;
+
+			//Обновляем запись платежа
+			$payment->update([
+				'status'      => 1,
+				'afterpay'    => $user->balance + $amount_with_bonus,
+				'external_id' => $intid,
+			]);
+
+			//Флаг первого депозита
+			$user->bonus_up = ($user->deps === 0 && $amount_with_bonus > 5);
+			//Обновляем баланс пользователя
+			$user->balance += $amount_with_bonus;
+			//Обновляем сумму депов пользователя
+			$user->deps += $amount_with_bonus;
+			//Обновляем минимальную сумму вывода
+			$user->sum_to_withdraw += ($amount * 40);
+
+			//Начисляем кешбэк
+			$rates = Status::pluck('cashbb', 'id');
+			$rate  = $user->status === 0
+				? 1
+				: ($rates->get($user->status, 1));
+			$user->cashback += $amount_with_bonus * $rate / 100;
+
+			//Пересчитываем уровень пользователя
+			$new_status_id = Status::where('deposit', '<=', $user->deps)
+				->orderBy('deposit', 'desc')
+				->value('id');
+			if ($new_status_id > $user->status) {
+				$user->status = $new_status_id;
+			}
+			$user->save();
+
+			if ($user->frozen) {
+				try {
+					$banTypeId = $this->banUser($user);
+					if ($banTypeId !== null) {
+						$user->update([
+							'ban' => 1,
+							'ban_type_id' => $banTypeId,
+						]);
+					}
+				} catch (\Throwable $e) {
+					Log::error('Ошибка при попытке забанить юзера: ' . $e->getMessage());
+				}
+			}
+
+
+			//Начисляем реферальный бонус
+			if ($refId = $user->ref_id) {
+				$refUser  = \App\Models\User::find($refId);
+				$refBonus = $amount_with_bonus * ($refUser->ref_coeff / 100);
+				$refUser->increment('profit',      $refBonus);
+				$refUser->increment('balance_ref', $refBonus);
+			}
+
+			try {
+				$eventId = md5($user->id . ':' . now());
+
+				$this->sendPostback([
+					'type_payout' => 'rs',
+					'external_id' => $user->external_id,
+					'id' => $user->id,
+					'event_id' => $eventId,
+					'deposit_amount' => round($payment->sum / 97, 2),
+					'deposit_currency' => 'USD',
+					'revenue_amount' => round(($payment->sum * 0.86) / 96, 2),
+					'revenue_currency' => 'USD',
+					'email' => $user->email,
+					'phone' => $user->phone,
+					'country_apha2code' => 'IN',
+					'offer_id' => 154
+				]);
+			} catch (\Throwable $e) {
+				\Log::error('Ошибка при отправке депозита: ' . $e->getMessage());
+			}
+
+			DB::commit();
+		} catch (\Throwable $e) {
+			DB::rollBack();
+			Log::error('resultPayyou failed', [
+				'order'     => $unique_id,
+				'exception' => $e,
+			]);
+
+			return response([
+				'success' => false,
+				'message' => 'Server error'
+			], 500);
+		}
+
+		// 5) Возвращаем успешный ответ
+		return response([
+			'success' => true,
+			'message' => 'Deposit success!'
+		]);
+	}
+
+
+
+	public function generatePayokLinkH5($orderAmount, $user, $orderId): ?string
+{
+    $baseUrl = 'https://api.payok.com';
+    $apiPath = '/api-pay/payment/V3.4/order/create-h5';
+
+    $payload = [
+        'merchantId' => '420316',
+        'requestTime' => gmdate("Y-m-d\TH:i:s.v\Z"),
+        'merchantOrderId' => $orderId,
+        'amount' => (float) $orderAmount,
+        'notificationUrl' => 'https://upwin-in.com/api/deposit/payok/callback',
+        'paymentMethodCode' => 'UPI',
+        'countryCode' => 'IN',
+        'currency' => 'INR',
+        'language' => 'EN',
+        'returnUrl' => 'https://upwin-in.com/',
+        'customer' => [
+            'name' => (string) $user->id,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'countryName' => 'India',
+            'ip' => request()->ip(),
+            'deviceId' => md5($user->email . request()->ip()),
+        ],
+        'goodsInfo' => [
+            'name'  => 'Deposit',
+            'id'    => $orderId,
+            'price' => number_format($orderAmount, 2, '.', ''),
+        ]
+    ];
+
+    $json = json_encode($payload, JSON_UNESCAPED_SLASHES);
+    $dataToSign = $json . '&' . $apiPath;
+
+    // Читаем приватный ключ из файла
+    $privateKeyPath = '/var/www/product/payok_keys/private.key.pem';
+    if (!file_exists($privateKeyPath)) {
+        \Log::error('PAYOK: Private key file not found');
+        return null;
+    }
+
+    $privateKeyContent = file_get_contents($privateKeyPath);
+    $privateKey = openssl_pkey_get_private($privateKeyContent);
+
+    if (!$privateKey) {
+        \Log::error('PAYOK: Invalid private key');
+        return null;
+    }
+
+    if (!openssl_sign($dataToSign, $signature, $privateKey, OPENSSL_ALGO_SHA256)) {
+        \Log::error('PAYOK: Failed to sign request');
+        return null;
+    }
+
+    $signatureBase64 = base64_encode($signature);
+
+    $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+        'sign' => $signatureBase64,
+    ])->withBody($json, 'application/json')
+      ->post($baseUrl . $apiPath);
+
+    \Log::channel('daily')->info('PAYOK FULL LOG', [
+        'payload'       => $payload,
+        'json_encoded'  => $json,
+        'data_to_sign'  => $dataToSign,
+        'signature'     => $signatureBase64,
+        'response_raw'  => $response->body(),
+        'response_json' => $response->json(),
+        'http_status'   => $response->status(),
+    ]);
+
+    $json = $response->json();
+
+    if (isset($json['code']) && $json['code'] === 'SUCCESS' && isset($json['paymentInfo']['content'])) {
+        return $json['paymentInfo']['content'];
+    }
+
+    \Log::error('PAYOK: Invalid response', ['json' => $json]);
+    return null;
+}
 
 	private function generatePear2PayLink($orderAmount, $user, $orderId, $apiKey, $merchantKey, $currency, $userCode, $userEmail)
 	{
@@ -1623,10 +1453,10 @@ class PaymentController extends Controller
 					'external_id' => $user->external_id,
 					'id' => $user->id,
 					'event_id' => $eventId,
-					'deposit_amount' => $payment->sum,
-					'deposit_currency' => 'INR',
-					'revenue_amount' => $payment->sum / 2,
-					'revenue_currency' => 'INR',
+					'deposit_amount' => round($payment->sum / 99, 2),
+					'deposit_currency' => 'USD',
+					'revenue_amount' => round(($payment->sum * 0.89) / 98, 2),
+					'revenue_currency' => 'USD',
 					'email' => $user->email,
 					'phone' => $user->phone,
 					'country_apha2code' => 'IN',
@@ -1798,10 +1628,10 @@ class PaymentController extends Controller
 					'external_id' => $user->external_id,
 					'id' => $user->id,
 					'event_id' => $eventId,
-					'deposit_amount' => $payment->sum,
-					'deposit_currency' => 'INR',
-					'revenue_amount' => $payment->sum / 2,
-					'revenue_currency' => 'INR',
+					'deposit_amount' => round($payment->sum / 95, 2),
+					'deposit_currency' => 'USD',
+					'revenue_amount' => round(($payment->sum * 0.94) / 95, 2),
+					'revenue_currency' => 'USD',
 					'email' => $user->email,
 					'phone' => $user->phone,
 					'country_apha2code' => 'IN',

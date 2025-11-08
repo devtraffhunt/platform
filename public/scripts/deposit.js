@@ -49,19 +49,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Перевірка введеної суми і активація кнопки депозиту
 	const validateAmount = () => {
-		elements.amountGroup.classList.remove("error");
-		let v = elements.amountInput.value.replace(/\D/g, "");
-		elements.amountInput.value = v;
-		const num = parseInt(v, 10);
+	elements.amountGroup.classList.remove("error");
 
-		if (num >= state.from && num <= state.to) {
-			elements.depositBtn.disabled = false;
-		} else {
-			elements.depositBtn.disabled = true;
-			elements.amountGroup.classList.add("error");
-		}
-		updateBonusAndTotal();
-	};
+	let v = elements.amountInput.value.replace(/\D/g, "");
+	elements.amountInput.value = v;
+	const num = parseInt(v, 10);
+
+	let valid = num >= state.from && num <= state.to;
+
+	// Сбрасываем ошибку с UPI
+	const upiGroup = document.getElementById("upiGroup");
+	if (upiGroup) {
+		upiGroup.classList.remove("error");
+	}
+
+	// Если нужен UPI — проверяем отдельно
+	if (state.selectedPsId == 14 && upiGroup) {
+	const upiInputGroup = upiGroup.querySelector(".up_input-group");
+	const upiValue = document.getElementById("upiInput").value.trim();
+	const upiPattern = /^[\w.\-]+@[\w.\-]+$/; // name@bank
+
+	upiInputGroup.classList.remove("error");
+
+	if (!upiPattern.test(upiValue)) {
+		valid = false;
+		upiInputGroup.classList.add("error"); // красная рамка только у инпута
+	}
+}
+
+
+	// Дизейбл кнопки по общей проверке
+	elements.depositBtn.disabled = !valid;
+
+	// Если сумма невалидная — подсвечиваем сумму
+	if (num < state.from || num > state.to) {
+		elements.amountGroup.classList.add("error");
+	}
+
+	updateBonusAndTotal();
+};
+
+
+
 
 	// Перевірка промокоду і оновлення бонусу
 	const validatePromo = () => {
@@ -69,6 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		 state.promo = code;
 		 if (code === "WELCOME") {
 		   state.bonusPercent = 500;
+		   elements.promoGroup.classList.remove("error");
+		 }else if (code === "7XVIP") {
+		   state.bonusPercent = 1000;
 		   elements.promoGroup.classList.remove("error");
 		 } else {
 		   state.bonusPercent = 0;
@@ -79,27 +111,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Обробка вибору платіжного методу
 	const onMethodSelect = el => {
-		elements.itemPays.forEach(e => e.classList.remove("up_item_pay_active"));
-		el.classList.add("up_item_pay_active");
+	// Убираем активный класс со всех и ставим на выбранный
+	elements.itemPays.forEach(e => e.classList.remove("up_item_pay_active"));
+	el.classList.add("up_item_pay_active");
 
-		state.selectedMethodId = el.dataset.methodId;
-		state.selectedMethodName = el.dataset.methodName;
+	// Запоминаем выбранный метод
+	state.selectedMethodId = el.dataset.methodId;
+	state.selectedMethodName = el.dataset.methodName;
+	state.selectedPsId = parseInt(el.dataset.psId, 10);
 
-		elements.selImg.src = el.querySelector("img").src;
-		elements.selSpan.textContent = state.selectedMethodName;
+	// Обновляем выбранную картинку и название
+	elements.selImg.src = el.querySelector("img").src;
+	elements.selSpan.textContent = state.selectedMethodName;
 
-		// Отримуємо значення з дата-атрибутів
-		const from = parseInt(el.dataset.from, 10);
-		const to = parseInt(el.dataset.to, 10);
-		const recommended = parseInt(el.dataset.recommended, 10);
+	// Границы суммы и рекомендованная
+	const from = parseInt(el.dataset.from, 10);
+	const to = parseInt(el.dataset.to, 10);
+	const recommended = parseInt(el.dataset.recommended, 10);
 
-		// Передаємо у setDepositData
-		setDepositData({ from, to, recommended });
+	setDepositData({ from, to, recommended });
 
-		elements.wrapper.classList.add("show-topup");
-		validateAmount();
-		validatePromo();
-	};
+	// === UPI поле только для psId = 14 ===
+	if (state.selectedPsId === 14) {
+		if (!document.getElementById("upiInput")) {
+			const html = `
+				<div class="up_pay_amount_container" id="upiGroup">
+					<div class="up_h3">Enter your UPI ID</div>
+					<div class="up_input up_input-group">
+						<input 
+							type="text" 
+							id="upiInput" 
+							name="upi_id" 
+							placeholder="example@upi" 
+							autocomplete="off"
+						>
+					</div>
+				</div>
+			`;
+			elements.promoGroup.parentNode.insertAdjacentHTML("beforebegin", html);
+			document.getElementById("upiInput").addEventListener("input", validateAmount);
+		}
+	} else {
+		const upiGroup = document.getElementById("upiGroup");
+		if (upiGroup) upiGroup.remove();
+	}
+
+	// Переходим на экран пополнения
+	elements.wrapper.classList.add("show-topup");
+
+	// Запускаем валидацию и обновление бонуса
+	validateAmount();
+	validatePromo();
+};
+
 
 	// Скидання стану форми при поверненні на вибір методу
 	const resetToMethodScreen = () => {
@@ -138,7 +202,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	const handleDepositClick = () => {
 		if (!state.selectedMethodId) return;
 
-		goDeposit(state.selectedMethodId, elements.amountInput.value, state.promo)
+		goDeposit(
+	state.selectedMethodId, 
+	elements.amountInput.value, 
+	state.promo, 
+	document.getElementById("upiInput")?.value.trim() || null
+);
+
 	};
 
 	//встановлюємо дані

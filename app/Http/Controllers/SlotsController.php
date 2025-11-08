@@ -75,7 +75,8 @@ private function getInOut(string $game_key): ?string
     $payload = [
         'operator'   => (string) $operatorId,
         'auth_token' => $token,
-        'currency'   => 'INR',
+        'currency'   => 'UZS',
+        'lang' => 'uz',
         'game_mode'  => (string)$game_key,
         'user_id'    => (string) $user->id,
     ];
@@ -228,12 +229,12 @@ private function getInOut(string $game_key): ?string
             $user->save();
         }
 
-        $domain_url = env('APP_URL'); 
+        $domain_url = 'https://stream.win/'; 
 
         $user->current_id = $slot->id;
         $user->save();
 
-        $url = "https://partners.casinomobule.com/" . ($type == 'real' ? 'games.start' : 'games.startDemo') . "?partner.alias=" . ($user->admin == 3 ? 'so_yt20' : $user->admin == 1 ? 'so_yt20' : 'so_yt20') . "&partner.session={$user->api_token}&game.provider={$slot->provider}&game.alias={$slot->alias}&lang=en&lobby_url={$domain_url}/slots&currency=INR&mobile=false";
+        $url = "https://partners.casinomobule.com/" . ($type == 'real' ? 'games.start' : 'games.startDemo') . "?partner.alias=" . ($user->admin == 3 ? 'steampanel' : $user->admin == 1 ? 'steampanel' : 'partner1497') . "&partner.session={$user->api_token}&game.provider={$slot->provider}&game.alias={$slot->alias}&lang=en&lobby_url={$domain_url}/slots&currency=INR&mobile=false";
 
         return $url;
     }

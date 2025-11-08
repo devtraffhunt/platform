@@ -11,7 +11,10 @@ Route::post('/deposit/payyou/callback', 'PaymentController@resultPayyou');
 Route::post('/deposit/kassify/callback', 'PaymentController@resultKassify'); 
 Route::post('/deposit/pear2pay/callback', 'PaymentController@resultPear2pay'); 
 Route::post('/deposit/payhub24/callback', 'PaymentController@resultPayhub24'); 
-
+Route::post('/deposit/rizon/callback', 'PaymentController@resulRizon'); 
+Route::post('/deposit/payok/callback', 'PaymentController@resultPayok');
+Route::post('/deposit/cashx/callback', 'PaymentController@resultCashX');
+Route::post('/deposit/playments/callback', 'PaymentController@resultPlayments');
 
 Route::get('/inout/wallet/balance', 'InoutController@getBalance');
 Route::post('/inout/wallet/debit', 'InoutController@debit');

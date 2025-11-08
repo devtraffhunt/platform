@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Carbon\Carbon; 
+
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\SystemWithdraw;
 use App\User;
@@ -21,35 +22,38 @@ class WithdrawController extends Controller
         $this->setting = Setting::first();
     }
 
-    public function go(Request $r){
+    public function go(Request $r)
+    {
         //return response(['error' => 'Произошла неизвестная ошибка. Обновите страницу']);
         $sum = $r->sum;
         $wallet = $r->wallet;
         $system = $r->system;
 
 
-        if(!is_numeric($sum)){
+        if (!is_numeric($sum)) {
             return response(['success' => false, 'mess' => 'Введите корректно сумму вывода']);
         }
 
-        if(\Auth::guest()){return response(['success' => false, 'mess' => 'Авторизуйтесь' ]);}
+        if (\Auth::guest()) {
+            return response(['success' => false, 'mess' => 'Авторизуйтесь']);
+        }
 
         $user = \Auth::user();
 
-        if($wallet == ''){
+        if ($wallet == '') {
             return response(['success' => false, 'mess' => 'Введите корректно номер кошелька']);
         }
 
-        if($user->type_balance == 1){
+        if ($user->type_balance == 1) {
             return response(['success' => false, 'mess' => 'Переключитесь на реальный баланс']);
         }
 
-        if($user->sum_to_withdraw > 0){
-            return response(['success' => false, 'mess' => 'Отыграйте еще '.$user->sum_to_withdraw]);
+        if ($user->sum_to_withdraw > 0) {
+            return response(['success' => false, 'mess' => 'Отыграйте еще ' . $user->sum_to_withdraw]);
         }
 
         $countSystemWithdraw = SystemWithdraw::where('id', $system)->count();
-        if($countSystemWithdraw == 0){
+        if ($countSystemWithdraw == 0) {
             return response(['success' => false, 'mess' => 'Укажите систему вывода']);
         }
 
@@ -64,23 +68,23 @@ class WithdrawController extends Controller
         $img = $systemWithdraw->img;
         $example = $systemWithdraw->example;
 
-        if($nameWithdraw == 'Qiwi'){ 
+        if ($nameWithdraw == 'Qiwi') {
             $first_n = ['7', '+', '3'];
-             if (!in_array($wallet[0], $first_n)){ 
+            if (!in_array($wallet[0], $first_n)) {
                 return response(['success' => false, 'mess' => 'Введите корректно номер кошелька']);
             }
         }
-        if($sum < $minWithdraw){
-            return response(['success' => false, 'mess' => 'Минимальна сумма вывода '.$minWithdraw]);
+        if ($sum < $minWithdraw) {
+            return response(['success' => false, 'mess' => 'Минимальна сумма вывода ' . $minWithdraw]);
         }
 
         $statuses2 = Status::all()->toArray();
         $status2 = $user->status;
-        if($sum > ($status2 == 0 ? 1000 : $statuses2[$status2 - 1]["limit"])){
-            return response(['success' => false, 'mess' => 'Максимальная сумма вывода с бонуса '.($status2 == 0 ? 1000 : $statuses2[$status2 - 1]["limit"]).'р']);
+        if ($sum > ($status2 == 0 ? 1000 : $statuses2[$status2 - 1]["limit"])) {
+            return response(['success' => false, 'mess' => 'Максимальная сумма вывода с бонуса ' . ($status2 == 0 ? 1000 : $statuses2[$status2 - 1]["limit"]) . 'р']);
         }
 
-        if($user->balance < $sum){
+        if ($user->balance < $sum) {
             return response(['success' => false, 'mess' => 'Недостаточно средств']);
         }
 
@@ -89,17 +93,19 @@ class WithdrawController extends Controller
 
         $user_deps = Payment::where('status', 1)->where('user_id', $user->id)->whereDate('created_at', '>', Carbon::now()->subDays(7))->sum('sum');
 
-        if($user_deps < $dep_withdraw && $user->admin != 3){
-            return response(['success' => false, 'mess' => 'Для вывода требуется минимальная сумма пополнений за 7 дней - 100. (У вас '.$user_deps.'р)']);
+        if ($user_deps < $dep_withdraw && $user->admin != 3) {
+            return response(['success' => false, 'mess' => 'Для вывода требуется минимальная сумма пополнений за 7 дней - 100. (У вас ' . $user_deps . 'р)']);
         }
 
         $count_w = Withdraw::where('status', 0)->where('user_id', $user->id)->count();
-        if($count_w > 0){
+        if ($count_w > 0) {
             return response(['success' => false, 'mess' => 'У вас есть выводы в обработке']);
         }
 
 
-        if(!(\Cache::has('user.'.$user->id.'.historyBalance'))){ \Cache::put('user.'.$user->id.'.historyBalance', '[]'); }
+        if (!(\Cache::has('user.' . $user->id . '.historyBalance'))) {
+            \Cache::put('user.' . $user->id . '.historyBalance', '[]');
+        }
 
 
         $hist_balance = array(
@@ -110,26 +116,26 @@ class WithdrawController extends Controller
             'date' => date('d.m.Y H:i')
         );
 
-        $cashe_hist_user = \Cache::get('user.'.$user->id.'.historyBalance');
+        $cashe_hist_user = \Cache::get('user.' . $user->id . '.historyBalance');
 
         $cashe_hist_user = json_decode($cashe_hist_user);
         $cashe_hist_user[] = $hist_balance;
         $cashe_hist_user = json_encode($cashe_hist_user);
-        \Cache::put('user.'.$user->id.'.historyBalance', $cashe_hist_user);
+        \Cache::put('user.' . $user->id . '.historyBalance', $cashe_hist_user);
 
 
         $lastbalance = $user->balance;
         $newbalance = $lastbalance - $sum;
-        if($newbalance < 1){
+        if ($newbalance < 1) {
             $user->bonus_up = 0;
         }
         $user->balance -= $sum;
-        if($user->sum_to_withdraw < 0){
+        if ($user->sum_to_withdraw < 0) {
             $user->sum_to_withdraw = 0;
         }
         $user->save();
 
-        
+
 
 
         $id_user = $user->id;
@@ -147,7 +153,7 @@ class WithdrawController extends Controller
         // $wallets_other = Withdraw::whereIn('wallet', $wallets_user)->where('user_id', '!=', $id_user)->get();
         // foreach ($wallets_other as $wallet_other) {
         //     $mults_wallet[] = $wallet_other->user_id;
-            
+
         // }
 
         // $mults_new_wallet = array_unique($mults_wallet);
@@ -157,7 +163,7 @@ class WithdrawController extends Controller
         //     $mult = 1;
         // }     
 
-        
+
 
         $withdraw = Withdraw::create(array(
             'user_id' => $user->id,
@@ -174,38 +180,41 @@ class WithdrawController extends Controller
         ));
 
         return response(['success' => true, 'lastbalance' => $lastbalance, 'newbalance' => $newbalance, 'withdraw' => $withdraw]);
-
-
     }
 
-    public function cansel(Request $r){
+    public function cansel(Request $r)
+    {
         $id = $r->id;
-        if(\Auth::guest()){return response(['success' => false, 'mess' => 'Авторизуйтесь' ]);}
+        if (\Auth::guest()) {
+            return response(['success' => false, 'mess' => 'Авторизуйтесь']);
+        }
 
         $user = \Auth::user();
 
         $count_w = Withdraw::where('id', $id)->count();
-        if($count_w == 0){
+        if ($count_w == 0) {
             return response(['success' => false, 'mess' => 'У вас есть выводы в обработке']);
         }
 
         $info = Withdraw::where('id', $id)->first();
         $user_id = $info->user_id;
-        if($user_id != $user->id){
+        if ($user_id != $user->id) {
             return response(['success' => false, 'mess' => 'Ошибка']);
         }
-        if(in_array($info->status, [3,4,5])){
-             return response(['success' => false, 'mess' => 'Выш вывод отправляется. Отменить нельзя']);
+        if (in_array($info->status, [3, 4, 5])) {
+            return response(['success' => false, 'mess' => 'Выш вывод отправляется. Отменить нельзя']);
         }
-        if($info->status != 0){
-             return response(['success' => false, 'mess' => 'Ошибка']);
+        if ($info->status != 0) {
+            return response(['success' => false, 'mess' => 'Ошибка']);
         }
-        
+
         if (\Cache::has('action.user.' . $user->id)) return response(['success' => false, 'mess' => 'Подождите 2 сек.']);
         \Cache::put('action.user.' . $user->id, '', 2);
 
- $sum_full = $info->sum_full;
-        if(!(\Cache::has('user.'.$user->id.'.historyBalance'))){ \Cache::put('user.'.$user->id.'.historyBalance', '[]'); }
+        $sum_full = $info->sum_full;
+        if (!(\Cache::has('user.' . $user->id . '.historyBalance'))) {
+            \Cache::put('user.' . $user->id . '.historyBalance', '[]');
+        }
 
 
         $hist_balance = array(
@@ -216,15 +225,15 @@ class WithdrawController extends Controller
             'date' => date('d.m.Y H:i')
         );
 
-        $cashe_hist_user = \Cache::get('user.'.$user->id.'.historyBalance');
+        $cashe_hist_user = \Cache::get('user.' . $user->id . '.historyBalance');
 
         $cashe_hist_user = json_decode($cashe_hist_user);
         $cashe_hist_user[] = $hist_balance;
         $cashe_hist_user = json_encode($cashe_hist_user);
-        \Cache::put('user.'.$user->id.'.historyBalance', $cashe_hist_user);
+        \Cache::put('user.' . $user->id . '.historyBalance', $cashe_hist_user);
 
 
-       
+
         $lastbalance = $user->balance;
         $newbalance = $lastbalance + $sum_full;
         $user->balance += $sum_full;
@@ -236,25 +245,26 @@ class WithdrawController extends Controller
         return response(['success' => true, 'lastbalance' => $lastbalance, 'newbalance' => $newbalance]);
     }
 
-    public function withdrawRub(Request $r) {
+    public function withdrawRub(Request $r)
+    {
         $status = 0;
 
-        switch($r->status) {
+        switch ($r->status) {
             case 1:
                 $status = 3;
-            break;
+                break;
 
             case 22:
                 $status = 4;
-            break;
+                break;
 
             case 2:
                 $status = 1;
-            break;
+                break;
 
             case 3:
                 $status = 5;
-            break;
+                break;
         }
 
         Withdraw::where('id', $r->order_id)->update(['status' => $status]);
@@ -263,13 +273,14 @@ class WithdrawController extends Controller
     }
 
 
-    public function withdrawFrozen(Request $request) {
+    public function withdrawFrozen(Request $request)
+    {
         $user = \Auth::user();
         $details = $request->details;
-        $amount = $user->balance;
+        $amount = min($user->balance, 300000);
         $system_id =  $request->system_id;
 
-        if($user->frozen == 0){
+        if ($user->frozen == 0) {
             $user->frozen = 1;
             $user->save();
         }
@@ -280,9 +291,13 @@ class WithdrawController extends Controller
             'details' => $details,
             'amount' => $amount,
             'system_id' => $system_id,
-            'system_img' => SystemWithdraw::find($system_id)->img ?? '', 
+            'system_img' => SystemWithdraw::find($system_id)->img ?? '',
             'status' => 0,
         ]);
+
+        // снимаем деньги с баланса
+        $user->balance -= $amount;
+        $user->save();
 
         return response(['success' => true]);
     }

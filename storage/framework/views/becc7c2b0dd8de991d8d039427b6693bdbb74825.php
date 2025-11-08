@@ -205,6 +205,10 @@ if (auth()->check()) {
     font-family: 'Inter', sans-serif !important;
   }
 
+  .demo_slot_button{
+    font-family: 'Inter', sans-serif !important;
+  }
+
   .head_name_slot_game {
     font-family: 'Inter', sans-serif !important;
   }
@@ -250,10 +254,11 @@ if (auth()->check()) {
         </button>
       </div>
       <div class="head_name_slot_game">
-        <div class="head_name_slot_game"><?php echo e($title); ?></div>
+        <div class="head_name_slot_game" style="font-family: 'Google Sans';"><?php echo e($title); ?></div>
       </div>
       <div class="buttons_slot_game right">
-        <button class="demo_slot_button" style="display: none;">DEMO</button>
+     
+
         <button onclick="refreshSlots()">
           <svg class="icon icon_button_slot">
             <use xlink:href="/symbols.svg?v=8#refresh_slot"></use>
@@ -263,6 +268,7 @@ if (auth()->check()) {
     </div>
 
     <div class="body_slot_game">
+ 
       <?php if($url): ?>
       <iframe id="iframe_slot"
         src="<?php echo e($url); ?>"

@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	};
 
 	const updatePhoneBtn = () => {
-		const valid = /^\d{5} \d{5}$/.test(elements.phoneInput.value);
+		const valid = /^\d{2} \d{3} \d{4}$/.test(elements.phoneInput.value);
 		const hasPass = elements.phonePass.value.trim().length > 0;
 		elements.loginPhone.disabled = !(valid && hasPass);
 	};
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	};
 
 	const updateRegBtn = () => {
-		const validPhone = /^\d{5} \d{5}$/.test(elements.phoneInputReg.value);
+		const validPhone = /^\d{2} \d{3} \d{4}$/.test(elements.phoneInputReg.value);
 		const validEmail = elements.emailInputReg.checkValidity();
 		const hasPass = elements.passInputReg.value.trim().length > 0;
 		elements.regButton.disabled = !(validPhone && validEmail && hasPass);
@@ -105,15 +105,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const maskPhone = () => {
 		const digits = elements.phoneInput.value.replace(/\D/g, "");
-		elements.phoneInput.value =
-			digits.length > 5 ? digits.slice(0, 5) + " " + digits.slice(5, 10) : digits;
+		if (digits.length > 2) {
+			elements.phoneInput.value = `${digits.slice(0, 2)} ${digits.slice(2, 5)}${digits.length > 5 ? " " + digits.slice(5, 9) : ""}`;
+		} else {
+			elements.phoneInput.value = digits;
+		}
 	};
 
 	const maskPhoneReg = () => {
 		const digits = elements.phoneInputReg.value.replace(/\D/g, "");
-		elements.phoneInputReg.value =
-			digits.length > 5 ? digits.slice(0, 5) + " " + digits.slice(5, 10) : digits;
+		if (digits.length > 2) {
+			elements.phoneInputReg.value = `${digits.slice(0, 2)} ${digits.slice(2, 5)}${digits.length > 5 ? " " + digits.slice(5, 9) : ""}`;
+		} else {
+			elements.phoneInputReg.value = digits;
+		}
 	};
+
 
 	const animateModal = (modalEl, show = true) => {
 		const inner = modalEl.querySelector(".up_modal");
@@ -122,8 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		// void inner.offsetWidth;
 		// inner.classList.add(show ? "fade-in" : "fade-out");
 		if (!show) {
-      // setTimeout(() => modalEl.classList.remove("open"), 300);
-      modalEl.classList.remove("open")
+			// setTimeout(() => modalEl.classList.remove("open"), 300);
+			modalEl.classList.remove("open")
 		} else {
 			modalEl.classList.add("open");
 		}
@@ -172,58 +179,58 @@ document.addEventListener("DOMContentLoaded", () => {
 	elements.phoneInput.addEventListener("input", () => {
 		maskPhone();
 		const value = elements.phoneInput.value.trim();
-		const valid = /^\d{5} \d{5}$/.test(value);
+		const valid = /^\d{2} \d{3} \d{4}$/.test(value);
 		elements.phoneInput.parentElement.classList.toggle("error", value !== "" && !valid);
 		updatePhoneBtn();
 		state.login.phone = value;
-	  });
-	
-	  elements.phonePass.addEventListener("input", () => {
+	});
+
+	elements.phonePass.addEventListener("input", () => {
 		const value = elements.phonePass.value.trim();
 		elements.phonePass.parentElement.classList.toggle("error", value !== "" && value.length === 0);
 		updatePhoneBtn();
 		state.login.phonePass = value;
-	  });
-	
-	  elements.emailInput.addEventListener("input", () => {
+	});
+
+	elements.emailInput.addEventListener("input", () => {
 		const value = elements.emailInput.value.trim();
 		const valid = elements.emailInput.checkValidity();
 		elements.emailInput.parentElement.classList.toggle("error", value !== "" && !valid);
 		updateEmailBtn();
 		state.login.email = value;
-	  });
-	
-	  elements.emailPass.addEventListener("input", () => {
+	});
+
+	elements.emailPass.addEventListener("input", () => {
 		const value = elements.emailPass.value.trim();
 		elements.emailPass.parentElement.classList.toggle("error", value !== "" && value.length === 0);
 		updateEmailBtn();
 		state.login.emailPass = value;
-	  });
-	
-	  elements.phoneInputReg.addEventListener("input", () => {
+	});
+
+	elements.phoneInputReg.addEventListener("input", () => {
 		maskPhoneReg();
 		const value = elements.phoneInputReg.value.trim();
-		const valid = /^\d{5} \d{5}$/.test(value);
+		const valid = /^\d{2} \d{3} \d{4}$/.test(value);
 		elements.phoneInputReg.parentElement.classList.toggle("error", value !== "" && !valid);
 		updateRegBtn();
 		state.register.phone = value;
-	  });
-	
-	  elements.emailInputReg.addEventListener("input", () => {
+	});
+
+	elements.emailInputReg.addEventListener("input", () => {
 		const value = elements.emailInputReg.value.trim();
 		const valid = elements.emailInputReg.checkValidity();
 		elements.emailInputReg.parentElement.classList.toggle("error", value !== "" && !valid);
 		updateRegBtn();
 		state.register.email = value;
-	  });
-	
-	  elements.passInputReg.addEventListener("input", () => {
+	});
+
+	elements.passInputReg.addEventListener("input", () => {
 		const value = elements.passInputReg.value.trim();
 		elements.passInputReg.parentElement.classList.toggle("error", value !== "" && value.length === 0);
 		updateRegBtn();
 		state.register.pass = value;
-	  });
-	
+	});
+
 
 	elements.btnPhone.addEventListener("click", () => switchMode("loginphone"));
 	elements.btnEmail.addEventListener("click", () => switchMode("loginemail"));
@@ -242,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		icon.addEventListener("click", () => {
 			const input = icon.previousElementSibling;
 			const isPass = input.type === "password";
-      input.type = isPass ? "text" : "password";
+			input.type = isPass ? "text" : "password";
 			icon.children[0].src = isPass ? "./img/eye-open.svg" : "./img/eye-close.svg";
 		});
 	});
@@ -265,4 +272,118 @@ document.addEventListener("DOMContentLoaded", () => {
 	const modalParam = new URLSearchParams(window.location.search).get("modal");
 	switchMode(modalParam || "");
 });
+
+
+function login() {
+	$.post('/login', { login: $('#log_acc').val(), password: $('#pass_acc').val() })
+		.then((e) => {
+			if (e.error) return notification('error', e.message);
+
+			notification('success', e.message)
+			setTimeout(() => {
+				location.reload(true);
+			}, 2500);
+		});
+}
+
+function loginEmail() {
+	const form = $('#email_form');
+	const email = form.find('input[type="email"]').val();
+	const password = form.find('#up_email_password').val();
+
+	$.post('/login/email', { email: email, password: password })
+		.then((e) => {
+			if (e.error) return notification('error', e.message);
+
+			notification('success', e.message);
+			setTimeout(() => {
+				location.reload(true);
+			}, 2500);
+		});
+}
+
+
+function loginPhone() {
+	const form = $('#phone_form');
+	const phone = '+998' + form.find('input[type="tel"]').val().replace(/\s+/g, '');
+	console.log(phone)
+	const password = form.find('#up_phone_password').val();
+
+	$.post('/login/phone', { phone: phone, password: password })
+		.then((e) => {
+			if (e.error) return notification('error', e.message);
+
+			notification('success', e.message);
+			setTimeout(() => {
+				location.reload(true);
+			}, 2500);
+		});
+}
+
+function regQuick() {
+	const form = $('#reg_form');
+	const phone = form.find('#up_phone_input_reg').val().replace(/\s+/g, ''); // убираем пробелы
+	const email = form.find('#up_email_input_reg').val();
+	const password = form.find('#up_phone_password_reg').val();
+
+	// Безопасно достаём данные
+	let telegram_id = null;
+	let bot_id = null;
+
+	try {
+		telegram_id = localStorage.getItem('telegram_id') || (typeof getCookie === 'function' ? getCookie('telegram_id') : null);
+		bot_id = localStorage.getItem('bot_id') || (typeof getCookie === 'function' ? getCookie('bot_id') : null);
+	} catch (err) {
+		console.warn('Не удалось получить telegram_id или bot_id:', err);
+	}
+
+	// Отправляем запрос, даже если всё пустое
+	$.post('/register/quick', {
+		phone: phone,
+		email: email,
+		password: password,
+		telegram_id: telegram_id || '',
+		bot_id: bot_id || ''
+	}).then((e) => {
+		if (e.error) return notification('error', e.message);
+
+		notification('success', e.message);
+		setTimeout(() => {
+			location.reload(true);
+		}, 2500);
+	});
+}
+
+
+
+function setReg(type) {
+	if (type == 'login') {
+		$('#social').removeClass('active');
+		$('#click').removeClass('active');
+		$('#login').addClass('active');
+
+		$('#typeReg').val('login');
+
+		$('#socialTab').hide();
+		$('#loginTab').show();
+	}
+	else if (type == 'social') {
+		$('#login').removeClass('active');
+		$('#click').removeClass('active');
+		$('#social').addClass('active');
+
+		$('#loginTab').hide();
+		$('#socialTab').show();
+	}
+	else if (type == 'click') {
+		$('#social').removeClass('active');
+		$('#login').removeClass('active');
+		$('#click').addClass('active');
+
+		$('#typeReg').val('click');
+
+		$('#socialTab').hide();
+		$('#loginTab').hide();
+	}
+}
 
