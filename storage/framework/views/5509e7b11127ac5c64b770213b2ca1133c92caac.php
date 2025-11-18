@@ -9,7 +9,7 @@
         <p style="width: 70%;"><?php echo e(__('common.banners.game-month-desk')); ?></p>
         <div class="gx-row mt-1">
 
-          <a class="btn is-ripples d-flex align-center has-ripple" <?php if(auth()->guard()->check()): ?> href="/crash" <?php else: ?> data-switch="regquick" href="javascript:void(0)" <?php endif; ?>>
+          <a class="btn is-ripples d-flex align-center has-ripple" <?php if(auth()->guard()->check()): ?> href="/games/aviator" <?php else: ?> data-switch="regquick" href="javascript:void(0)" <?php endif; ?>>
             <span><?php echo e(__('common.banners.play-now')); ?></span>
           </a>
         </div>
@@ -376,7 +376,17 @@
           </div>
         </a>
 
-        <a <?php if(auth()->guard()->check()): ?> href="/crash" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
+        <a <?php if(auth()->guard()->check()): ?> href="/games/chicken-road-vegas" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
+          <div class="games__thumb">
+            <img src="/img/games/chicken-road-vegas.jpg" alt="Chicken Road Vegas">
+          </div>
+          <div class="games__info">
+            <div class="games__provider"><img src="/img/providers/inout.svg">InOut</div>
+            <div class="games__title">Chicken Road Vegas</div>
+          </div>
+        </a>
+
+        <a <?php if(auth()->guard()->check()): ?> href="/games/aviator" <?php else: ?> data-switch="regquick" <?php endif; ?> class="games__item">
           <div class="games__thumb">
             <img src="/img/games/svg/aviator.svg" alt="Aviator">
           </div>

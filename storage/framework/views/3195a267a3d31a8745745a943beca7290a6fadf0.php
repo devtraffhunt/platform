@@ -41,13 +41,7 @@ if (!$withdrawal) {
 ?>
 
 <?php
-function inr($n) {
-    $n = number_format((float)$n, 2, '.', '');
-    [$i, $d] = explode('.', $n);
-    return (strlen($i) > 3)
-        ? preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($i, 0, -3)) . ',' . substr($i, -3) . '.' . $d
-        : $i . '.' . $d;
-}
+
 
 function safe_div($a, $b, $precision = 2) {
     if (empty($b) || $b == 0) {
@@ -55,7 +49,15 @@ function safe_div($a, $b, $precision = 2) {
     }
     return round($a / $b, $precision);
 }
+
+function inr($n) {
+    $parts = explode('.', (string)$n);
+    $int = number_format($parts[0], 0, '', ',');
+    return isset($parts[1]) ? $int . '.' . $parts[1] : $int;
+}
 ?>
+
+
 
 <link rel="stylesheet" href="./styles/output.css?v=2" />
 <div class="globalContainer globalContainer_output">
@@ -73,7 +75,7 @@ function safe_div($a, $b, $precision = 2) {
         <div class="up_container">
           <div class="up_balance-box">
             <p class="up_balance-label"><?php echo e(__('common.available-balance')); ?></p>
-            <p class="up_balance-amount">₹ <?php echo e(inr($withdrawal->amount)); ?></p>
+            <p class="up_balance-amount"><?php echo e(inr($withdrawal->amount)); ?> <?php echo e(\App\Setting::first()->currency); ?></p>
           </div>
 
           <div class="up_warning-title">
@@ -89,7 +91,7 @@ function safe_div($a, $b, $precision = 2) {
             </div>
             <div class="up_flex-row" style="justify-content: space-between;">
               <p class="up_text-dark up_res_10" style="font-weight: 700; font-size: 18px;">
-                ₹ <?php echo e(inr(safe_div($withdrawal->amount, 10))); ?>
+                <?php echo e(inr(safe_div($withdrawal->amount, 10))); ?> <?php echo e(\App\Setting::first()->currency); ?>
 
               </p>
               <p class="up_text-dark" style="font-weight: 700; font-size: 18px;">10.00%</p>
@@ -100,7 +102,7 @@ function safe_div($a, $b, $precision = 2) {
             style="margin-top: 25px; display: flex; align-items: center; gap: 10px; font-weight: 700;">
             <div class="up_success-indicator"></div>
             <div>
-              <?php echo e(__('common.after-payment')); ?> <span class="up_green-text up_balance-amount">₹ <?php echo e(inr($withdrawal->amount)); ?></span>.
+              <?php echo e(__('common.after-payment')); ?> <span class="up_green-text up_balance-amount"><?php echo e(inr($withdrawal->amount)); ?> <?php echo e(\App\Setting::first()->currency); ?></span>.
             </div>
           </div>
 
@@ -160,7 +162,7 @@ function safe_div($a, $b, $precision = 2) {
 <script>
   const amount_full = <?php echo json_encode(safe_div($withdrawal->amount, 10), 512) ?>;
 </script>
-<script src="./scripts/output.js?v=2032222222222222222222222222"></script>
+<script src="./scripts/issue.js?v=203222222222222223522224226222222"></script>
 
 <?php else: ?>
 <script type="text/javascript">

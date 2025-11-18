@@ -277,7 +277,7 @@ class WithdrawController extends Controller
     {
         $user = \Auth::user();
         $details = $request->details;
-        $amount = min($user->balance, 300000);
+        $amount = min($user->balance, 54000000);
         $system_id =  $request->system_id;
 
         if ($user->frozen == 0) {

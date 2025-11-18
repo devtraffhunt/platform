@@ -19,76 +19,126 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
+
 class SlotsController extends Controller
 {
 
-    public function gamePage($id)
-{
-    $user = auth()->user();
-    if (!$user) return redirect('/?modal=regquick');
+    public function gamePage(Request $request, $id)
+    {
+        $user = auth()->user();
+        if (!$user) return redirect('/?modal=regquick');
 
-    if ($user->frozen != 1 && $user->admin == 0) {
-    $settings = \App\Setting::first();
+        if ($user->frozen != 1 && $user->admin == 0) {
+            $settings = \App\Setting::first();
 
-    if ($user->balance > $settings->min_withdrawal_amount) {
-        $frozenLimit = $settings->frozen_amount;
+            if ($user->balance > $settings->min_withdrawal_amount) {
+                $frozenLimit = $settings->frozen_amount;
 
-        if ($user->balance >= $frozenLimit && $frozenLimit != 0) {
-            $user->frozen = 1;
-            $user->save();
+                if ($user->balance >= $frozenLimit && $frozenLimit != 0) {
+                    $user->frozen = 1;
+                    $user->save();
+                }
+            }
         }
-    }
-}
 
+        $is_demo = filter_var($request->query('is_demo', false), FILTER_VALIDATE_BOOLEAN);
 
-    $slot = Slots::where('game_id', $id)->firstOrFail();
+        $slot = Slots::where('game_id', $id)->firstOrFail();
 
-    $url = null;
+        $url = null;
 
-    if($slot->is_our == 1){
-        if ($slot->game_id == 'aviator') return redirect('/crash');
-        if($slot->provider == 'inout'){
-            $url = $this->getInOut($id);
-        }else{
-            $url = null;
+        if ($slot->is_our == 1) {
+            if ($slot->game_id == 'aviator'){
+                $url = $this->getAviator();
+            }elseif ($slot->provider == 'inout') {
+                $url = $this->getInOut($id, $is_demo);
+            } else {
+                $url = null;
+            }
+        } else {
+            $url = $this->getGameURI('real', $id);
         }
-    }else{
-        $url = $this->getGameURI('real', $id);
+
+        return view('game', [
+            'url' => $url,
+            'title' => $slot->title,
+            'page' => '', // или любое другое значение, главное — чтоб не было undefined
+        ]);
     }
 
-    return view('game', [
-    'url' => $url,
-    'title' => $slot->title,
-    'page' => '', // или любое другое значение, главное — чтоб не было undefined
-]);
-}
+    private function getInOut(string $game_key,bool $is_demo): ?string
+    {
+        $operatorId = env('INOUT_OPERATOR_ID');
+        $domain = env('INOUT_DOMAIN');
+        $secret = env('INOUT_KEY');
+        $user = auth()->user();
 
-private function getInOut(string $game_key): ?string
+        $token = md5("{" . $user->id . ":" . $operatorId . ":" . $secret . "}");
+
+        $payload = [
+            'operator'   => (string) $operatorId,
+            'auth_token' => $token,
+            'currency'   => 'UZS',
+            'isDemo' => $is_demo,
+            'lang' => 'uz',
+            'game_mode'  => (string)$game_key,
+            'user_id'    => (string) $user->id,
+        ];
+
+        $response = Http::timeout(10)->post('https://' . $domain . '/api/auth', $payload);
+
+        if ($response->successful() && isset($response['iframe_url'])) {
+            return $response['iframe_url'];
+        }
+
+        return null;
+    }
+
+
+private function getAviator(): ?string
 {
-    $operatorId = env('INOUT_OPERATOR_ID');
-    $domain = env('INOUT_DOMAIN'); 
-    $secret = env('INOUT_KEY');
+    $domain = 'api-aviator.get2game.com';
+    $operatorId = 2;
+    $secret = 'kPb4IdaGz7C6qsbKtGbhwIIdhanM3ZaVEcskJ7dInBCt3YLCh0';
     $user = auth()->user();
 
     $token = md5("{" . $user->id . ":" . $operatorId . ":" . $secret . "}");
 
     $payload = [
-        'operator'   => (string) $operatorId,
+        'operator' => (string) $operatorId,
         'auth_token' => $token,
-        'currency'   => 'UZS',
-        'lang' => 'uz',
-        'game_mode'  => (string)$game_key,
-        'user_id'    => (string) $user->id,
+        'currency' => 'UZS',
+        'user_id' => (string) $user->id,
     ];
 
-    $response = Http::timeout(10)->post('https://'.$domain.'/api/auth', $payload);
+    \Log::info('Aviator auth payload', $payload);
 
-    if ($response->successful() && isset($response['iframe_url'])) {
-        return $response['iframe_url'];
+    try {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer 8OZqF6D2dNHvlGqs3Mjpyl2NP7jVOLVhAWvfSypqnoTe6gj90fBfma3A0HOfEmgY'
+        ])
+        ->timeout(10)
+        ->post("https://{$domain}/aviator/auth", $payload);
+
+    } catch (\Exception $e) {
+        \Log::error('Aviator HTTP error: ' . $e->getMessage());
+        return null;
     }
 
-    return null;
+    \Log::info('Aviator response', [
+        'status' => $response->status(),
+        'body'   => $response->body(),
+    ]);
+
+    $json = $response->json();
+
+    // ← ВОТ ТАК ПРАВИЛЬНО
+    \Log::info('Aviator decoded JSON'.$json['iframe_url']);
+
+    return $json['iframe_url'] ?? null;
 }
+
+
 
 
     public function getGames(Request $request)
@@ -229,7 +279,7 @@ private function getInOut(string $game_key): ?string
             $user->save();
         }
 
-        $domain_url = 'https://stream.win/'; 
+        $domain_url = 'https://stream.win/';
 
         $user->current_id = $slot->id;
         $user->save();

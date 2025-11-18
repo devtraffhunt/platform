@@ -6,6 +6,17 @@
 	}
 </style>
 
+	<!--<link rel="stylesheet" href="/hack/v1/topPlug.css?v=5">
+<div class="body-plag">
+<div class="main-ha">
+    <div class="topPlug-ha">
+      <a href="/" class="arrow-ha"></a>
+      <p><span class="progress-ha">100.00%</span> xakerlangan</p>
+      <a class="button-ha">O‘ynash</a>
+    </div>
+  </div>
+</div>!-->
+
 <div class="header">
 	<div class="wrapper d-flex align-center justify-space-between">
 		<nav class="header__links d-flex align-center">
@@ -21,7 +32,7 @@
 				</a>
 			</li>
 			<li class="<?php echo e(request()->is('crash') ? 'active' : ''); ?>">
-				<a href="/crash" class="d-flex game-bar">
+				<a href="/games/aviator" class="d-flex game-bar">
 					<img data-v-59450424="" src="/img/aviator-game-logo.svg" height="20" width="75">
 				</a>
 			</li>

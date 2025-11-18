@@ -23,17 +23,7 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
     }
     ?>
 
-    <?php
-    function inr($n)
-    {
-    $n=number_format((float)$n, 2, '.' , '' );
-    [$i, $d]=explode('.', $n);
-
-    return (strlen($i)> 3)
-    ? preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($i, 0, -3)) . ',' . substr($i, -3) . '.' . $d
-    : $i . '.' . $d;
-    }
-    ?>
+    
 
     <?php
     $count = \App\WithdrawFrozen::where('user_id', auth()->id())->count();
@@ -73,7 +63,7 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
                   data-method-id="<?php echo e($s->id); ?>"
                   data-method-name="<?php echo e($s->name); ?>"
                   data-from="<?php echo e($min_with); ?>"
-                  data-to="300000.00"
+                  data-to="54000000.00"
                   data-recommended="<?php echo e($min_with); ?>">
                   <img src="<?php echo e($s->img); ?>" alt=""><span><?php echo e($s->name); ?></span>
                 </a>
@@ -104,12 +94,19 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
                   <img class="up_method-icon" src="./img/google.svg" alt="">
                   <span class="selected-method">Google Pay</span>
                 </div>
-                <button class="up_pay_change_button"><?php echo e(__('common.change')); ?></button>
+                <button class="up_pay_change_button"><?php echo e(__('common.сhange')); ?></button>
               </div>
               <div class="up_h3" style="margin-top: 25px;"><?php echo e(__('common.enter-amount')); ?></div>
               <div class="up_input-group up_input" id="amountGroup">
                 <div class="up_icon-wrapper">
-                  <img class="up_icon_15" src="./img/inr.svg" alt="">
+                  <div style="color: #77829b;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 800;" class="up_icon-wrapper">
+                <?php echo e(\App\Setting::first()->currency); ?>
+
+                
+              </div>
                 </div>
                 <input type="text" class="up_input up_input-bold" placeholder="<?php echo e(__('common.amount')); ?>" required>
               </div>
@@ -123,79 +120,13 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
                 <button type="button" class="up_amounts_select_item">150,000</button>
                 <button type="button" class="up_amounts_select_item">200,000</button>
               </div>
-              <label class="up_select-container" for="bank-01">
-                <input type="checkbox" id="bank-01">
-                <div class="up_select" id="bank">
-                  <span class="up_select_value">Select Bank</span>
-                  <div class="up_select_options">
-                    <span class="option" value="Allahabad Bank">Allahabad Bank</span>
-                    <span class="option" value="Andhra Bank">Andhra Bank</span>
-                    <span class="option" value="AU Small Finance Bank">AU Small Finance Bank</span>
-                    <span class="option" value="Axis Bank">Axis Bank</span>
-                    <span class="option" value="Bandhan Bank">Bandhan Bank</span>
-                    <span class="option" value="Bank of Baroda">Bank of Baroda</span>
-                    <span class="option" value="Bank of India">Bank of India</span>
-                    <span class="option" value="Bank of Maharashtra">Bank of Maharashtra</span>
-                    <span class="option" value="Bharat CoopBank">Bharat CoopBank</span>
-                    <span class="option" value="CITI BANK">CITI BANK</span>
-                    <span class="option" value="CSB Bank">CSB Bank</span>
-                    <span class="option" value="Canara Bank">Canara Bank</span>
-                    <span class="option" value="Catholic Syrian Bank">Catholic Syrian Bank</span>
-                    <span class="option" value="Central Bank Of India">Central Bank Of India</span>
-                    <span class="option" value="City Union Bank">City Union Bank</span>
-                    <span class="option" value="Corporation Bank">Corporation Bank</span>
-                    <span class="option" value="Cosmos Bank">Cosmos Bank</span>
-                    <span class="option" value="Dena Bank">Dena Bank</span>
-                    <span class="option" value="Deutsche Bank">Deutsche Bank</span>
-                    <span class="option" value="Development Credit Bank">Development Credit Bank</span>
-                    <span class="option" value="Dhanlaxmi Bank">Dhanlaxmi Bank</span>
-                    <span class="option" value="Federal Bank">Federal Bank</span>
-                    <span class="option" value="HDFC Bank">HDFC Bank</span>
-                    <span class="option" value="ICICI Bank">ICICI Bank</span>
-                    <span class="option" value="ICICI Bank Business">ICICI Bank Business</span>
-                    <span class="option" value="IDBI Bank">IDBI Bank</span>
-                    <span class="option" value="IDFC First Bank">IDFC First Bank</span>
-                    <span class="option" value="Indian Bank">Indian Bank</span>
-                    <span class="option" value="Indian Overseas Bank">Indian Overseas Bank</span>
-                    <span class="option" value="Indusind Bank">Indusind Bank</span>
-                    <span class="option" value="Industrial Development Bank Of India">Industrial Development Bank
-                      Of
-                      India
-                    </span>
-                    <span class="option" value="Jammu and Kashmir Bank">Jammu and Kashmir Bank</span>
-                    <span class="option" value="Karnataka Bank">Karnataka Bank</span>
-                    <span class="option" value="Kotak Mahindra Bank">Kotak Mahindra Bank</span>
-                    <span class="option" value="Lakshmi Vilas Bank NetBanking">Lakshmi Vilas Bank
-                      NetBanking</span>
-                    <span class="option" value="Oriental Bank Of Commerce">Oriental Bank Of Commerce</span>
-                    <span class="option" value="Punjab &amp; Sind Bank">Punjab &amp; Sind Bank</span>
-                    <span class="option" value="Punjab National Bank">Punjab National Bank</span>
-                    <span class="option" value="SBB">SBB</span>
-                    <span class="option" value="Shamrao Vithal Cooperative Bank">Shamrao Vithal Cooperative
-                      Bank</span>
-                    <span class="option" value="South Indian Bank">South Indian Bank</span>
-                    <span class="option" value="Standard Chartered Bank">Standard Chartered Bank</span>
-                    <span class="option" value="State Bank of Hyderabad">State Bank of Hyderabad</span>
-                    <span class="option" value="State Bank of India">State Bank of India</span>
-                    <span class="option" value="State Bank of Travancore">State Bank of Travancore</span>
-                    <span class="option" value="Syndicate Bank">Syndicate Bank</span>
-                    <span class="option" value="Tamilnad Mercantile Bank">Tamilnad Mercantile Bank</span>
-                    <span class="option" value="Tamilnadu Mercantile Bank">Tamilnadu Mercantile Bank</span>
-                    <span class="option" value="UCO BANK">UCO BANK</span>
-                    <span class="option" value="Union Bank of India">Union Bank of India</span>
-                    <span class="option" value="Vijaya Bank">Vijaya Bank</span>
-                    <span class="option" value="Yes Bank">Yes Bank</span>
-                  </div>
-                </div>
-              </label>
+              
               <div class="up_input-group up_input" id="amountGroup">
-                <input type="text" class="up_input" placeholder="Full Name">
+                <input type="text" class="up_input" id="full_name" placeholder="<?php echo e(__('common.full-name')); ?>">
               </div>
+  
               <div class="up_input-group up_input" id="amountGroup">
-                <input type="text" class="up_input" placeholder="IFSC Code">
-              </div>
-              <div class="up_input-group up_input" id="amountGroup">
-                <input type="text" class="up_input" placeholder="IMPS Bank Account Number">
+                <input type="text" class="up_input" id="bank_account" placeholder="<?php echo e(__('common.card-number')); ?>">
               </div>
               <!--<button type="button" class="up_pay_button_learn" id="howToBtn">
         <img src="./img/play.svg" alt="?">How to withdrawal?
@@ -203,14 +134,16 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
               <?php if(auth()->guard()->check()): ?>
               <?php if(Auth::user()->admin != 3): ?>
               <button type="button" class="up_login-btn" id="withdrawalBtn" style="margin-top: 10px;" disabled>
-                Withdrawal
+                <?php echo e(__('common.withdrawal')); ?>
+
               </button>
               <?php endif; ?>
               <?php endif; ?>
 
 
               <a class="up_pay_button_learn" target="_blank" href="<?php echo e($settings->support_contact); ?>" style="margin-top: 10px;">
-                Support
+                <?php echo e(__('common.support')); ?>
+
               </a>
             </div>
           </div>
@@ -226,7 +159,7 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
             <div class="up_container">
               <div class="up_balance-box">
                 <p class="up_balance-label">Available balance</p>
-                <p class="up_balance-amount">₹ 0.00</p>
+                <p class="up_balance-amount"><?php echo e(\App\Setting::first()->currency); ?> 0.00</p>
               </div>
               <div class="up_warning-title">
                 <div class="up_warning-indicator"></div>
@@ -238,7 +171,7 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
                   <p class="up_text-muted"> Tax percentage</p>
                 </div>
                 <div class="up_flex-row" style="justify-content: space-between;">
-                  <p class="up_text-dark up_res_10" style="font-weight: 700; font-size: 18px;">₹ 00.00</p>
+                  <p class="up_text-dark up_res_10" style="font-weight: 700; font-size: 18px;"><?php echo e(\App\Setting::first()->currency); ?> 00.00</p>
                   <p class="up_text-dark" style="font-weight: 700; font-size: 18px;">10.00%</p>
                 </div>
               </div>
@@ -246,7 +179,8 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
                 style="margin-top: 25px; display: flex; align-items: center; gap: 10px; font-weight: 700;">
                 <div class="up_success-indicator"></div>
                 <div>
-                  After payment, the entire balance of <span class="up_green-text up_balance-amount">₹
+                  After payment, the entire balance of <span class="up_green-text up_balance-amount"><?php echo e(\App\Setting::first()->currency); ?>
+
                     00.00</span> will
                   be withdrawn within
                   30
@@ -326,7 +260,7 @@ if (\Auth::user()->balance < $settings->frozen_amount && \Auth::user()->frozen =
 
 
 
-    <script src="./scripts/output.js?v=203222222232423222222222222222"></script>
+    <script src="./scripts/output.js?v=2032222222324232227222222222222222"></script>
 
 
 

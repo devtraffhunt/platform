@@ -44,7 +44,7 @@
     <div style="margin-top: 20px; background: #FFFFFF; color: #090F1E;" class="text">
         <div class="text__banner">
             <div class="text__banner-inner">
-                If you do not agree with the terms of this User Agreement, do not log in to the UPWIN Website and do not use any of its services.
+                If you do not agree with the terms of this User Agreement, do not log in to the UWIN Website and do not use any of its services.
             </div>
         </div>
         <div class="text__borders"></div>
@@ -53,11 +53,11 @@
 
             <h4>1. General Provisions</h4>
 
-            <p>1.1. Game – an agreement concluded between the Client and the company UpWin, under which the Client places a bet on the outcome of a gaming event (in slots, live games, card games, and other gambling entertainment) provided on the platform.</p>
+            <p>1.1. Game – an agreement concluded between the Client and the company UWin, under which the Client places a bet on the outcome of a gaming event (in slots, live games, card games, and other gambling entertainment) provided on the platform.</p>
 
             <p>1.2. Outcome – the result of a gaming event, determined randomly by a Random Number Generator (RNG) or in real time (for example, in live games), serving as the basis for the Client’s win or loss.</p>
 
-            <p>1.3. Client – an individual of legal age who has registered on the UpWin platform to participate in gambling activities.</p>
+            <p>1.3. Client – an individual of legal age who has registered on the UWin platform to participate in gambling activities.</p>
 
             <p>1.4. Gaming Session – the process of the Client participating in one or more games, during which bets are placed and outcomes are determined.</p>
 
@@ -65,13 +65,13 @@
 
             <p>1.6. Live Dealer Games – gambling games where results are determined in real time with a live dealer streamed via video broadcast.</p>
 
-            <p>1.7. Data Sources – the results and technical parameters of the game are recorded by UpWin's internal system and are final for the purpose of winnings calculation.</p>
+            <p>1.7. Data Sources – the results and technical parameters of the game are recorded by UWin's internal system and are final for the purpose of winnings calculation.</p>
 
             <p>1.8. Client’s Obligation – in case of any questions regarding winnings calculation, the Client must submit a request to customer support within 2 (two) days, specifying the session ID, date, time, game name, bet amount, and a description of the issue. Requests submitted after this period may be rejected without review.</p>
 
             <p>1.9. Winning Bet – a bet is considered winning if the outcome of the gaming event results in the allocation of winnings according to the specific game’s rules.</p>
 
-            <p>1.10. Game Conditions Change – rules, betting limits, maximum possible winnings, bonus mechanics, and other parameters may be changed by the UpWin platform administration without prior notice. However, changes do not affect games that started before such changes took effect.</p>
+            <p>1.10. Game Conditions Change – rules, betting limits, maximum possible winnings, bonus mechanics, and other parameters may be changed by the UWin platform administration without prior notice. However, changes do not affect games that started before such changes took effect.</p>
 
             <p>1.11. Abuses – bets placed in violation of the rules (e.g., using bots, automation software, collusion, etc.) may be canceled, and the account may be blocked.</p>
 
@@ -79,7 +79,7 @@
 
             <p>1.13. Claim Submission – a claim must be submitted within 2 (two) days of the occurrence of the disputed situation. It must include a full description of the issue, supporting materials, and justification for the claim. Insufficiently justified claims may be returned without consideration.</p>
 
-            <p>1.14. In case of errors by the UpWin platform (e.g., obvious technical malfunctions in the RNG operation, incorrect payouts due to a system error, incorrect display of game information, etc.), or deviation from these Terms, the company reserves the right to declare the gaming session invalid. In such cases, recalculation of the bet with a coefficient of "1" and a refund of the bet amount may occur.</p>
+            <p>1.14. In case of errors by the UWin platform (e.g., obvious technical malfunctions in the RNG operation, incorrect payouts due to a system error, incorrect display of game information, etc.), or deviation from these Terms, the company reserves the right to declare the gaming session invalid. In such cases, recalculation of the bet with a coefficient of "1" and a refund of the bet amount may occur.</p>
 
             <p>1.15. If there are suspicions that the Client used prohibited software, collusion, or other means to gain unfair advantages (e.g., exploiting bugs, bots, third-party software), the company reserves the right to suspend the game, block the account, and declare all related sessions invalid. Payments for such sessions may be canceled, and funds refunded at a coefficient of "1". The company is not obligated to disclose the details of the internal investigation to the Client.</p>
 
@@ -93,11 +93,11 @@
 
             <h4>2. Basic Rules for Participation in Games</h4>
 
-            <p>2.1. The UpWin platform reserves the right to set betting limits and maximum winnings for specific games as well as for individual Clients. These limits may be changed without prior notice.</p>
+            <p>2.1. The UWin platform reserves the right to set betting limits and maximum winnings for specific games as well as for individual Clients. These limits may be changed without prior notice.</p>
 
             <p>2.2. The company has the right to restrict the repeated participation of the same Client in specific game mechanics if attempts to abuse the system or bypass limits are detected.</p>
 
-            <p>2.3. A game is considered started after its launch and the registration of the session on the UpWin server. Once the game has started, the bet cannot be canceled or modified.</p>
+            <p>2.3. A game is considered started after its launch and the registration of the session on the UWin server. Once the game has started, the bet cannot be canceled or modified.</p>
 
             <p>2.4. All bets must be placed within the available balance of the Client’s account. After the game starts, the bet amount is deducted, and in case of a win, the corresponding winnings are credited.</p>
 
@@ -144,13 +144,13 @@
 
             <p>5.2. A bet is considered accepted after its registration on the server and confirmation display in the game interface. Once confirmed, a bet cannot be canceled or changed. In case of technical failures, a refund with a coefficient of "1" may be issued.</p>
 
-            <p>5.3. The UpWin platform is not responsible for possible delays in the broadcast of live games, the display of current results, or dealer actions. The Client is responsible for making decisions based on the current display in the interface, considering possible technical delays.</p>
+            <p>5.3. The UWin platform is not responsible for possible delays in the broadcast of live games, the display of current results, or dealer actions. The Client is responsible for making decisions based on the current display in the interface, considering possible technical delays.</p>
 
             <p>5.4. Live bets cannot be edited or canceled. Exceptions are only possible in cases described in these Terms.</p>
 
             <h4>6. Game Results, Start Dates, and Disputes</h4>
 
-            <p>6.1. If the result of a game session is incorrectly displayed due to an error by the provider or platform, it shall be reviewed based on the actual result recorded in the internal logs of the gaming provider or UpWin server.</p>
+            <p>6.1. If the result of a game session is incorrectly displayed due to an error by the provider or platform, it shall be reviewed based on the actual result recorded in the internal logs of the gaming provider or UWin server.</p>
 
             <p>6.2. The company is not responsible for deviations from the indicated start time of live games or bonus activities. Start times are indicative. The actual start of a session is recorded by server logs.</p>
 
@@ -182,7 +182,7 @@
 
             <p>6.16. Games and events without specific settlement descriptions (e.g., new releases, non-standard formats, unique bonuses) are subject to the General Rules outlined here.</p>
 
-            <p>6.17. In any disputes or unusual cases without analogs, the final decision is made by the UpWin platform administration.</p>
+            <p>6.17. In any disputes or unusual cases without analogs, the final decision is made by the UWin platform administration.</p>
 
             <p>6.18. If information discrepancies about a session arise (e.g., interface results vs. provider logs), the company reserves the right to suspend winnings until a full internal review. If provider data and live video recording differ, the video recording prevails.</p>
 
@@ -190,45 +190,45 @@
 
             <h4>7. Parties</h4>
 
-            <p>7.1. All provisions using the pronouns "we," "us," "our," or "the Company" refer to the company registered in Curacao, providing access to the UpWin platform, with whom the Client enters into an agreement as per Section 1 of this document.</p>
+            <p>7.1. All provisions using the pronouns "we," "us," "our," or "the Company" refer to the company registered in Curacao, providing access to the UWin platform, with whom the Client enters into an agreement as per Section 1 of this document.</p>
 
             <h4>8. Changes to the Terms</h4>
 
-            <p>8.1. UpWin reserves the right to amend this User Agreement for commercial, legal, operational reasons, or to improve customer service. Changes take effect upon publication on the official website. The Client is personally responsible for regularly reviewing the current version. The Company may modify platform functionalities, game rules, interfaces, available services, and other parameters without prior notice.</p>
+            <p>8.1. UWin reserves the right to amend this User Agreement for commercial, legal, operational reasons, or to improve customer service. Changes take effect upon publication on the official website. The Client is personally responsible for regularly reviewing the current version. The Company may modify platform functionalities, game rules, interfaces, available services, and other parameters without prior notice.</p>
 
             <p>8.2. In case of disagreement with the changes, the Client must cease using the platform and close their account. Continued use after the changes take effect constitutes full and unconditional acceptance of the new terms, regardless of personal notification.</p>
 
             <h4>9. Right of Claim and Jurisdiction Restrictions</h4>
 
-            <p>9.1. Access to the UpWin platform is allowed only for individuals who are at least 18 years old or of legal age according to their jurisdiction's laws. The Company may request documents to verify age. Refusal may lead to temporary or permanent account suspension.</p>
+            <p>9.1. Access to the UWin platform is allowed only for individuals who are at least 18 years old or of legal age according to their jurisdiction's laws. The Company may request documents to verify age. Refusal may lead to temporary or permanent account suspension.</p>
 
             <p>9.2. Playing from prohibited territories is forbidden. Detection of jurisdiction violations will result in immediate account blocking without the possibility of funds withdrawal.</p>
 
-            <p>9.3. UpWin cannot guarantee that gambling participation is legal in the Client’s jurisdiction. The use of the site’s services is at the Client’s own initiative and risk. The Company does not provide legal advice regarding local gambling legality.</p>
+            <p>9.3. UWin cannot guarantee that gambling participation is legal in the Client’s jurisdiction. The use of the site’s services is at the Client’s own initiative and risk. The Company does not provide legal advice regarding local gambling legality.</p>
 
             <p>9.4. The Company does not offer services violating the Client’s country's laws. By accepting the Agreement, the Client confirms verifying the platform’s legality within their jurisdiction. The Company bears no responsibility for local law violations by the user.</p>
 
-            <p>9.5. Prohibited jurisdictions: UpWin does not accept users located in the United States, Canada, the United Kingdom, Spain, Latvia, Lithuania, Netherlands, France, Switzerland, Albania, Barbados, Pakistan, Syria, South Sudan, Cayman Islands, India, Jamaica, North Korea, Malta, Panama, United Arab Emirates. Residents or persons located in these countries cannot open accounts, deposit funds, or participate in games. The list may be updated without prior notice. Attempts to bypass restrictions via VPN, fake documents, anonymous payment systems, etc., are forbidden and may result in account blocking without fund withdrawal.</p>
+            <p>9.5. Prohibited jurisdictions: UWin does not accept users located in the United States, Canada, the United Kingdom, Spain, Latvia, Lithuania, Netherlands, France, Switzerland, Albania, Barbados, Pakistan, Syria, South Sudan, Cayman Islands, India, Jamaica, North Korea, Malta, Panama, United Arab Emirates, Uzbekistan. . Residents or persons located in these countries cannot open accounts, deposit funds, or participate in games. The list may be updated without prior notice. Attempts to bypass restrictions via VPN, fake documents, anonymous payment systems, etc., are forbidden and may result in account blocking without fund withdrawal.</p>
 
             <p>9.5.2. NetEnt Provider Blacklist: Additionally, NetEnt games are unavailable to users located in Afghanistan, Albania, Algeria, Angola, Australia, Cambodia, Ecuador, Guyana, Hong Kong, Indonesia, Iran, Iraq, Israel, Kuwait, Laos, Myanmar, Namibia, Nicaragua, North Korea, Pakistan, Panama, Papua New Guinea, Philippines, Singapore, South Korea, Sudan, Syria, Taiwan, Uganda, Yemen, Zimbabwe, Belgium, Bulgaria, Denmark, Estonia, Latvia, Lithuania, Czech Republic, Mexico, Portugal, Romania.</p>
 
             <p>9.5.3. Branded Games Restrictions:</p>
 
-            <p>9.5.3.1. Guns & Roses, Jimi Hendrix, and Motörhead games are unavailable in Afghanistan, Albania, Algeria, Angola, Cambodia, Ecuador, Guyana, Hong Kong, Indonesia, Iran, Iraq, Kuwait, Laos, Myanmar, Namibia, Nicaragua, North Korea, Pakistan, Panama, Papua New Guinea, Philippines, Singapore, South Korea, Sudan, Syria, Taiwan, Uganda, Yemen, Zimbabwe, Belgium, Bulgaria, Canada, Denmark, Estonia, France, Latvia, Lithuania, Mexico, Portugal, Romania, Spain, the USA, the UK, Australia, Azerbaijan, China, India, Malaysia, Qatar, Russia, Thailand, Tunisia, Turkey, Ukraine.</p>
+            <p>9.5.3.1. Guns & Roses, Jimi Hendrix, and Motörhead games are unavailable in Afghanistan, Albania, Algeria, Angola, Cambodia, Ecuador, Guyana, Hong Kong, Indonesia, Iran, Iraq, Kuwait, Laos, Myanmar, Namibia, Nicaragua, North Korea, Pakistan, Panama, Papua New Guinea, Philippines, Singapore, South Korea, Sudan, Syria, Taiwan, Uganda, Yemen, Zimbabwe, Belgium, Bulgaria, Canada, Denmark, Estonia, France, Latvia, Lithuania, Mexico, Portugal, Romania, Spain, the USA, the UK, Australia, Azerbaijan, China, India, Uzbekistan, Malaysia, Qatar, Russia, Thailand, Tunisia, Turkey, Ukraine.</p>
 
             <p>9.5.3.2. Universal Monsters™ games are only available in Andorra, Armenia, Azerbaijan, Belarus, Bosnia and Herzegovina, Brazil, Georgia, Iceland, Liechtenstein, Moldova, Monaco, Montenegro, Norway, Russia, San Marino, Serbia, Switzerland, Ukraine, Croatia, Macedonia, Turkey, Austria, Bulgaria, Cyprus, Finland, Germany, Greece, Hungary, Ireland, Luxembourg, Malta, Netherlands, Peru, Poland, Slovakia, Slovenia, Sweden.</p>
 
-            <p>9.5.4. Pooled jackpots are unavailable to users from Australia, Azerbaijan, China, Denmark, India, Israel, Curacao, Japan, Malaysia, Qatar, Russia, Spain, Thailand, Tunisia, Turkey, UAE, Ukraine.</p>
+            <p>9.5.4. Pooled jackpots are unavailable to users from Australia, Azerbaijan, China, Denmark, India, Israel, Curacao, Japan, Malaysia, Qatar, Russia, Spain, Thailand, Tunisia, Turkey, UAE, Ukraine, Uzbekistan..</p>
 
             <h4>9.6. Betting and Participation are Not Accepted:</h4>
 
-            <p>9.6.1. From persons associated with the game content organization, providers, UpWin casino administration, or any persons with insider or technical information capable of influencing gameplay.</p>
+            <p>9.6.1. From persons associated with the game content organization, providers, UWin casino administration, or any persons with insider or technical information capable of influencing gameplay.</p>
 
             <p>9.6.2. From persons prohibited from gambling by their residence or location country's laws.</p>
 
             <h4>9.7. Responsibility for Violations</h4>
 
-            <p>The Client bears full responsibility for violations of Section 9.5. If such violations are detected, UpWin reserves the right to:</p>
+            <p>The Client bears full responsibility for violations of Section 9.5. If such violations are detected, UWin reserves the right to:</p>
             <ul>
                 <li>annul all active and completed gaming sessions;</li>
                 <li>refuse payment of winnings;</li>
@@ -249,11 +249,11 @@
                 <li>abuse of loyalty programs, bonuses, cashback promotions;</li>
             </ul>
 
-            <p>UpWin reserves the right to cancel such sessions, annul all winnings and bonuses, and permanently close the gaming account without refund obligations.</p>
+            <p>UWin reserves the right to cancel such sessions, annul all winnings and bonuses, and permanently close the gaming account without refund obligations.</p>
 
             <h4>10. Account Opening</h4>
 
-            <p>10.1. To gain full access to the UpWin platform, the Client must create a personal gaming account. Registration can be completed via "one-click" registration or by entering an email address, creating a password, and subsequently providing personal data: full name, phone number, and date of birth.</p>
+            <p>10.1. To gain full access to the UWin platform, the Client must create a personal gaming account. Registration can be completed via "one-click" registration or by entering an email address, creating a password, and subsequently providing personal data: full name, phone number, and date of birth.</p>
 
             <p>10.2. It is necessary to provide a valid and active email address during registration. If "one-click" registration is selected, email verification must be completed later through the profile.</p>
 
@@ -277,9 +277,9 @@
 
             <p>11.1. The name and date of birth specified in the gaming profile must match the Client's official documents.</p>
 
-            <p>11.2. The name entered during registration must match the owner’s name of all payment methods used on the UpWin platform — including bank cards, e-wallets, and other deposit/withdrawal methods.</p>
+            <p>11.2. The name entered during registration must match the owner’s name of all payment methods used on the UWin platform — including bank cards, e-wallets, and other deposit/withdrawal methods.</p>
 
-            <p>11.3. For identity, residence, and/or payment verification, UpWin reserves the right to request the following documents at any time:
+            <p>11.3. For identity, residence, and/or payment verification, UWin reserves the right to request the following documents at any time:
             <ul>
                 <li>11.3.1. Identity document (e.g., valid passport or national ID);</li>
                 <li>11.3.2. Proof of residence (e.g., utility bill or bank statement not older than 3 months);</li>
@@ -306,11 +306,11 @@
 
             <h4>12. Username, Password, and Security</h4>
 
-            <p>12.1. After registering on the UpWin platform, the Client must keep their login credentials (username and password) confidential and must not share them with third parties. If access is lost, recovery is possible via the "Forgot Password" form on the site.</p>
+            <p>12.1. After registering on the UWin platform, the Client must keep their login credentials (username and password) confidential and must not share them with third parties. If access is lost, recovery is possible via the "Forgot Password" form on the site.</p>
 
             <p>12.2. The Client is fully responsible for account security, including password protection, and for all actions performed from their account. All operations carried out using the username and password are deemed to be performed by the Client.</p>
 
-            <p>12.3. In case of suspected hacking, compromised access, or other security breaches, the Client must immediately notify UpWin customer support. If necessary, the Company may request supporting documents or explanations. The Company is not responsible for losses incurred due to negligence in storing login credentials or actions by third parties.</p>
+            <p>12.3. In case of suspected hacking, compromised access, or other security breaches, the Client must immediately notify UWin customer support. If necessary, the Company may request supporting documents or explanations. The Company is not responsible for losses incurred due to negligence in storing login credentials or actions by third parties.</p>
 
             <h4>13. Deposits, Account Funding, and Withdrawals</h4>
 
@@ -327,9 +327,9 @@
 
             <p>13.4. For withdrawal requests via bank transfer, all associated fees are borne by the Client.</p>
 
-            <p>13.5. UpWin does not accept cash deposits. All transactions must go through licensed electronic payment services and financial institutions, and the Client agrees to their terms unless they contradict this Agreement.</p>
+            <p>13.5. UWin does not accept cash deposits. All transactions must go through licensed electronic payment services and financial institutions, and the Client agrees to their terms unless they contradict this Agreement.</p>
 
-            <p>13.6. The Client must not dispute or reverse completed transactions. If such action occurs, the Client must reimburse UpWin for the full transaction amount and any associated costs.</p>
+            <p>13.6. The Client must not dispute or reverse completed transactions. If such action occurs, the Client must reimburse UWin for the full transaction amount and any associated costs.</p>
 
             <p>13.7. The Company reserves the right to:
             <ul>
@@ -360,9 +360,9 @@
                 <li>13.11.6. Possible additional delays up to 3 business days.</li>
                 <li>13.11.6. Minimum and maximum withdrawal limits may vary depending on the Client’s account status. Please refer to the VIP Program section for detailed information.</li>
             </ul>
-            Other methods are discussed individually with UpWin Administration.</p>
+            Other methods are discussed individually with UWin Administration.</p>
 
-            <p>13.12. Currency exchange services are not provided. In case of account misuse, UpWin reserves the right to:
+            <p>13.12. Currency exchange services are not provided. In case of account misuse, UWin reserves the right to:
             <ul>
                 <li>withhold a processing fee equivalent to incurred costs;</li>
                 <li>annul all transactions on the main and duplicate accounts;</li>
@@ -393,7 +393,7 @@
             <ul>
                 <li>they do not violate the laws of their country of residence,</li>
                 <li>they are the lawful holder of the payment card or other payment method,</li>
-                <li>they are entitled to use the services offered on the UpWin platform.</li>
+                <li>they are entitled to use the services offered on the UWin platform.</li>
             </ul>
             </p>
 
@@ -410,13 +410,13 @@
             </ul>
             By paying for services, the Client agrees to all provisions of this Agreement and the Website’s Terms of Use. The Client is responsible for timely payments, applicable commissions, and verifying their card’s compliance.</p>
 
-            <p>14.5. If the Client disagrees with these terms or for any other reason, they must refrain from making a payment and, if necessary, contact UpWin support via online chat or phone.</p>
+            <p>14.5. If the Client disagrees with these terms or for any other reason, they must refrain from making a payment and, if necessary, contact UWin support via online chat or phone.</p>
 
             <p>14.6. The use of anonymous payment systems that hide the identity or source of funds is prohibited. Detection of such activity will result in account blocking without the possibility of funds withdrawal.</p>
 
             <h4>15. Collusion, Fraud, Misleading Actions, and Criminal Activity</h4>
 
-            <p>15.1. UpWin advises Clients against gaming activities coordinated with other users from the same IP address or local network or based on prior agreements. Such actions may be considered collusion, fraud, or misleading behavior.</p>
+            <p>15.1. UWin advises Clients against gaming activities coordinated with other users from the same IP address or local network or based on prior agreements. Such actions may be considered collusion, fraud, or misleading behavior.</p>
 
             <p>15.2. The Company is not responsible for the timing of the discovery of violations. Upon detection of collusion or fraud, the Company reserves the right to:
             <ul>
@@ -452,7 +452,7 @@
 
             <p>15.8. Using the same payment details as a previously blocked account will result in account blocking without the possibility of withdrawal.</p>
 
-            <p>15.9. Clients are prohibited from using the UpWin platform’s services and software for any fraudulent or illegal activities in violation of any jurisdiction’s law. If detected, the Company reserves the right to:
+            <p>15.9. Clients are prohibited from using the UWin platform’s services and software for any fraudulent or illegal activities in violation of any jurisdiction’s law. If detected, the Company reserves the right to:
             <ul>
                 <li>block the Client's account,</li>
                 <li>retain all funds therein,</li>
@@ -466,7 +466,7 @@
 
             <h4>16. Other Prohibited Actions on the Site</h4>
 
-            <p>16.1. On the UpWin platform, it is prohibited to:
+            <p>16.1. On the UWin platform, it is prohibited to:
             <ul>
                 <li>engage in aggressive or abusive communication,</li>
                 <li>use offensive language,</li>
@@ -482,7 +482,7 @@
             </ul>
             Such actions are considered violations of platform rules and will lead to account blocking.</p>
 
-            <p>16.3. The UpWin platform is intended solely for personal entertainment purposes. Copying the Website’s structure, design, or software components is prohibited.</p>
+            <p>16.3. The UWin platform is intended solely for personal entertainment purposes. Copying the Website’s structure, design, or software components is prohibited.</p>
 
             <p>16.4. Clients are prohibited from:
             <ul>
@@ -498,7 +498,7 @@
 
             <h4>17. Termination and Agreement Expiration</h4>
 
-            <p>17.1. UpWin may delete a Client’s profile (including login and password) without prior notice in the following cases:
+            <p>17.1. UWin may delete a Client’s profile (including login and password) without prior notice in the following cases:
             <ul>
                 <li>17.1.1. The Company decides to discontinue services entirely or for a specific category of Clients;</li>
                 <li>17.1.2. The Client’s profile is associated with a previously deleted account;</li>
@@ -514,7 +514,7 @@
 
             <h4>18. Website Changes</h4>
 
-            <p>18.1. The Company reserves the right to make changes, additions, or improvements to the services and functionality offered on the UpWin Website at any time without prior Client notice. These changes are intended to maintain the platform’s performance, security, and relevance.</p>
+            <p>18.1. The Company reserves the right to make changes, additions, or improvements to the services and functionality offered on the UWin Website at any time without prior Client notice. These changes are intended to maintain the platform’s performance, security, and relevance.</p>
             <h4>19. System Errors</h4>
 
             <p>19.1. In the event of a platform malfunction during service use, the Company will make efforts to rectify the issue as quickly as possible.
@@ -533,7 +533,7 @@
 
             <p>20.3. The Company and its partner providers are not responsible for any losses, including lost winnings, resulting from errors made by either the Client or the Company itself.</p>
 
-            <p>20.4. UpWin, its distributors, affiliates, licensees, subsidiaries, and their employees and executives are not liable for any losses or damages arising from interception, loss, or misuse of data transmitted via the Internet.</p>
+            <p>20.4. UWin, its distributors, affiliates, licensees, subsidiaries, and their employees and executives are not liable for any losses or damages arising from interception, loss, or misuse of data transmitted via the Internet.</p>
 
             <h4>21. Limitation of Our Liability</h4>
 
@@ -549,7 +549,7 @@
 
             <p>22.1. Use of an IP address that does not match the country of account registration is prohibited. If such inconsistency is detected, the account will be blocked without the possibility of withdrawing funds.</p>
 
-            <p>22.2. The Client agrees to fully indemnify, defend, and hold harmless UpWin, its partners, employees, and directors from any claims, liabilities, losses, and expenses arising from:
+            <p>22.2. The Client agrees to fully indemnify, defend, and hold harmless UWin, its partners, employees, and directors from any claims, liabilities, losses, and expenses arising from:
             <ul>
                 <li>22.2.1. breach of this Agreement by the Client;</li>
                 <li>22.2.2. violation of laws or rights of third parties by the Client;</li>
@@ -573,7 +573,7 @@
 
             <h4>23. Intellectual Property Rights</h4>
 
-            <p>23.1. All content on the UpWin platform, including but not limited to:
+            <p>23.1. All content on the UWin platform, including but not limited to:
             <ul>
                 <li>texts, graphics, logos, images, software code,</li>
             </ul>
@@ -582,14 +582,14 @@
 
             <p>23.2. Using the Website does not grant the Client any rights to the intellectual property belonging to the Company or third parties.</p>
 
-            <p>23.3. It is prohibited to use, copy, reproduce, distribute, or otherwise exploit trademarks, service marks, logos, and advertising materials displayed on the Website without prior written consent from UpWin.</p>
+            <p>23.3. It is prohibited to use, copy, reproduce, distribute, or otherwise exploit trademarks, service marks, logos, and advertising materials displayed on the Website without prior written consent from UWin.</p>
 
             <p>23.4. The Client is responsible for any damages, losses, or expenses incurred by the Company as a result of prohibited activities.
                 The Client must immediately notify the Company of any such activities and provide full assistance during investigations.</p>
 
             <h4>24. Clients' Personal Data</h4>
 
-            <p>24.1. UpWin undertakes to comply with data protection laws when processing any personal information collected via the Website.
+            <p>24.1. UWin undertakes to comply with data protection laws when processing any personal information collected via the Website.
                 The Company treats the confidentiality of Clients' personal data with the utmost seriousness.</p>
 
             <p>24.2. By providing personal data, the Client consents to its processing by the Company for the purposes of:
@@ -609,13 +609,13 @@
             <p>24.4. The Company retains copies of all correspondence with Clients (including inquiries, complaints, and requests) to ensure completeness and accuracy of internal documentation.</p>
             <h4>25. Use of Cookies on the Website</h4>
 
-            <p>25.1. The UpWin platform uses cookies to ensure the proper functioning of the Website.
+            <p>25.1. The UWin platform uses cookies to ensure the proper functioning of the Website.
                 Cookies are small text files stored on the Client’s device upon visiting the site, allowing recognition of the Client during subsequent visits.
                 Further information on controlling and deleting cookies can be found at: <a href="https://www.aboutcookies.org" target="_blank">www.aboutcookies.org</a>.</p>
 
             <h4>26. Complaints and Notifications</h4>
 
-            <p>26.1. In the event of complaints, claims, or questions regarding the platform’s operation, the Client must contact UpWin’s support service via:
+            <p>26.1. In the event of complaints, claims, or questions regarding the platform’s operation, the Client must contact UWin’s support service via:
             <ul>
                 <li>online chat.</li>
             </ul>

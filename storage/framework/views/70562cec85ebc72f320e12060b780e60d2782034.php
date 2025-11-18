@@ -3,14 +3,7 @@
     $user = \Auth::user();
     $settings = \App\Setting::first();
 
-    function inr($n)
-    {
-        $n = number_format((float)$n, 2, '.', '');
-        [$i, $d] = explode('.', $n);
-        return (strlen($i) > 3)
-            ? preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($i, 0, -3)) . ',' . substr($i, -3) . '.' . $d
-            : $i . '.' . $d;
-    }
+ 
 
     // Подставляем реальные значения в текст перевода
     $frozenText = __('common.account-frozen-text');
@@ -38,7 +31,7 @@
         <div class="up_container">
           <div class="up_balance-box">
             <p class="up_balance-label"><?php echo e(__('common.available-balance')); ?></p>
-            <p class="up_balance-amount" data-balance="<?php echo e($user->balance); ?>">₹ <?php echo e($user->balance); ?></p>
+            <p class="up_balance-amount" data-balance="<?php echo e($user->balance); ?>"><?php echo e(\App\Setting::first()->currency); ?> <?php echo e($user->balance); ?></p>
           </div>
 
           <div class="up_warning-title">
@@ -69,7 +62,7 @@
   const balanceFromBackend = document.querySelector(`[data-balance]`).dataset.balance;
 
   const updateBalanceUI = balance => {
-    const formatted = `₹ ${balance.toLocaleString("en-EN", { minimumFractionDigits: 2 })}`;
+    const formatted = `<?php echo e(\App\Setting::first()->currency); ?> ${balance.toLocaleString("en-EN", { minimumFractionDigits: 2 })}`;
     document.querySelectorAll(".up_balance-amount").forEach(el => (el.textContent = formatted));
   };
 

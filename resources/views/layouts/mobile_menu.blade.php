@@ -9,7 +9,7 @@
                 <span class="mobile_p">{{ __('common.slots') }}</span>
             </li>
             <li>
-                <a class="btn_active btn_crash active" href="/crash">
+                <a class="btn_active btn_crash active" href="/games/aviator">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="#B0143A" class="icon_mobiles" viewBox="0 0 182 182">
                         <g clip-path="url(#clip0_125_572)">
@@ -241,7 +241,7 @@
                 {{ __('common.slots') }}
             </a>
 
-            <a href="/crash" class="d-flex game-bar">
+            <a href="/games/aviator" class="d-flex game-bar">
                 <img data-v-59450424="" src="/img/aviator-game-logo.svg" height="20" width="75">
             </a>
 

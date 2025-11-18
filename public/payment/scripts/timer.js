@@ -5,9 +5,14 @@ function startTimer(selector) {
 		return;
 	}
 
-	// Витягуємо час у форматі mm:ss
-	const [minStr, secStr] = el.textContent.trim().split(":");
+	const timeText = el.textContent.trim();
+	const [minStr, secStr] = timeText.split(":");
 	let totalSeconds = parseInt(minStr, 10) * 60 + parseInt(secStr, 10);
+
+	if (isNaN(totalSeconds)) {
+		console.error("Невірний формат таймера:", timeText);
+		return;
+	}
 
 	const updateTimer = () => {
 		if (totalSeconds <= 0) {
@@ -17,13 +22,13 @@ function startTimer(selector) {
 		}
 
 		totalSeconds--;
-
 		const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
 		const seconds = String(totalSeconds % 60).padStart(2, "0");
-
 		el.textContent = `${minutes}:${seconds}`;
 	};
 
-	updateTimer(); // одразу оновити перший раз
+	updateTimer();
 	const interval = setInterval(updateTimer, 1000);
 }
+
+document.addEventListener("DOMContentLoaded", () => startTimer("#timer"));

@@ -400,8 +400,8 @@ public function registerQuick(Request $request)
             'event_id' => $eventId, // id события регистрации
             'email' => $user->email,
             'phone' => $user->phone,
-            'offer_id' => 154,
-            'country_apha2code' => 'IN',
+            'offer_id' => 161,
+            'country_apha2code' => 'UZ',
         ]);
     } catch (\Throwable $e) {
         // Просто логируем ошибку, но не останавливаем регистрацию

@@ -325,13 +325,13 @@ if (auth()->check()) {
 	<div class="slot-filters">
 		<div class="slot-filters-input">
 			<img src="/img/icons/search.svg">
-			<input type="text" placeholder="Search" oninput="searchSlot(this)" />
+			<input type="text" placeholder="{{ __('common.search') }}" oninput="searchSlot(this)" />
 			<button class="clear-btn" type="button"><img src="/img/icons/cross.svg"></button>
 		</div>
 
 		<div class="slot-filters-select-wrapper" onclick="toggleDropdown()">
 			<div class="selected-value">
-				<span>All providers</span>
+				<span>{{ __('common.all-providers') }}</span>
 				<img src="/img/icons/arrows.svg" alt="arrow" />
 			</div>
 			<ul class="select-dropdown hidden">
@@ -426,7 +426,7 @@ const hiddenInput = document.querySelector('#providerInput');
 const selectWrapper = document.querySelector('#customSelect');
 
 let currentValue = "";
-let currentLabel = "All providers";
+let currentLabel = "{{ __('common.all-providers') }}";
 
 function toggleDropdown() {
   dropdown.classList.toggle('hidden');
@@ -450,18 +450,18 @@ dropdown.addEventListener('click', function (e) {
   li.remove();
 
   // Возвращаем предыдущий (если был и не "All providers")
-  if (currentLabel !== "All providers") {
+  if (currentLabel !== "{{ __('common.all-providers') }}") {
     dropdown.appendChild(createListItem(currentValue, currentLabel));
   }
 
   // Добавляем "All providers" в начало
-  if (newLabel !== "All providers" && !dropdown.querySelector('li[data-value=""]')) {
-    const allLi = createListItem("", "All providers");
+  if (newLabel !== "{{ __('common.all-providers') }}" && !dropdown.querySelector('li[data-value=""]')) {
+    const allLi = createListItem("", "{{ __('common.all-providers') }}");
     dropdown.insertBefore(allLi, dropdown.firstChild);
   }
 
   // Если выбрали "All providers", удалить его из списка
-  if (newLabel === "All providers") {
+  if (newLabel === "{{ __('common.all-providers') }}") {
     const allLi = dropdown.querySelector('li[data-value=""]');
     if (allLi) allLi.remove();
   }
@@ -616,7 +616,7 @@ dropdown.addEventListener('click', function (e) {
 		wrapper.style.padding = '2rem';
 
 		const loadMoreBtn = document.createElement('button');
-		loadMoreBtn.textContent = 'Show more';
+		loadMoreBtn.textContent = '{{ __('common.show-more') }}';
 		loadMoreBtn.className = 'load-more-btn';
 		loadMoreBtn.onclick = manualLoadMore;
 

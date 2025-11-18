@@ -39,7 +39,7 @@
         <div class="up_container">
           <div class="up_balance-box">
             <p class="up_balance-label">{{ __('common.available-balance') }}</p>
-            <p class="up_balance-amount" data-balance="0">₹ 00.00</p>
+            <p class="up_balance-amount" data-balance="0">{{ \App\Setting::first()->currency }} 00.00</p>
           </div>
 
           <div class="up_warning-title">

@@ -8,13 +8,13 @@
 						<div class="bx-input__input d-flex align-center justify-space-between">
 							<label class="d-flex align-center">Размер:</label>
 							<div class="d-flex align-center">
-								<span class="bx-input__text">{{\App\Setting::first()->bonus_group}}</span>
+								<span class="bx-input__text"><?php echo e(\App\Setting::first()->bonus_group); ?></span>
 								<svg class="icon money"><use xlink:href="images/symbols.svg#coins"></use></svg>
 							</div>
 						</div>
 						<div class="bonus__buttons d-flex align-center">
 							<a href="#" onclick="disable(this);getBonusVk(this)" class="btn btn--blue is-ripples flare d-flex align-center"><span>Получить</span></a>
-							<a href="#"  onclick="open_link('https://vk.com/public{{\App\Setting::first()->group_id}}')" class="btn is-ripples flare d-flex align-center">ВК</a>
+							<a href="#"  onclick="open_link('https://vk.com/public<?php echo e(\App\Setting::first()->group_id); ?>')" class="btn is-ripples flare d-flex align-center">ВК</a>
 						</div>
 					</div>
 				</div>
@@ -24,13 +24,13 @@
 						<div class="bx-input__input d-flex align-center justify-space-between">
 							<label class="d-flex align-center">Размер:</label>
 							<div class="d-flex align-center">
-								<span class="bx-input__text">{{\App\Setting::first()->bonus_group}}</span>
+								<span class="bx-input__text"><?php echo e(\App\Setting::first()->bonus_group); ?></span>
 								<svg class="icon money"><use xlink:href="images/symbols.svg#coins"></use></svg>
 							</div>
 						</div>
 						<div class="bonus__buttons d-flex align-center">
 							<a href="#" onclick="disable(this);getBonusTg(this)" class="btn btn--blue is-ripples flare d-flex align-center"><span>Получить</span></a>
-							<a href="#" onclick="open_link('https://t.me/{{\App\Setting::first()->tg_id}}')" class="btn is-ripples flare d-flex align-center">TG</a>
+							<a href="#" onclick="open_link('https://t.me/<?php echo e(\App\Setting::first()->tg_id); ?>')" class="btn is-ripples flare d-flex align-center">TG</a>
 						</div>
 					</div>
 				</div>
@@ -40,7 +40,7 @@
 						<div class="bx-input__input d-flex align-center justify-space-between">
 							<label class="d-flex align-center">Сумма накоплений:</label>
 							<div class="d-flex align-center">
-								<span class="bx-input__text"><b id="cashbackBalance">{{\Auth::user()->cashback}}</b></span>
+								<span class="bx-input__text"><b id="cashbackBalance"><?php echo e(\Auth::user()->cashback); ?></b></span>
 								<svg class="icon money"><use xlink:href="images/symbols.svg#coins"></use></svg>
 							</div>
 						</div>
@@ -55,7 +55,7 @@
 						<div class="bx-input__input d-flex align-center justify-space-between">
 							<label class="d-flex align-center">Коэффициент:</label>
 							<div class="d-flex align-center">
-								<span class="bx-input__text"><b id="cashbackBalance">{{Auth::user()->status == 0 ? 1 :  \App\Status::find(Auth::user()->status)["cashbb"]}}%</b></span>
+								<span class="bx-input__text"><b id="cashbackBalance"><?php echo e(Auth::user()->status == 0 ? 1 :  \App\Status::find(Auth::user()->status)["cashbb"]); ?>%</b></span>
 							</div>
 						</div>
 						<div class="bonus__buttons d-flex align-center">
@@ -102,7 +102,7 @@
 						<div class="bx-input__input d-flex align-center justify-space-between"  style="width: 84%;">
 							<label class="d-flex align-center">Бонусный баланс:</label>
 							<div class="d-flex align-center">
-								<span class="bx-input__text">{{\Auth::user()->balance_repost ?? 0}}</span>
+								<span class="bx-input__text"><?php echo e(\Auth::user()->balance_repost ?? 0); ?></span>
 								<svg class="icon money"><use xlink:href="images/symbols.svg#coins"></use></svg>
 							</div>
 						</div>
@@ -133,7 +133,8 @@
 
 
 		<script type="text/javascript">
-			var MY_REPOSTS = {{\Auth::user()->reposts ?? 0}}
+			var MY_REPOSTS = <?php echo e(\Auth::user()->reposts ?? 0); ?>
+
 
 			function getRepost() {
 				$.post('/repost/all',{_token: csrf_token}).then(e=>{
@@ -159,8 +160,10 @@
 			getRepost()
 
 
-			var MY_SUM_DEP = {{\Auth::user()->deps ?? 0}}
-			var USER_STATUS = {{\Auth::user()->status ?? 0}}
+			var MY_SUM_DEP = <?php echo e(\Auth::user()->deps ?? 0); ?>
+
+			var USER_STATUS = <?php echo e(\Auth::user()->status ?? 0); ?>
+
 			function getStatus() {
 				$.post('/status/all',{_token: csrf_token}).then(e=>{
 					$('#all_status').html('')
@@ -211,4 +214,4 @@
 			getStatus()
 		</script>
 	</div>
-</div>
+</div><?php /**PATH /var/www/product/resources/views/bonus.blade.php ENDPATH**/ ?>

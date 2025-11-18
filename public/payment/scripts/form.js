@@ -1,10 +1,6 @@
-document.getElementById("amountUTR").addEventListener("input", function (e) {
-	this.value = this.value.replace(/\D/g, "");
-});
 
 const sendAmount = () => {
-	const input = document.getElementById("amountUTR");
-	const amount = input.value.trim();
+	const amount = transaction;
 
 	if (!amount || !/^\d+$/.test(amount)) {
 		error("Сannot be empty");

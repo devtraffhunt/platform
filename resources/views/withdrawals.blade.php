@@ -51,12 +51,11 @@ $updated = \DB::affectingStatement("
         ->orderByDesc('id')->get();
 
     function inr($n) {
-        $n = number_format((float)$n, 2, '.', '');
-        [$i, $d] = explode('.', $n);
-        return (strlen($i) > 3)
-            ? preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', substr($i, 0, -3)) . ',' . substr($i, -3) . '.' . $d
-            : $i . '.' . $d;
-    }
+    $parts = explode('.', (string)$n);
+    $int = number_format($parts[0], 0, '', ',');
+    return isset($parts[1]) ? $int . '.' . $parts[1] : $int;
+}
+
 
     function in_time($dt) {
         return \Carbon\Carbon::parse($dt)->setTimezone('Asia/Kolkata')->format('d M, Y | h:i A');
@@ -82,7 +81,7 @@ $updated = \DB::affectingStatement("
   <div class="up_metrics">
     <span class="up_id">#{{ $w->id }}</span>
     <div class="up_cashAndStatus">
-      <span class="up_cash">₹ {{ inr($w->amount) }}</span>
+      <span class="up_cash">{{ \App\Setting::first()->currency }} {{ inr($w->amount) }}</span>
       <span class="up_status {{ $cls }}">{{ $txt }}</span>
     </div>
   </div>

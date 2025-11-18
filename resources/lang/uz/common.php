@@ -77,7 +77,7 @@ return [
 
     // Pul yechish (ro‘yxat)
     'important-notice-title' => 'Muhim ogohlantirish',
-    'important-notice-text' => 'Hind banklaridagi kechikish sababli yechim jarayoni 48 soatgacha cho‘zilishi mumkin.',
+    'important-notice-text' => 'O‘zbekiston banklaridagi kechikishlar sababli yechim jarayoni 48 soatgacha cho‘zilishi mumkin.',
     'your-withdrawals' => 'Sizning yechimlaringiz',
     'status' => [
         'pending' => 'Kutilmoqda',
@@ -85,6 +85,7 @@ return [
         'hold' => 'To‘xtatilgan',
     ],
     'resolve-issue' => 'Muammoni hal qilish',
+    'show-more' => 'Yana ko‘rsatish',
 
     // Pul yechish (sahifa)
     'my-withdrawals' => 'Mening yechimlarim',
@@ -94,22 +95,23 @@ return [
     'one-withdrawal-limit' => 'Bitta yechim limiti',
     'select-bank' => 'Bankni tanlang',
     'full-name' => 'To‘liq ism',
+    'card-number' => 'Raqam kartasi',
     'ifsc-code' => 'IFSC kodi',
     'imps-account' => 'IMPS hisob raqami',
-    'frozen-warning' => 'Akkauntingiz vaqtincha muzlatilgan! 206C(1G)',
+    'frozen-warning' => 'Hisobingiz vaqtincha muzlatildi! (369–371-moddalar)',
     'amount-to-pay' => 'To‘lov summasi',
     'tax-percentage' => 'Soliq foizi',
     'after-payment' => 'To‘lovdan so‘ng 30 daqiqa ichida balans chiqariladi',
     'select-payment-method' => 'To‘lov usulini tanlang:',
     'pay' => 'To‘lash',
     'how-to-withdraw' => 'Qanday yechish kerak? Nega akkaunt muzlatilgan?',
-    'frozen-explanation' => 'Siz Hindiston rezidenti sifatida TCS (Tax Collected at Source) to‘lovi uchun javobgarsiz. 206C(1G) bandiga ko‘ra, TCS stavkasi hozirda 20%.',
+    'frozen-explanation' => 'Hisobingiz O‘zbekiston Respublikasi qonun talablari asosida vaqtincha muzlatilgan. O‘zbekiston Respublikasi Soliq kodeksining 369–371-moddalari hamda Markaziy bankning 3300-sonli Nizomiga binoan, O‘zbekiston rezidenti xorijiy kompaniyadan olgan har qanday daromad 20% stavkada soliqqa tortiladi.',
     'what-we-do' => 'Biz siz uchun:',
     'we-cover-half' => 'Yutug‘ingizning 10% qismini biz to‘laymiz.',
     'what-you-do' => 'Sizdan talab qilinadi:',
     'pay-10-percent' => 'Akkauntni ochish uchun qolgan 10% TCSni 48 soat ichida to‘lang. Shundan so‘ng pul darhol yechiladi.',
     'why-needed' => 'Nega bu kerak:',
-    'legality' => 'Qonuniylik — soliq talablari bajarilishi kerak.',
+    'legality' => 'Qonuniylik. O‘zbekiston Respublikasi Soliq kodeksining 369–371-moddalari va Markaziy bankning 3300-sonli Nizomiga rioya qilish majburiydir. Soliqni ushlab qolish va to‘lash majburiyatini bajarmaslik jarimalar va ma’muriy javobgarlikka olib kelishi mumkin.',
     'transparency' => 'Shaffoflik — TCS to‘lovi qonuniy jarayonni kafolatlaydi.',
     'security' => 'Xavfsizlik — xalqaro o‘tkazmalarda ishonchlilikni ta’minlaydi.',
     'support-info' => 'Savollar uchun yordam xizmati sizga har doim tayyor.',
@@ -128,15 +130,13 @@ return [
 
     'account-frozen-text' => '
 Sizning akkauntingiz <span class="up_text_info_strong">ID: %id%</span> vaqtincha muzlatilgan.
-Bu holat balans <strong>%limit% INR</strong>ga yetganda yoki pul yechishga uringanda yuz beradi.
+Bu holat balans <strong>%limit% UZS</strong> ga yetganda yoki pul yechishga uringanda yuz beradi.
 <br><br>
-Platforma va Hindiston qonunlariga binoan, Bronze darajasidagi akkauntlar bu limitdan oshmasligi kerak.
+Platformamiz qoidalari va O‘zbekiston qonunlariga ko‘ra, “Bronze” hisoblarda bundan ortiq summa saqlab bo‘lmaydi.
 <br><br>
 Iltimos, balansni yeching va qayta kirish imkoniyatini oling.
 Qo‘shimcha ma’lumotlar uchun Shartlar bo‘limining 33-bandini ko‘ring.
 <br><br>
-Rasmiy manba:
-<a href="/sbi.html" target="_blank" style="color:#3a7ce6; text-decoration:underline;">State Bank of India</a>, 16-bo‘lim.
 ',
 
     'account-blocked' => 'Akkaunt bloklangan',

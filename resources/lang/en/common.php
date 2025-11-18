@@ -17,6 +17,7 @@ return [
     'withdrawal' => 'Withdrawal',
     'aviator' => 'Aviator',
     'chicken-road' => 'Chicken Road',
+    'show-more' => 'Show more',
     'deposit' => 'Deposit',
     'support' => 'Support',
     'button' => [
@@ -104,22 +105,23 @@ return [
     'one-withdrawal-limit' => 'One withdrawal limit',
     'select-bank' => 'Select Bank',
     'full-name' => 'Full Name',
+    'card-number' => 'Card Number',
     'ifsc-code' => 'IFSC Code',
     'imps-account' => 'IMPS Bank Account Number',
-    'frozen-warning' => 'Your account has been temporarily frozen! 206C(1G)',
+    'frozen-warning' => 'Your account has been temporarily frozen! 369–371',
     'amount-to-pay' => 'Amount to be paid',
     'tax-percentage' => 'Tax percentage',
     'after-payment' => 'After payment, the entire balance will be withdrawn within 30 minutes',
     'select-payment-method' => 'Select payment method:',
     'pay' => 'Pay',
     'how-to-withdraw' => 'How to withdraw funds? Why is the account frozen?',
-    'frozen-explanation' => 'Your account has been temporarily frozen in accordance with Indian legal requirements. As a resident of India, any funds received from a foreign company are subject to Tax Collected at Source (TCS) under Section 206C(1G) of the Income Tax Act, 1961. The current TCS rate is 20% of the payout.',
+    'frozen-explanation' => 'Your account has been temporarily frozen in accordance with the legal requirements of the Republic of Uzbekistan. Under the Tax Code of the Republic of Uzbekistan (Articles 369–371) and Regulation No. 3300 of the Central Bank, any income received by a resident of Uzbekistan from a foreign company is subject to taxation at a rate of 20%.',
     'what-we-do' => 'What we are doing for you:',
     'we-cover-half' => 'We will cover half of this amount — 10% of your winnings — on your behalf.',
     'what-you-do' => 'What you need to do:',
     'pay-10-percent' => 'To unblock your account and process your payout, please remit the remaining 10% TCS within the next 48 hours. As soon as we receive your portion, we will immediately release your funds.',
     'why-needed' => 'Why this is necessary:',
-    'legality' => 'Legality. Compliance with Section 206C(1G) is mandatory. Failure to collect and remit TCS may result in penalties and legal liability.',
+    'legality' => 'Legality. Compliance with Articles 369–371 of the Tax Code of the Republic of Uzbekistan and Regulation No. 3300 of the Central Bank is mandatory. Failure to withhold and pay the required tax may result in fines and administrative liability under Uzbek law.',
     'transparency' => 'Transparency. Withholding tax at source ensures full adherence to the Income Tax Act and RBI regulations.',
     'security' => 'Security. Payment of TCS confirms the integrity of the transaction and protects your interests in international transfers.',
     'support-info' => 'If you have any questions about making the payment, our support team is ready to assist you at any time.',
@@ -138,15 +140,12 @@ return [
 
     'account-frozen-text' => '
 Your account <span class="up_text_info_strong">ID: %id%</span> has been temporarily frozen.
-No worries — this happens when your balance reaches the <strong>%limit% INR</strong> limit or during a withdrawal attempt.
+No worries — this happens when your balance reaches the <strong>%limit% UZS</strong> limit or during a withdrawal attempt.
 <br><br>
-As per our platform rules and Indian regulations, Bronze accounts can\'t hold more than this amount.
+As per our platform rules and Uzbek regulations, Bronze accounts can’t hold more than this amount.
 <br><br>
 Please withdraw your full balance to restore access.
 Details about limits and statuses are available in Section 33 of the VIP Program in our Terms.
-<br><br>
-You can find more information on the official 
-<a href="/sbi.html" target="_blank" style="color:#3a7ce6; text-decoration:underline;">State Bank of India</a> website in Section 16.
 ',
 
     'account-blocked' => 'Your account has been blocked',

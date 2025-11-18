@@ -21,22 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// ===== Поля банківської форми =====
 	const selectBank = $(".up_select");
-	const nameInput = $('input[placeholder="Full Name"]');
-	const ifscInput = $('input[placeholder="IFSC Code"]');
-	const accountInput = $('input[placeholder="IMPS Bank Account Number"]');
+	const nameInput = $('#full_name');
+const accountInput = $('#bank_account');
+
 
 	// ===== Об'єкти стану =====
 	const limits = { min: 500, max: 50000 }; // Мін/макс для суми
 	const recommended = 1500; // Рекомендована сума
 	let selectedMethod = null; // Активний метод
-	let selectBankOption = ""; // Обраний банк
+	
 	let balance = 0; // Баланс користувача
 
 	const formData = {
 		fullName: "",
-		ifsc: "",
 		accountNumber: "",
-		bank: "",
+
 	};
 
 	// ===== Валідації окремих полів =====
@@ -48,13 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		return valid;
 	};
 
-	const checkIFSC = () => {
-		const val = ifscInput.value.trim();
-		const valid = val.length === 11;
-		ifscInput.parentElement.classList.toggle("error", !valid);
-		formData.ifsc = val;
-		return valid;
-	};
+
 
 	const checkAccount = () => {
 		const val = accountInput.value.trim();
@@ -64,26 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		return valid;
 	};
 
-	const checkBank = () => {
-		const valid = !!selectBankOption;
-		selectBank.classList.toggle("error", !valid);
-		formData.bank = selectBankOption;
-		return valid;
-	};
+
 
 	// ===== Перевірка усіх полів для активації кнопки "Withdraw" =====
 	const updateSubmitButton = () => {
 		const fullNameValid = /^[A-Za-z]+(?:\s[A-Za-z]+)+$/.test(nameInput.value.trim());
-		const ifscValid = ifscInput.value.trim().length === 11;
 		const accountValid = /^\d+$/.test(accountInput.value.trim());
-		const bankValid = !!selectBankOption;
 		
 		const max = balance;
 		const amountValid = parseInt(input.value);
 		const isValid = amountValid >= limits.min && amountValid <= balance && amountValid <= limits.max;
 		console.log(max, isValid, limits.min, limits.max, balance, amountValid)
 	
-		withdrawBtn.disabled = !(fullNameValid && ifscValid && accountValid && bankValid && isValid);
+		withdrawBtn.disabled = !(fullNameValid && accountValid && isValid);
 	  };
 	
 	  // ===== Активує кнопку "Pay" якщо вибрано метод оплати =====
@@ -147,13 +133,13 @@ document.addEventListener("DOMContentLoaded", () => {
 				options.forEach(el => el.classList.remove("up_selected_option"));
 				option.classList.add("up_selected_option");
 
-				checkBank();
+			
 				updateSubmitButton();
 				checkbox.checked = false;
 			});
 		});
 	};
-	useBankSelector();
+
 
 	// ===== Валідація під час вводу =====
 	nameInput.addEventListener("input", () => {
@@ -165,11 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		updateSubmitButton();
 	});
 
-	ifscInput.addEventListener("input", () => {
-		ifscInput.value = ifscInput.value.slice(0, 11);
-		checkIFSC();
-		updateSubmitButton();
-	});
+	
 
 	accountInput.addEventListener("input", () => {
 		accountInput.value = accountInput.value.replace(/\D/g, "");
@@ -250,8 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			const fromEl = document.querySelector(".up_from");
 			const toEl = document.querySelector(".up_to");
-			if (fromEl) fromEl.textContent = min.toLocaleString("en-IN");
-			if (toEl) toEl.textContent = max.toLocaleString("en-IN");
+			if (fromEl) fromEl.textContent = min.toLocaleString("en-US");
+			if (toEl) toEl.textContent = max.toLocaleString("en-US");
 
 			const icon = btn.querySelector("img").src;
 			const name = btn.querySelector("span").textContent;
@@ -332,12 +314,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	const updateLimitsUI = () => {
 		const fromEl = document.querySelector(".up_from");
 		const toEl = document.querySelector(".up_to");
-		if (fromEl) fromEl.textContent = limits.min.toLocaleString("en-IN");
-		if (toEl) toEl.textContent = limits.max.toLocaleString("en-IN");
+		if (fromEl) fromEl.textContent = limits.min.toLocaleString("en-US");
+		if (toEl) toEl.textContent = limits.max.toLocaleString("en-US");
 	};
 
 	const updateBalanceUI = balance => {
-		const formatted = `₹ ${balance.toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
+		const formatted = `UZS ${balance.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
 		$$(".up_balance-amount").forEach(el => (el.textContent = formatted));
 	};
 
@@ -345,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const totalAfterTcs = Math.floor(balance * 0.10); // отрезаем всё после запятой
 	const summaryEl = page_3.querySelector(".up_res_10");
 	if (summaryEl) {
-		summaryEl.textContent = `₹ ${totalAfterTcs.toLocaleString("en-IN")}.00`;
+		summaryEl.textContent = `UZS ${totalAfterTcs.toLocaleString("en-US")}.00`;
 	}
 };
 

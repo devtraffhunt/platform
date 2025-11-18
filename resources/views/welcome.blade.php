@@ -9,7 +9,7 @@
         <p style="width: 70%;">{{ __('common.banners.game-month-desk') }}</p>
         <div class="gx-row mt-1">
 
-          <a class="btn is-ripples d-flex align-center has-ripple" @auth href="/crash" @else data-switch="regquick" href="javascript:void(0)" @endauth>
+          <a class="btn is-ripples d-flex align-center has-ripple" @auth href="/games/aviator" @else data-switch="regquick" href="javascript:void(0)" @endauth>
             <span>{{ __('common.banners.play-now') }}</span>
           </a>
         </div>
@@ -375,7 +375,17 @@
           </div>
         </a>
 
-        <a @auth href="/crash" @else data-switch="regquick" @endauth class="games__item">
+        <a @auth href="/games/chicken-road-vegas" @else data-switch="regquick" @endauth class="games__item">
+          <div class="games__thumb">
+            <img src="/img/games/chicken-road-vegas.jpg" alt="Chicken Road Vegas">
+          </div>
+          <div class="games__info">
+            <div class="games__provider"><img src="/img/providers/inout.svg">InOut</div>
+            <div class="games__title">Chicken Road Vegas</div>
+          </div>
+        </a>
+
+        <a @auth href="/games/aviator" @else data-switch="regquick" @endauth class="games__item">
           <div class="games__thumb">
             <img src="/img/games/svg/aviator.svg" alt="Aviator">
           </div>

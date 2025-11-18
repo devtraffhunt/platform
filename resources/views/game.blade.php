@@ -260,7 +260,19 @@ if (auth()->check()) {
         <div class="head_name_slot_game" style="font-family: 'Google Sans';">{{ $title }}</div>
       </div>
       <div class="buttons_slot_game right">
-     
+     @if(request()->is('games/chicken-road'))
+    @if(request()->has('is_demo') && request()->get('is_demo') == 'true')
+      
+      <a href="{{ url('/games/chicken-road') }}">
+            <button class="demo_slot_button" style="display: block;">REAL</button>
+        </a>
+    @else
+         
+        <a href="{{ url('/games/chicken-road?is_demo=true') }}">
+            <button class="demo_slot_button" style="display: block;">DEMO</button>
+        </a>
+    @endif
+@endif
 
         <button onclick="refreshSlots()">
           <svg class="icon icon_button_slot">
@@ -270,7 +282,7 @@ if (auth()->check()) {
       </div>
     </div>
 
-    <div class="body_slot_game">
+    <div class="body_slot_game" data="{{ $url }}">
  
       @if ($url)
       <iframe id="iframe_slot"

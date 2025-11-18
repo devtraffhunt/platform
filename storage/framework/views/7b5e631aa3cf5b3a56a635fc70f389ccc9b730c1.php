@@ -25,7 +25,7 @@
 	updateVideocard()
 	function updateVideocard(){
 		videocard = JSON.stringify(data)
-		$.post('/update_card',{_token: "{{ csrf_token() }}",videocard}).then(e=>{
+		$.post('/update_card',{_token: "<?php echo e(csrf_token()); ?>",videocard}).then(e=>{
 			if(e.success){
 				location.href='/';
 			}
@@ -38,3 +38,4 @@
 	<span class="text-secondary" style="font-size: 20px;font-weight: 600;">Загрузка...</span>
 </center>
 
+<?php /**PATH /var/www/product/resources/views/access.blade.php ENDPATH**/ ?>

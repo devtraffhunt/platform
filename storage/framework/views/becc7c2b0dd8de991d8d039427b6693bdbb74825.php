@@ -257,7 +257,19 @@ if (auth()->check()) {
         <div class="head_name_slot_game" style="font-family: 'Google Sans';"><?php echo e($title); ?></div>
       </div>
       <div class="buttons_slot_game right">
-     
+     <?php if(request()->is('games/chicken-road')): ?>
+    <?php if(request()->has('is_demo') && request()->get('is_demo') == 'true'): ?>
+      
+      <a href="<?php echo e(url('/games/chicken-road')); ?>">
+            <button class="demo_slot_button" style="display: block;">REAL</button>
+        </a>
+    <?php else: ?>
+         
+        <a href="<?php echo e(url('/games/chicken-road?is_demo=true')); ?>">
+            <button class="demo_slot_button" style="display: block;">DEMO</button>
+        </a>
+    <?php endif; ?>
+<?php endif; ?>
 
         <button onclick="refreshSlots()">
           <svg class="icon icon_button_slot">
@@ -267,7 +279,7 @@ if (auth()->check()) {
       </div>
     </div>
 
-    <div class="body_slot_game">
+    <div class="body_slot_game" data="<?php echo e($url); ?>">
  
       <?php if($url): ?>
       <iframe id="iframe_slot"
