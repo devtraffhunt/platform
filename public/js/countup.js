@@ -52,11 +52,11 @@ var CountUp = function(target, startVal, endVal, decimals, duration, options) {
         };
     }
 
-     // default options 
+     // default options
     this.options = {
         useEasing : true, // toggle easing
-        useGrouping : false, // 1,000,000 vs 1000000
-        separator : '-', // character to use as a separator
+        useGrouping : true, // 1,000,000 vs 1000000
+        separator : ' ', // character to use as a separator
         decimal : '.' // character to use as a decimal
     };
     // extend default options with passed options object
