@@ -26,11 +26,11 @@ class SlotMobuleController extends Controller
     public function callback(string $method, Request $request)
     {
         \Log::info('SlotMobule callback received', [
-        'method' => $method,
-        'ip' => $request->ip(),
-        'headers' => $request->headers->all(),
-        'payload' => $request->all(),
-    ]);
+            'method' => $method,
+            'ip' => $request->ip(),
+            'headers' => $request->headers->all(),
+            'payload' => $request->all(),
+        ]);
 
         return match ($method) {
             'check.session'   => $this->checkSession($request),
@@ -53,12 +53,12 @@ class SlotMobuleController extends Controller
             $data = $this->slotMobuleService->checkSession($request->session, $request->currency);
             return $this->respond(200, 'check.session', $data);
         } catch (\Throwable $e) {
-\Log::error("check.session error", [
-    'message' => $e->getMessage(),
-    'trace' => $e->getTraceAsString(),
-    'payload' => $request->all(),
-    'ip' => $request->ip(),
-]);
+            \Log::error("check.session error", [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'payload' => $request->all(),
+                'ip' => $request->ip(),
+            ]);
 
             return $this->respond(404, 'check.session', $e->getMessage());
         }
@@ -77,11 +77,11 @@ class SlotMobuleController extends Controller
         } catch (\Throwable $e) {
 
             \Log::error("check.balance error", [
-    'message' => $e->getMessage(),
-    'trace' => $e->getTraceAsString(),
-    'payload' => $request->all(),
-    'ip' => $request->ip(),
-]);
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'payload' => $request->all(),
+                'ip' => $request->ip(),
+            ]);
             return $this->respond(404, 'check.balance', $e->getMessage());
         }
     }
@@ -99,11 +99,11 @@ class SlotMobuleController extends Controller
             return $this->respond(200, 'trx.cancel', $data);
         } catch (\Throwable $e) {
             \Log::error("trx.cancel error", [
-    'message' => $e->getMessage(),
-    'trace' => $e->getTraceAsString(),
-    'payload' => $request->all(),
-    'ip' => $request->ip(),
-]);
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'payload' => $request->all(),
+                'ip' => $request->ip(),
+            ]);
             return $this->respond(404, 'trx.cancel', $e->getMessage());
         }
     }
@@ -128,11 +128,11 @@ class SlotMobuleController extends Controller
             return $this->respond(200, 'withdraw.bet', $data);
         } catch (\Throwable $e) {
             \Log::error("withdraw.bet error", [
-    'message' => $e->getMessage(),
-    'trace' => $e->getTraceAsString(),
-    'payload' => $request->all(),
-    'ip' => $request->ip(),
-]);
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'payload' => $request->all(),
+                'ip' => $request->ip(),
+            ]);
             return $this->respond(404, 'withdraw.bet', $e->getMessage());
         }
     }
@@ -157,11 +157,11 @@ class SlotMobuleController extends Controller
             return $this->respond(200, 'deposit.win', $data);
         } catch (\Throwable $e) {
             \Log::error("deposit.win error", [
-    'message' => $e->getMessage(),
-    'trace' => $e->getTraceAsString(),
-    'payload' => $request->all(),
-    'ip' => $request->ip(),
-]);
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'payload' => $request->all(),
+                'ip' => $request->ip(),
+            ]);
             return $this->respond(404, 'deposit.win', $e->getMessage());
         }
     }

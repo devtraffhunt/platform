@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Providers\SlotMobuleService;
 use Illuminate\Support\Facades\DB;
 use App\Enums\GameTransactionType;
+use App\Services\Providers\GameProviderFactory;
 
 
 class GameService
@@ -61,30 +62,16 @@ class GameService
 
     public function getGameByKey(string $gameKey): Game
     {
-        $game = Game::where('game_key', $gameKey)->first();
-
-        if (!$game) {
-            throw new \RuntimeException("Game with key '{$gameKey}' not found.");
-        }
-
-        return $game;
+        return Game::with('providerRelation:id,config_name')
+            ->where('game_key', $gameKey)
+            ->firstOrFail();
     }
-
 
     public function getGameUrl(Game $game, string $type, ?User $user = null): string
     {
-
-        $slotService = new \App\Services\Providers\SlotMobuleService(
-            $this->userService,
-            $this
-        );
-
-        return $slotService->getFrameUrl($game, $type, $user);
+        $provider = app(GameProviderFactory::class)->make($game);
+        return $provider->getFrameUrl($game, $type, $user);
     }
-
-
-
-
 
 
     public function debit(string $token, string $gameKey, float $amount, string $currency, string $external_id, array $payload): array
@@ -177,8 +164,6 @@ class GameService
             ];
         });
     }
-
-
 
 
     public function refund(string $token, string $gameKey, float $amount, string $currency, string $external_id,  array $payload): array

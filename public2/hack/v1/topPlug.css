@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+
+.body-plag{
+	height: 50px;
+	line-height: 1.5;
+	font-family: "Inter", system-ui, sans-serif;
+	text-rendering: optimizeSpeed;
+	-webkit-font-smoothing: antialiased;
+	background-color: #726e69;
+	color: #000;
+}
+
+.main-ha {
+	max-width: 500px;
+	width: 100%;
+	height: 100dvh;
+	margin: 0 auto;
+	padding: 0px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-image: url(public/bg.webp);
+	background-position: center;
+	background-size: contain;
+}
+
+.topPlug-ha {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	padding: 0px 10px;
+
+	background-color: rgba(66, 66, 66, 1);
+
+	.arrow-ha {
+		position: relative;
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		background-color: rgba(114, 110, 105, 1);
+		margin-right: 7px;
+
+		&::before {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTE1IDE5LjkyIDguNDggMTMuNGMtLjc3LS43Ny0uNzctMi4wMyAwLTIuOEwxNSA0LjA4Ii8+PC9zdmc+");
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	}
+
+	p {
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 100%;
+		color: white;
+	}
+
+	.progress-ha {
+		display: inline-block;
+		padding: 4px;
+		background-color: rgba(255, 203, 41, 0.32);
+		border: 1px solid rgba(255, 203, 41, 1);
+		border-radius: 5px;
+		font-weight: 700;
+	}
+
+	.button-ha {
+		height: 35px;
+    padding: 0px 21px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: auto;
+    border-radius: 10px;
+		background-color: rgba(255, 203, 41, 1);
+    color: rgba(0, 0, 0, 1);
+    font-weight: 900;
+    font-size: 14px;
+	}
+}

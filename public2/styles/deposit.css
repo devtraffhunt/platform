@@ -1,0 +1,210 @@
+.globalContainer_deposit {
+	/* === Загальні блоки === */
+	.screenWrapper {
+	  position: relative;
+	  width: 100%;
+	  height: 1000px;
+	  overflow: hidden;
+	  margin: 0 auto;
+  
+	  @media (min-width: 800px) {
+		position: relative;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	  }
+	}
+  
+	.screen {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  transition: transform 0.3s ease;
+  
+	  @media (min-width: 800px) {
+		position: relative;
+		width: fit-content;
+		height: fit-content;
+	  }
+	}
+  
+	@media (max-width: 800px) {
+	  #methodsWindow {
+		transform: translateX(0);
+	  }
+	  #topupWindow {
+		transform: translateX(100%);
+	  }
+	  .screenWrapper.show-topup #methodsWindow {
+		transform: translateX(-100%);
+	  }
+	  .screenWrapper.show-topup #topupWindow {
+		transform: translateX(0);
+	  }
+	}
+  
+	.up_main {
+	  display: flex;
+	  width: 100%;
+	  flex-direction: column;
+	}
+  
+	@media (min-width: 800px) {
+	  #methodsWindow {
+		.up_main {
+		  .up_container {
+			width: 390px;
+			background-color: #edf0f7;
+			border-radius: 20px 0px 0px 20px;
+  
+			.up_item_pay {
+			  background-color: white;
+			}
+		  }
+		}
+	  }
+	  #topupWindow {
+		.up_main {
+		  .up_container {
+			width: 390px;
+			border-radius: 0px 20px 20px 0px;
+		  }
+		}
+	  }
+  
+	  .up_container {
+		max-height: 680px;
+	  }
+	}
+  
+	.up_header {
+	  position: relative;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  width: 100%;
+	  max-width: 390px;
+	  padding: 15px 0px;
+	  min-height: 45px;
+  
+	  @media (min-width: 800px) {
+		.up_h1 {
+		  position: absolute;
+		  right: 0;
+		  transform: translateX(50%);
+		}
+	  }
+	}
+  
+	.up_header_secondScreen {
+	  @media (min-width: 800px) {
+		visibility: hidden;
+	  }
+	}
+	.up_back_button {
+	  position: absolute;
+	  left: 0;
+	  color: #fff;
+	  font-family: Inter, sans-serif;
+	  font-size: 16px;
+	  font-weight: 400;
+	  display: flex;
+	  align-items: center;
+	  padding: 0;
+	  background: none;
+	  border: none;
+	}
+	.up_back_button img {
+	  margin-right: 7px;
+	}
+  
+	.up_container {
+	  box-sizing: border-box;
+	  width: 100%;
+	  max-width: 420px;
+	  margin: 0 auto;
+	  padding: 15px;
+	  background: #fff;
+	  border-radius: 20px;
+	  height: 800px;
+	  display: flex;
+	  flex-direction: column;
+  
+	  .up_balance {
+		position: relative;
+		max-width: 100%;
+		height: fit-content;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		border-radius: 15px;
+		background-color: white;
+		padding: 15px 20px;
+		margin-bottom: 30px;
+  
+		.up_label {
+		  color: #a9b1c2;
+		  font-family: Inter;
+		  font-size: 12px;
+		  font-weight: 500;
+		}
+  
+		.up_balance_balance {
+		  color: black;
+		  font-family: Inter;
+		  font-size: 16px;
+		  font-weight: 500;
+		}
+  
+		&:before {
+		  content: "";
+		  position: absolute;
+		  left: -15px;
+		  bottom: -15px;
+		  width: calc(100% + 30px);
+		  height: 1px;
+		  background-color: white;
+		}
+	  }
+	}
+  
+	/* === Метод оплати === */
+	.up_h2 {
+	  color: #77829b;
+	  font-family: Inter;
+	  font-size: 14px;
+	  font-weight: 500;
+	}
+  
+	/* === Сума поповнення === */
+	.up_pay_amount_container {
+	  margin-top: 15px;
+	}
+  
+	/* === Промокод === */
+	.up_input_pay_promo {
+	  margin-bottom: 0;
+	}
+	.up_promo_container {
+	  display: flex;
+	  padding: 9px 11px 9px 12px;
+	  margin: 0 auto;
+	  width: 85%;
+	  justify-content: space-between;
+	  border-radius: 0 0 10px 10px;
+	  background: linear-gradient(90deg, #1868f3 0%, #90469e 100%);
+	}
+	.up_promo_text {
+	  color: #fff;
+	  font-family: Inter;
+	  font-size: 14px;
+	  font-weight: 700;
+	}
+  }
+  

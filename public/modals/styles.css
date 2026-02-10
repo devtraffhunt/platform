@@ -1,0 +1,553 @@
+:root {
+  --color-primary: #397CE6;
+  --color-bg: #FFFFFF;
+  --color-light: #F1F3F8;
+  --color-gray: #77829B;
+  --color-text: #1C252E;
+  --color-green: #29B663;
+
+  /* новая переменная для высоты полей */
+  --input-height: 48px;
+}
+
+
+
+.up_modal {
+  background: var(--color-bg);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 390px;
+  margin: 16px auto;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.up_modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.up_modal-header h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 20px;
+}
+.up_close-btn {
+  width: 32px;
+  height: 32px;
+  background: var(--color-light);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.up_subtitle {
+  margin-top: 8px;
+  color: var(--color-gray);
+  font-size: 14px;
+}
+
+/* ===== Методы входа: сетка 2×2 ===== */
+.up_methods {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: 15px;
+}
+.up_method-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  width: 100%;
+  background: var(--color-light);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--color-text);
+  transition: background .2s, color .2s;
+}
+
+.up_method-btn svg {
+  color: #77829B;
+  fill: #77829B !important;
+}
+
+.up_method-btn.up_selected svg {
+  color: #FFF;
+  fill: #fff !important;
+}
+
+.up_method-btn.up_selected {
+  background: var(--color-primary);
+  color: #FFF;
+  fill: #fff !important;
+}
+
+/* Заглушка OAuth */
+.up_social p {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+/* Общие отступы для форм */
+.up_form {
+  margin-top: 12px;
+}
+
+/* === Поля ввода и плашка под иконкой === */
+.up_input-group,
+.up_password-group {
+  display: flex;
+  align-items: center;
+  background: var(--color-light);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+
+  /* фиксированная высота контейнера */
+  height: var(--input-height);
+}
+
+/* плашка под иконкой делаем квадратной */
+.up_icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(119, 130, 155, 0.05);
+  width: var(--input-height);
+  flex-shrink: 0;
+  height:48px;
+}
+
+
+
+/* +91 спан тоже по центру */
+.up_input-group span {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  height: var(--input-height);
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+/* Сам инпут без вертикального padding, с line-height для центрирования */
+.up_input-group input,
+.up_password-group input {
+  flex: 1;
+  height: var(--input-height);
+  padding: 0 12px;
+  line-height: var(--input-height);
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: var(--color-text);
+  outline: none;
+}
+
+.up_icon_15 { width: 15px; }
+.up_icon_20 { width: 20px; }
+
+/* Глазик для пароля */
+.up_password-group {
+  position: relative;
+}
+.up_password-group .eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Кнопка Login */
+.up_login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  background: var(--color-primary);
+  color: #FFF;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.up_login-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+
+/* Кнопка Login */
+.up_reg-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  background: var(--color-green);
+  color: #FFF;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.up_reg-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+
+/* Ссылки */
+.up_forgot {
+  text-align: center;
+  margin-top: 8px;
+}
+.up_forgot a,
+.up_register a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 14px;
+}
+.up_register {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--color-gray);
+}
+
+.up_input input::placeholder {
+  color: var(--color-gray);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.up_input-group.error,
+.up_password-group.error {
+  border: 1px solid red;
+}
+
+
+
+/* Оверлей вокруг модалки */
+.modal-overlay {
+  display: none;              /* прячем по умолчанию */
+  position: fixed;
+  inset: 0;                   /* топ/право/низ/лево = 0 */
+  background: rgba(0,0,0,0.5);
+  justify-content: center;    /* центрируем по горизонтали */
+  align-items: center;        /* по вертикали */
+  z-index: 1000;
+    /* размытие заднего фона */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+/* Показываем, когда нужно */
+.modal-overlay.open {
+  display: flex;
+}
+
+.up_header {
+  position: relative;       /* Чтобы абсолютная кнопка считала (.header) своим родителем */
+  display: flex;
+  justify-content: center;  /* Центрируем всё (в частности .h1) */
+  align-items: center;
+  width: 100%;
+  max-width:390px;
+  margin: 15px auto;
+}
+
+.up_back_button {
+  position: absolute;  /* Вынесем кнопку из потока */
+  left: 0;             /* Прижмём к левому краю header */
+  color: #FFF;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  padding: 0;          /* При необходимости скорректируйте отступы */
+  background: none;    /* Сброс фона */
+  border: none;        /* Сброс рамки */
+}
+
+.up_back_button img {
+  margin-right: 7px;
+}
+
+.up_h1 {
+  /* теперь flex-контейнер сам по центру, заголовок не надо трогать */
+  color: #FFF;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.up_container {
+  box-sizing: border-box;          /* чтобы padding был «внутри» */
+  width: 100%;
+  max-width:420px;/* никогда не шире 390 px, но и не шире экрана */
+  margin: 0 auto;                  /* центрирует на широких экранах */
+  padding: 15px;
+  background: #FFF;
+  border-radius: 20px;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.up_main{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+
+.up_h2{
+  color: #77829B;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.up_methods_pay {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;           /* только межэлементные отступы */
+  width: 100%;
+  /* padding: 7px; */ /* Убираем эту строку, чтобы по краям не было отступов */
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.up_item_pay {
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 15px;
+  background: #EDF0F7;
+  text-decoration: none;
+}
+
+.up_item_pay span{
+  color: #090F1E;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 5px;
+}
+
+.up_item_pay img{
+  height: 30px;
+  width: auto;
+  max-width: 100%; 
+}
+
+.up_pay_change_container {
+  width: 100%;
+  border-radius: 10px;
+  background: #EDF0F7;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;    /* ← вот здесь */
+}
+
+.up_pay_change_method {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; /* обычно space-between здесь не нужен */
+  align-items: center;         /* ← и здесь */
+  gap: 8px;                     /* опционально, чтобы картинка и текст не слипались */
+}
+
+.up_pay_change_method img {
+  height: 30px;
+  width: auto;
+}
+
+.up_pay_change_method span {
+  color: #090F1E;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.up_pay_change_button{
+  color: #397CE6;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.up_pay_amount_container{
+  margin-top: 15px;
+}
+
+.up_h3{
+  color: #090F1E;
+
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-bottom: 10px;
+}
+
+.up_bold_input{
+  margin-bottom: 5px;
+}
+
+.up_bold_input input{
+  color: #77829B;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.up_text_input_small{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.up_h4{
+  color: #77829B;
+
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.up_amounts_select_container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 90%;
+  margin:10px auto;
+}
+
+.up_amounts_select_item{
+  border-radius: 10px;
+  background: #EDF0F7;
+  padding: 7px;
+  color: #77829B;
+
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.up_promo_container{
+  display: flex;
+  padding: 9px 11px 9px 12px;
+  flex-direction: row;
+  margin: 0 auto;
+  width: 85%;
+  justify-content: space-between;
+  border-radius: 0px 0px 10px 10px;
+  background: linear-gradient(90deg, #1868F3 0%, #90469E 100%);
+}
+
+.up_promo_text{
+  color: #FFF;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.up_input_pay_promo{
+  margin-bottom: 0px;
+}
+
+.up_pay_button_learn{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  width: 100%;
+  border-radius: 10px;
+  background: #F3F6FB;
+  color: #77829B;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.up_pay_button_learn img{
+  margin-right: 10px;
+}
+
+.up_pay_button{
+  margin-top: 10px;
+  text-decoration: none;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  color: #FFF;
+  border-radius: 10px;
+  background: #19AB59;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.up_pay_button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* при ширине экрана ≤ 600px убираем центрирование по вертикали */
+@media (max-width: 600px) {
+  .modal-overlay {
+    align-items: flex-start;  /* прижать контент к верху */
+  }
+}
+
+
+
+/* На узких экранах простая сетка ввиде одной колонки

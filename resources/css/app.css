@@ -1,0 +1,39 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* === Toastify кастомизация === */
+.toastify .toast-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 16px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.4); /* ✅ менее яркий */
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.toastify .toast-close:hover {
+  color: rgba(255, 255, 255, 0.8); /* подсветка при наведении */
+  opacity: 1;
+  cursor: pointer;
+}
+
+.up_toast-title {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.up_toast-text {
+  font-size: 14px;
+  line-height: 1.4;
+}
